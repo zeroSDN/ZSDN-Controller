@@ -1,0 +1,29 @@
+*** of_match.h	2015-10-08 13:39:37.237016000 +0200
+--- of_match_patched.h	2015-10-08 16:06:37.794456000 +0200
+***************
+*** 109,116 ****
+  of_memmask(void *value, const void *mask, size_t len)
+  {
+      int i;
+!     uint8_t *v = value;
+!     const uint8_t *m = mask;
+  
+      for (i = 0; i < len; i++) {
+          v[i] &= m[i];
+--- 108,123 ----
+  of_memmask(void *value, const void *mask, size_t len)
+  {
+      int i;
+! 
+!     //uint8_t *v = value;
+!     //const uint8_t *m = mask;
+! 
+!     //uint8_t *v = static_cast<uint8_t *>(value);
+!     //const uint8_t *m = static_cast<const uint8_t *>(mask);
+! 
+!     // TODO Verify
+!     uint8_t *v = (uint8_t*)value;
+!     const uint8_t *m = (const uint8_t*)mask;
+  
+      for (i = 0; i < len; i++) {
+          v[i] &= m[i];

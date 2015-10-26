@@ -1,0 +1,6 @@
+[submodule "ZMF"]
+	path = ZMF
+	url = https://github.com/zeroSDN/ZMF.git
+[submodule "JMF"]
+	path = JMF
+	url = https://github.com/zeroSDN/JMF.git

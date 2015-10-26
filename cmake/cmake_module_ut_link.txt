@@ -1,0 +1,12 @@
+
+
+# Build zsdn commons pre-build
+add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
+                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../common/zsdn-commons/
+                   COMMAND cmake --build .)
+add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
+                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../common/zsdn-commons/
+                   COMMAND cmake .)
+
+target_link_libraries(${PROJECT_NAME} cppunit zmf zsdn-commons 
+	protobuf zmq zmqpp PocoFoundation PocoNet PocoUtil loci tins)

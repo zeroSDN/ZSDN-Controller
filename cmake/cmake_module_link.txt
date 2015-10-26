@@ -1,0 +1,3 @@
+target_link_libraries(${PROJECT_NAME}
+	zsdn-commons zmf
+	protobuf zmq zmqpp PocoFoundation PocoNet PocoUtil loci tins)
