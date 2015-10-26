@@ -10,19 +10,23 @@ echo "Installing to directory: $ZDIR"
 
 echo ""
 echo "Press enter to continue (or Ctrl+C to cancel)"
-
 read
 
-cd $ZDIR
 
+cd $ZDIR
 echo $ZDIR > ./util/zsdn-dir.txt
 echo "set(ZSDN_DIR $ZDIR)" > ./util/zsdn-dir_cmake.txt
 
+
+echo
+echo "## Start init submodules"
 git submodule init
 git submodule update
 
+
 cd ZMF
-echo "# Start init ZSDN dependencies"
+echo
+echo "## Start init ZMF"
 if ./init-zmf.sh; then
 	echo "# init_zmf success"
 else
@@ -34,7 +38,8 @@ cd ..
 
 
 cd util
-echo "# Start init ZSDN dependencies"
+echo
+echo "## Start init ZSDN dependencies"
 if ./init_dependencies.sh; then
 	echo "# init_dependencies success"
 else
