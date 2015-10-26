@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html ng-app="zsdn-logging">
+<head>
+<meta charset="UTF-8">
+<title>Logging - ZeroSDN</title>
+<link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" />
+<script src="js/config.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js"></script>
+<script src="angular-smart-table/2.1.2/package/dist/smart-table.min.js"></script>
+<script src="js/logging-angular.js"></script>
+<link rel="stylesheet" href="css/style.css" />
+</head>
+
+<nav>
+	<ul>
+		<li><a href="logging.html">Logging</a></li>
+		<li><a href="modules.html">Modules</a></li>
+		<li><a href="topo.html">Topology</a></li>
+	</ul>
+</nav>
+
+<body ng-controller="mainCtrl">
+	<div class="container">
+		<h3>Logging Messages</h3>
+		<button type="button" ng-click="update()" class="btn btn-sm">
+			<i class="glyphicon glyphicon-refresh"></i> Update
+		</button>
+		<table st-table="displayedCollection" st-safe-src="rowCollection"
+			class="table table-striped">
+			<thead>
+				<tr>
+					<!-- <th st-sort="id">UUID</th> -->
+					<th st-sort="messageType">Message Type</th>
+					<th st-sort="senderType">Sender Type</th>
+					<th st-sort="senderId">Sender ID</th>
+					<th st-sort="timeStamp" st-sort-default="reverse">Time</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="row in displayedCollection">
+					<!-- <td>{{row.id}} -->
+					<td>{{row.messageType}}</td>
+					<td>{{row.senderType}}</td>
+					<td>{{row.senderId}}</td>
+					<td>{{row.timeStamp | date : 'dd.MM.yyyy hh:mm:ss:sss'}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</body>
+</html>

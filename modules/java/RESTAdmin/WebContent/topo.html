@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>TopoView - ZeroSDN</title>
+<script src="js/config.js"></script>
+<!-- <link rel="stylesheet"
+	href="//netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css" /> -->
+<!-- <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.js"></script> -->
+<!-- <script src="angular-smart-table/2.1.2/package/dist/smart-table.min.js"></script> -->
+<!-- <script src="js/modules-angular.js"></script> -->
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script> -->
+<link rel="stylesheet" href="css/style.css" />
+</head>
+<nav>
+	<ul>
+		<li><a href="logging.html">Logging</a></li>
+		<li><a href="modules.html">Modules</a></li>
+		<li><a href="topo.html">Topology</a></li>
+	</ul>
+</nav>
+<body>
+	<div class="center">
+		<script>
+var width = window.innerWidth;
+var height = window.innerHeight;
+
+var radius = 10;
+
+var color = d3.scale.category10();
+	
+var svg = d3.select("body")
+	.append("svg")
+	.attr("width", width)
+	.attr("height", height);
+	
+var force = d3.layout.force()
+			.gravity(.05)
+			.distance(100)
+			.charge(-100)
+			.size([width, height]);
+
+var nodes = [];
+var links = [];
+
+var data = [];
+var lastResponse = [];
+
+var minValue;
+var maxValue;
+
+getDataXHR();
+
+//setInterval(function() {
+//	  getDataXHR();
+//}, 1500);
+
+function getDataXHR() {
+d3.xhr(url + "/RESTAdmin/rest/topo" + '?' + Math.floor(Math.random() * 1000), function(error, response) {
+	
+	data = JSON.parse(response.response);
+	if (response.response != lastResponse) {
+		data.links.forEach(function(link) {
+			if(typeof maxValue === 'undefined' || link.value >= maxValue) {
+				maxValue = link.value;
+			}
+			
+			if(typeof minValue === 'undefined' || link.value <= minValue) {
+				minValue = link.value;
+			}
+			
+			var sourceNode = data.nodes.filter( function(node) { if(node.id === link.source) return node; });
+			var targetNode = data.nodes.filter(function(node) { if(node.id === link.target) return node; });
+			
+			links.push({source: sourceNode[0], target: targetNode[0], value: link.value});
+		});
+		lastResponse = response.response;
+		redraw();
+	}
+	
+});	
+}
+
+function redraw() {
+	
+	force
+		.nodes(data.nodes)
+		.links(links)
+		.start();
+	
+	var link = svg.selectAll(".link")
+		.data(links)
+		.enter().append("line")
+		.attr("class", "link")
+		.style("stroke", function(d) {return "rgb(" + calcColor(d.value) + ",0,0)";});
+		//.style("stroke-width", function(d) {return 0.5});
+	
+	var node = svg.selectAll(".node")
+		.data(data.nodes)
+		.enter().append("g")
+		.attr("class", node)
+		.call(force.drag);
+	
+	node.append("circle")
+		.attr("r", radius);
+		
+	node.append("text")
+		.attr("dx", 12)
+		.attr("dy", ".35em")
+		.text(function(d) { return d.name; });
+	
+	force.on("tick", function() {
+		link.attr("x1", function(d) { return d.source.x; })
+			.attr("y1", function(d) { return d.source.y; })
+			.attr("x2", function(d) { return d.target.x; })
+			.attr("y2", function(d) { return d.target.y; });
+		
+		node.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+	});
+}
+/**
+ * Map link value to color range
+ * @param value the value of the link
+ * @return the mapped color value 
+ */
+function calcColor(value) {
+	var rgbMAX = 255;
+	var color =  Math.round((rgbMAX / (maxValue - minValue)) * value - ((rgbMAX / (maxValue-minValue)) * maxValue - rgbMAX));  
+	return color;
+}
+</script>
+	</div>
+</body>
+</html>
