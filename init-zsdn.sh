@@ -1,9 +1,8 @@
 echo "### Installing ZSDN environment ###"
 echo ""
-echo "I will try to get it work"
+echo "Initializing zhe ZSDN environment"
 echo "THIS MAY TAKE SOME TIME"
-
-echo ""
+echo 
 
 ZDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Installing to directory: $ZDIR"
@@ -50,7 +49,9 @@ fi
 cd ..
 
 
-if ./build-all.sh; then
+echo
+echo "## Start build ZSDN core modules"
+if ./build-all.sh -m zsdn-core; then
 	echo "# Build ALL success"
 else
 	result=$?
@@ -58,4 +59,4 @@ else
 	exit ${result}
 fi
 
-echo "### Finished Its-Not-Working Script ###"
+echo "### Installing ZSDN environment ###"
