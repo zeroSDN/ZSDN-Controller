@@ -8,11 +8,13 @@ ZDIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Installing to directory: $ZDIR"
 
 echo ""
-echo "Press enter to continue (or Ctrl+C to cancel)"
-read
+echo "Press enter to continue or wait 10s (or Ctrl+C to cancel)"
+read -t 10
 
 
 cd $ZDIR
+
+
 echo $ZDIR > ./util/zsdn-dir.txt
 echo "set(ZSDN_DIR $ZDIR)" > ./util/zsdn-dir_cmake.txt
 
