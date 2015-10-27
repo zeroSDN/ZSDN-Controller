@@ -6,10 +6,15 @@ project(${PROJECT_NAME})
 
 option(NoTests "NoTests" ON)
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/../../util/zsdn-dir_cmake.txt)
+
+# Set ZSDN root folder path relative to project
+set(ZSDN_ROOT_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/../../..")
+
+
+include(${ZSDN_ROOT_FOLDER}/util/zsdn-dir_cmake.txt)
 
 # Build to lib folder
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../dependencies/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ZSDN_ROOT_FOLDER}/dependencies/lib)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -D_DEBUG")
 

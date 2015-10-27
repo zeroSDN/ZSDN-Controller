@@ -29,10 +29,10 @@ cd ZMF
 echo
 echo "## Start init ZMF"
 if ./init-zmf.sh; then
-	echo "# init_zmf success"
+	echo "# Init ZMF success"
 else
 	result=$?
-	echo "!! Failed to init_zmf"
+	echo "!! Failed to init ZMF"
 	exit ${result}
 fi
 cd ..
@@ -42,10 +42,10 @@ cd util
 echo
 echo "## Start init ZSDN dependencies"
 if ./init_dependencies.sh; then
-	echo "# init_dependencies success"
+	echo "# Init ZSDN dependencies success"
 else
 	result=$?
-	echo "!! Failed to init_dependencies"
+	echo "!! Failed to init ZSDN dependencies"
 	exit ${result}
 fi
 cd ..

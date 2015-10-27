@@ -51,6 +51,9 @@ else
 fi
 
 
+# Build C++ Commons
+cd cpp
+
 # Clear Commons
 find . -name CMakeCache.txt -delete
 find . -name Makefile -delete
@@ -69,6 +72,8 @@ else
 	echo "!! Failed to Cmake Common: "${result}
 	exit ${result}
 fi
+cd ..
+
 cd ..
 
 echo "### Finished Build ZSDN Commons ###"
