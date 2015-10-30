@@ -7,5 +7,3 @@ cpp/StatisticsModule
 cpp/ARPModule
 cpp/SimpleForwardingModule
 cpp/ForwardingModule
-cpp/LoggingModule
-java/RestAdminModule
