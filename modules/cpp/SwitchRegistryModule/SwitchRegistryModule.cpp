@@ -209,7 +209,7 @@ void SwitchRegistryModule::processFeatureReply(const zmf::data::ZmfMessage& mess
     of_features_reply_t* featRep = zsdn::of_object_new_from_data_string_copy(message.getData());
     //get SwitchAdapter from data, which sent the message
     Switch& aSwitch = switches[switchID];
-
+    Switch oldSwitch = switches[switchID];
     //set Switch information in data
     if(featRep->version>=OF_VERSION_1_3) {
         of_features_reply_auxiliary_id_get(featRep, &aSwitch.auxiliary_id);
@@ -278,7 +278,7 @@ void SwitchRegistryModule::processFeatureReply(const zmf::data::ZmfMessage& mess
     getLogger().trace("received Feature-Reply for Switch: " + std::to_string(switchID));
     //if Switch is active it changed
     if(aSwitch.active){
-        sendSwitchChanged(aSwitch);
+        sendSwitchChanged(aSwitch, oldSwitch);
     }else {
         //if Ports are available already, Switch becomes active
         if (aSwitch.got_ports) {
@@ -306,6 +306,7 @@ void SwitchRegistryModule::processMultipartReply(const zmf::data::ZmfMessage& me
     } //TODO on change: implement other types
     //get SwitchAdapter from data, which sent the message
     Switch& aSwitch = switches[switchID];
+    Switch oldSwitch = switches[switchID];
 
     //delete portlist(so it is updated from the message
     aSwitch.ports.clear();
@@ -349,7 +350,7 @@ void SwitchRegistryModule::processMultipartReply(const zmf::data::ZmfMessage& me
     aSwitch.got_ports = true;
     //if Switch is active it changed
     if(aSwitch.active){
-        sendSwitchChanged(aSwitch);
+        sendSwitchChanged(aSwitch, oldSwitch);
     }else{
         //if SwitchInfo is available already, Switch becomes active
         if (aSwitch.switch_info_available) {
@@ -400,6 +401,7 @@ void SwitchRegistryModule::processPortStatus(const zmf::data::ZmfMessage& messag
         return;
     }
     Switch& aSwitch = switches[switchID];
+    Switch oldSwitch = switches[switchID];
     of_port_status_t* portStatusT = zsdn::of_object_new_from_data_string_copy(message.getData());
     uint8_t reason;
     of_port_status_reason_get(portStatusT, &reason);
@@ -433,7 +435,7 @@ void SwitchRegistryModule::processPortStatus(const zmf::data::ZmfMessage& messag
             of_port_desc_delete(portDescT);
             of_port_status_delete(portStatusT);
             getLogger().trace("Port-Status-message added new Port " + std::to_string(portnr) +" for Switch:" + std::to_string(switchID));
-            sendSwitchChanged(aSwitch);
+            sendSwitchChanged(aSwitch, oldSwitch);
             return;
         }
         case OF_PORT_CHANGE_REASON_DELETE:{
@@ -453,7 +455,7 @@ void SwitchRegistryModule::processPortStatus(const zmf::data::ZmfMessage& messag
             of_port_desc_delete(portDescT);
             of_port_status_delete(portStatusT);
             getLogger().trace("Port-Status-message deleted Port " + std::to_string(portnr) +" for Switch:" + std::to_string(switchID));
-            sendSwitchChanged(aSwitch);
+            sendSwitchChanged(aSwitch, oldSwitch);
             return;
         }
         case OF_PORT_CHANGE_REASON_MODIFY:{
@@ -489,7 +491,7 @@ void SwitchRegistryModule::processPortStatus(const zmf::data::ZmfMessage& messag
             of_port_desc_delete(portDescT);
             of_port_status_delete(portStatusT);
             getLogger().trace("Port-Status-message updated Port " + std::to_string(portnr) +" for Switch:" + std::to_string(switchID));
-            sendSwitchChanged(aSwitch);
+            sendSwitchChanged(aSwitch, oldSwitch);
             return;
         }
         default:{
@@ -554,17 +556,49 @@ void SwitchRegistryModule::switchBecameActive(Switch aSwitch) {
     getLogger().information("Switch became active: " + std::to_string(aSwitch.getSwitchID()));
 }
 
-void SwitchRegistryModule::sendSwitchChanged(Switch aSwitch) {
+void SwitchRegistryModule::sendSwitchChanged(Switch aSwitch, Switch oldSwitch) {
     //create common::topology::Switch
     common::topology::Switch* pSwitch = convertToProto(aSwitch.getSwitchID());
+    common::topology::Switch* pOldSwitch = new common::topology::Switch();
+    //set SwitchInfo in common::topology::Switch
+    pOldSwitch->set_switch_dpid(oldSwitch.getSwitchID());
+    pOldSwitch->set_openflow_version(oldSwitch.of_version);
+    common::topology::SwitchSpecs* switchSpecs = new common::topology::SwitchSpecs();
+    pOldSwitch->set_allocated_switch_specs(switchSpecs);
+    switchSpecs->set_n_buffers(oldSwitch.n_buffers);
+    switchSpecs->set_n_tables(oldSwitch.n_tables);
+    switchSpecs->set_auxiliary_id(oldSwitch.auxiliary_id);
+    switchSpecs->set_capabilities(oldSwitch.capabilities);
+    switchSpecs->set_reserved(oldSwitch.reserved);
+    //add Ports and Portinfo to common::topology::Switch
+    for (const Port& port : oldSwitch.ports) {
+        common::topology::SwitchPort* switchPort = pOldSwitch->add_switch_ports();
+        common::topology::AttachmentPoint* attachmentPoint = new common::topology::AttachmentPoint();
+        switchPort->set_allocated_attachment_point(attachmentPoint);
+        attachmentPoint->set_switch_dpid(oldSwitch.getSwitchID());
+        attachmentPoint->set_switch_port(port.switch_port);
+        common::topology::PortSpecs* portSpecs = new common::topology::PortSpecs();
+        switchPort->set_allocated_port_specs(portSpecs);
+        portSpecs->set_mac_address(port.mac_address);
+        portSpecs->set_port_name(port.port_name);
+        portSpecs->set_config(port.config);
+        portSpecs->set_state(port.state);
+        portSpecs->set_curr(port.curr);
+        portSpecs->set_advertised(port.advertised);
+        portSpecs->set_supported(port.supported);
+        portSpecs->set_peer(port.peer);
+        portSpecs->set_curr_speed(port.curr_speed);
+        portSpecs->set_max_speed(port.max_speed);
+    }
 //create message
     SwitchRegistryModule_Proto::From messageContainer;
     SwitchRegistryModule_Proto::From_SwitchEvent* switchEvent = new SwitchRegistryModule_Proto::From_SwitchEvent();
     SwitchRegistryModule_Proto::From_SwitchEvent_SwitchChanged* switchChanged = new SwitchRegistryModule_Proto::From_SwitchEvent_SwitchChanged();
     switchChanged->set_allocated_switch_now(pSwitch);
+    switchChanged->set_allocated_switch_before(pOldSwitch);
     switchEvent->set_allocated_switch_changed(switchChanged);
     messageContainer.set_allocated_switch_event(switchEvent);
-
+    messageContainer.PrintDebugString();
     getZmf()->publish(
             zmf::data::ZmfMessage(topicsSwitchChanged_, messageContainer.SerializeAsString()));
     getLogger().information("Switch changed: " + std::to_string(aSwitch.getSwitchID()));

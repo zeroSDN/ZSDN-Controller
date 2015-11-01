@@ -8,7 +8,7 @@
 #define ZSDN_LOGGINGMODULE_H
 
 #include <stdint.h>
-#include "data/MessageType.hpp"
+#include "zmf/MessageType.hpp"
 
 using namespace zmf::data;
 

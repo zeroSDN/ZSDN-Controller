@@ -53,7 +53,7 @@ int main(int argc, char* argv[]) {
         SwitchAdapterRunner switchAdapterServer(version, ofPort, argv[1]);
         bool started = switchAdapterServer.start();
         if (started) {
-            std::cout << "Press any key to stop the SwitchAdapterRunner.";
+            std::cout << "Press enter to stop the SwitchAdapterRunner.";
             std::cin.ignore();
             switchAdapterServer.stop();
             return 0;

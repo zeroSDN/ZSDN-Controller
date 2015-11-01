@@ -18,6 +18,7 @@ CPPUNIT_TEST_SUITE(zsdnCommonsTests);
         CPPUNIT_TEST(testRequestUtils);
         CPPUNIT_TEST(testNetworkGraph);
         CPPUNIT_TEST(testMacConversions);
+        CPPUNIT_TEST(testTopicConstruction);
 
 
     CPPUNIT_TEST_SUITE_END();
@@ -33,6 +34,8 @@ public:
     void testRequestUtils();
 
     void testLociExtensions();
+
+    void testTopicConstruction();
 
 };
 

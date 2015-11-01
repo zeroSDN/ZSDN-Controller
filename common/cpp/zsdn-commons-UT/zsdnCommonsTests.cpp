@@ -10,6 +10,7 @@
 #include <LociExtensions.h>
 #include <Poco/Exception.h>
 #include <MemUtils.h>
+#include "zsdn/topics/TopologyModule_topics.hpp"
 
 zsdnCommonsTests::zsdnCommonsTests() {
 
@@ -163,3 +164,7 @@ void zsdnCommonsTests::testLociExtensions() {
 
 }
 
+void zsdnCommonsTests::testTopicConstruction() {
+    MessageType t = topologymodule_topics::FROM().topology_module().topology_changed_event().build();
+    std::cout << t.toString() << "\n";
+}

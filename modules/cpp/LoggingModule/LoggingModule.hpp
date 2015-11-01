@@ -1,7 +1,7 @@
 #ifndef LoggingModule_H
 #define LoggingModule_H
 
-#include <AbstractModule.hpp>
+#include <zmf/AbstractModule.hpp>
 #include <zsdn/Configs.h>
 #include <thread>
 #include <cassandra.h>

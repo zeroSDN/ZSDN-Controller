@@ -48,7 +48,6 @@ void StatisticsModule::startThread() {
     pollingThread = new std::thread([this]() {
         std::list<std::shared_ptr<zmf::data::ModuleHandle>> activeSwitches;
         while (keepPolling) {
-            getLogger().information("Starting to Request GetAllSwitches from a SwitchRegistryModule.");
             activeSwitches = getZmf()->getPeerRegistry()->getPeersWithType(SWITCH_ADAPTER_MODULE_TYPE_ID, true);
             for (std::shared_ptr<zmf::data::ModuleHandle> switchAdapter : activeSwitches) {
 

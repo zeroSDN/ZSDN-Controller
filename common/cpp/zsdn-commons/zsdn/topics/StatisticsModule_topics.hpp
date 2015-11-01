@@ -14,78 +14,40 @@ using namespace zmf::data;
 
 namespace statisticsmodule_topics {
 
-    const uint8_t TOPIC_VAL__TO = 0x01;
-    const uint8_t TOPIC_VAL__FROM = 0x02;
-    const uint16_t TOPIC_VAL__FROM__STATISTICS_MODULE = 0x0001;
-    const uint8_t TOPIC_VAL__FROM__STATISTICS_MODULE__STATISTIC_EVENT = 0x00;
-    const uint8_t TOPIC_VAL__FROM__STATISTICS_MODULE__STATISTIC_EVENT__ADDED = 0x00;
-    const uint8_t TOPIC_VAL__REQUEST = 0x03;
-    const uint8_t TOPIC_VAL__REPLY = 0x04;
+const uint8_t  TOPIC_VAL__FROM = 0x02;
+const uint16_t TOPIC_VAL__FROM__STATISTICS_MODULE = 0x0008;
+const uint8_t  TOPIC_VAL__FROM__STATISTICS_MODULE__STATISTIC_EVENT = 0x00;
+const uint8_t  TOPIC_VAL__FROM__STATISTICS_MODULE__STATISTIC_EVENT__ADDED = 0x00;
 
-    class AbstractFactory {
-    protected:
-        MessageType& id;
+class AbstractFactory {
+protected:
+MessageType& id;
+AbstractFactory(MessageType &f) : id(f) {}
+public:
+MessageType build() {return id;}
+};
 
-        AbstractFactory(MessageType& f) : id(f) { }
-
-    public:
-        MessageType build() { return id; }
-    };
-
-    class TO {
-    private:
-        MessageType id;
-    public:
-        TO() : id() { id.appendMatch8((uint8_t) TOPIC_VAL__TO); }
-    };
-
-    class FROM {
-    private:
-        MessageType id;
-    public:
-        class STATISTICS_MODULE : public AbstractFactory {
-        public:
-            STATISTICS_MODULE(MessageType& f) : AbstractFactory(f) {
-                id.appendMatch16((uint16_t) TOPIC_VAL__FROM__STATISTICS_MODULE);
-            }
-
-            class STATISTIC_EVENT : public AbstractFactory {
-            public:
-                STATISTIC_EVENT(MessageType& f) : AbstractFactory(f) {
-                    id.appendMatch8((uint8_t) TOPIC_VAL__FROM__STATISTICS_MODULE__STATISTIC_EVENT);
-                }
-
-                class ADDED : public AbstractFactory {
-                public:
-                    ADDED(MessageType& f) : AbstractFactory(f) {
-                        id.appendMatch8((uint8_t) TOPIC_VAL__FROM__STATISTICS_MODULE__STATISTIC_EVENT__ADDED);
-                    }
-                };
-
-                ADDED added() { return ADDED(id); }
-            };
-
-            STATISTIC_EVENT statistic_event() { return STATISTIC_EVENT(id); }
-        };
-
-        FROM() : id() { id.appendMatch8((uint8_t) TOPIC_VAL__FROM); }
-
-        STATISTICS_MODULE statistics_module() { return STATISTICS_MODULE(id); }
-    };
-
-    class REQUEST {
-    private:
-        MessageType id;
-    public:
-        REQUEST() : id() { id.appendMatch8((uint8_t) TOPIC_VAL__REQUEST); }
-    };
-
-    class REPLY {
-    private:
-        MessageType id;
-    public:
-        REPLY() : id() { id.appendMatch8((uint8_t) TOPIC_VAL__REPLY); }
-    };
+class FROM {
+private:
+MessageType id;
+public:
+class STATISTICS_MODULE : public AbstractFactory {
+public:
+STATISTICS_MODULE(MessageType &f) : AbstractFactory(f) {id.appendMatch16((uint16_t) TOPIC_VAL__FROM__STATISTICS_MODULE); }
+class STATISTIC_EVENT : public AbstractFactory {
+public:
+STATISTIC_EVENT(MessageType &f) : AbstractFactory(f) {id.appendMatch8((uint8_t) TOPIC_VAL__FROM__STATISTICS_MODULE__STATISTIC_EVENT); }
+class ADDED : public AbstractFactory {
+public:
+ADDED(MessageType &f) : AbstractFactory(f) {id.appendMatch8((uint8_t) TOPIC_VAL__FROM__STATISTICS_MODULE__STATISTIC_EVENT__ADDED); }
+};
+ADDED added() {return ADDED(id);}
+};
+STATISTIC_EVENT statistic_event() {return STATISTIC_EVENT(id);}
+};
+FROM() : id() {id.appendMatch8((uint8_t) TOPIC_VAL__FROM); }
+STATISTICS_MODULE statistics_module() {return STATISTICS_MODULE(id);}
+};
 
 
 } // namespace statisticsmodule_topics

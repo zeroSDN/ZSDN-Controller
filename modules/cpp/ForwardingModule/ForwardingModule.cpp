@@ -613,7 +613,7 @@ void ForwardingModule::installFlowRulesAlongPath(const of_version_t ofVersion,
 
             getZmf()->publish(zmf::data::ZmfMessage(toSpecificSwitch, serializedFlow));
 
-            zsdn::of_object_delete_ignoring_buffer(flowToAdd);
+           of_flow_add_delete(flowToAdd);
         }
     }
 

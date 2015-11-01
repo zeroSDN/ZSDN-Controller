@@ -5,12 +5,7 @@ set(PROJECT_NAME zsdn-commons_UT)
 set(PARENT_PROJECT_NAME zsdn-commons)
 project(${PROJECT_NAME})
 
-
-# Set ZSDN root folder path relative to project
-set(ZSDN_ROOT_FOLDER "${CMAKE_CURRENT_SOURCE_DIR}/../../..")
-
-
-include(${ZSDN_ROOT_FOLDER}/util/zsdn-dir_cmake.txt)
+include(${CMAKE_CURRENT_SOURCE_DIR}/../../util/zsdn-dir_cmake.txt)
 
 
 # Module header

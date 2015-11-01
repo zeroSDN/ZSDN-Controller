@@ -174,9 +174,11 @@ std::shared_ptr<zmf::IZmfInstanceController> SwitchAdapterRunner::startSwitchAda
 
         // return the successfully started instance.
         return configFile_.empty() ?
-               zmf::instance::ZmfInstance::startInstance(module, {zmf::instance::ZmfInstance::NO_PEER_DISCOVERY_WAIT})
+               zmf::instance::ZmfInstance::startInstance(module, {zmf::instance::ZmfInstance::NO_PEER_DISCOVERY_WAIT,
+                                                                  zmf::instance::ZmfInstance::NO_EQUAL_MODULE_INTERCONNECT})
                                    :
-               zmf::instance::ZmfInstance::startInstance(module, {zmf::instance::ZmfInstance::NO_PEER_DISCOVERY_WAIT},
+               zmf::instance::ZmfInstance::startInstance(module, {zmf::instance::ZmfInstance::NO_PEER_DISCOVERY_WAIT,
+                                                                  zmf::instance::ZmfInstance::NO_EQUAL_MODULE_INTERCONNECT},
                                                          configFile_);
 
 

@@ -325,7 +325,9 @@ void SwitchAdapter::handleOpenFlowFromSwitch() {
 
 
                 getZmf()->publish(zmf::data::ZmfMessage(packetInTopic_, receiveBuffer, (size_t) message->length));
-                getLogger().trace("Published OF_PACKET_IN.");
+                if(getLogger().trace()) {
+                    getLogger().trace("Published OF_PACKET_IN to " + packetInTopic_.toString());
+                }
                 break;
             }
             default: // any other openFlow message type.

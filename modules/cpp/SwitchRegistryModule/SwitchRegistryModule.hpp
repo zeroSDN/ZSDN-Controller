@@ -182,7 +182,7 @@ private:
      * To be used after active Switchs data changed.
      * @param The Switch that has different data now
      */
-    void sendSwitchChanged(Switch aSwitch);
+    void sendSwitchChanged(Switch aSwitch, Switch oldSwitch);
 
 
     /**

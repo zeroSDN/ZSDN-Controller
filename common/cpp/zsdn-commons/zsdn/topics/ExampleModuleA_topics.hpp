@@ -14,121 +14,83 @@ using namespace zmf::data;
 
 namespace examplemodulea_topics {
 
-    const uint8_t TOPIC_VAL__TO = 0x01;
-    const uint16_t TOPIC_VAL__TO__EXAMPLE_MODULE_A = 0xfff2;
-    const uint8_t TOPIC_VAL__TO__EXAMPLE_MODULE_A__SOME_EVENT = 0x00;
-    const uint8_t TOPIC_VAL__TO__EXAMPLE_MODULE_A__ANOTHER_EVENT = 0x01;
-    const uint8_t TOPIC_VAL__TO__EXAMPLE_MODULE_A__SOME_REQUEST = 0x02;
-    const uint8_t TOPIC_VAL__FROM = 0x02;
-    const uint16_t TOPIC_VAL__FROM__EXAMPLE_MODULE_A = 0xfff2;
-    const uint8_t TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER = 0x00;
-    const uint8_t TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER__ZERO_TO_TEN = 0x00;
-    const uint8_t TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER__GREATER_TEN = 0x01;
+const uint8_t  TOPIC_VAL__TO = 0x01;
+const uint16_t TOPIC_VAL__TO__EXAMPLE_MODULE_A = 0xfff2;
+const uint8_t  TOPIC_VAL__TO__EXAMPLE_MODULE_A__SOME_EVENT = 0x00;
+const uint8_t  TOPIC_VAL__TO__EXAMPLE_MODULE_A__ANOTHER_EVENT = 0x01;
+const uint8_t  TOPIC_VAL__TO__EXAMPLE_MODULE_A__SOME_REQUEST = 0x02;
+const uint8_t  TOPIC_VAL__FROM = 0x02;
+const uint16_t TOPIC_VAL__FROM__EXAMPLE_MODULE_A = 0xfff2;
+const uint8_t  TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER = 0x00;
+const uint8_t  TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER__ZERO_TO_TEN = 0x00;
+const uint8_t  TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER__GREATER_TEN = 0x01;
 
-    class AbstractFactory {
-    protected:
-        MessageType& id;
+class AbstractFactory {
+protected:
+MessageType& id;
+AbstractFactory(MessageType &f) : id(f) {}
+public:
+MessageType build() {return id;}
+};
 
-        AbstractFactory(MessageType& f) : id(f) { }
+class TO {
+private:
+MessageType id;
+public:
+class EXAMPLE_MODULE_A : public AbstractFactory {
+public:
+EXAMPLE_MODULE_A(MessageType &f) : AbstractFactory(f) {id.appendMatch16((uint16_t) TOPIC_VAL__TO__EXAMPLE_MODULE_A); }
+class SOME_EVENT : public AbstractFactory {
+public:
+SOME_EVENT(MessageType &f) : AbstractFactory(f) {id.appendMatch8((uint8_t) TOPIC_VAL__TO__EXAMPLE_MODULE_A__SOME_EVENT); }
+class TO_INSTANCE_ID : public AbstractFactory {
+public:
+TO_INSTANCE_ID(MessageType &f, uint64_t value) : AbstractFactory(f) {id.appendMatch64((uint64_t) value); }
+};
+TO_INSTANCE_ID to_instance_id(uint64_t value) {return TO_INSTANCE_ID(id, value);}
+};
+class ANOTHER_EVENT : public AbstractFactory {
+public:
+ANOTHER_EVENT(MessageType &f) : AbstractFactory(f) {id.appendMatch8((uint8_t) TOPIC_VAL__TO__EXAMPLE_MODULE_A__ANOTHER_EVENT); }
+};
+class SOME_REQUEST : public AbstractFactory {
+public:
+SOME_REQUEST(MessageType &f) : AbstractFactory(f) {id.appendMatch8((uint8_t) TOPIC_VAL__TO__EXAMPLE_MODULE_A__SOME_REQUEST); }
+};
+SOME_EVENT some_event() {return SOME_EVENT(id);}
+ANOTHER_EVENT another_event() {return ANOTHER_EVENT(id);}
+SOME_REQUEST some_request() {return SOME_REQUEST(id);}
+};
+TO() : id() {id.appendMatch8((uint8_t) TOPIC_VAL__TO); }
+EXAMPLE_MODULE_A example_module_a() {return EXAMPLE_MODULE_A(id);}
+};
 
-    public:
-        MessageType build() { return id; }
-    };
-
-    class TO {
-    private:
-        MessageType id;
-    public:
-        class EXAMPLE_MODULE_A : public AbstractFactory {
-        public:
-            EXAMPLE_MODULE_A(MessageType& f) : AbstractFactory(f) {
-                id.appendMatch16((uint16_t) TOPIC_VAL__TO__EXAMPLE_MODULE_A);
-            }
-
-            class SOME_EVENT : public AbstractFactory {
-            public:
-                SOME_EVENT(MessageType& f) : AbstractFactory(f) {
-                    id.appendMatch8((uint8_t) TOPIC_VAL__TO__EXAMPLE_MODULE_A__SOME_EVENT);
-                }
-
-                class TO_INSTANCE_ID : public AbstractFactory {
-                public:
-                    TO_INSTANCE_ID(MessageType& f, uint64_t value) : AbstractFactory(f) {
-                        id.appendMatch64((uint64_t) value);
-                    }
-                };
-
-                TO_INSTANCE_ID to_instance_id(uint64_t value) { return TO_INSTANCE_ID(id, value); }
-            };
-
-            class ANOTHER_EVENT : public AbstractFactory {
-            public:
-                ANOTHER_EVENT(MessageType& f) : AbstractFactory(f) {
-                    id.appendMatch8((uint8_t) TOPIC_VAL__TO__EXAMPLE_MODULE_A__ANOTHER_EVENT);
-                }
-            };
-
-            class SOME_REQUEST : public AbstractFactory {
-            public:
-                SOME_REQUEST(MessageType& f) : AbstractFactory(f) {
-                    id.appendMatch8((uint8_t) TOPIC_VAL__TO__EXAMPLE_MODULE_A__SOME_REQUEST);
-                }
-            };
-
-            SOME_EVENT some_event() { return SOME_EVENT(id); }
-
-            ANOTHER_EVENT another_event() { return ANOTHER_EVENT(id); }
-
-            SOME_REQUEST some_request() { return SOME_REQUEST(id); }
-        };
-
-        TO() : id() { id.appendMatch8((uint8_t) TOPIC_VAL__TO); }
-
-        EXAMPLE_MODULE_A example_module_a() { return EXAMPLE_MODULE_A(id); }
-    };
-
-    class FROM {
-    private:
-        MessageType id;
-    public:
-        class EXAMPLE_MODULE_A : public AbstractFactory {
-        public:
-            EXAMPLE_MODULE_A(MessageType& f) : AbstractFactory(f) {
-                id.appendMatch16((uint16_t) TOPIC_VAL__FROM__EXAMPLE_MODULE_A);
-            }
-
-            class RANDOM_NUMBER : public AbstractFactory {
-            public:
-                RANDOM_NUMBER(MessageType& f) : AbstractFactory(f) {
-                    id.appendMatch8((uint8_t) TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER);
-                }
-
-                class ZERO_TO_TEN : public AbstractFactory {
-                public:
-                    ZERO_TO_TEN(MessageType& f) : AbstractFactory(f) {
-                        id.appendMatch8((uint8_t) TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER__ZERO_TO_TEN);
-                    }
-                };
-
-                class GREATER_TEN : public AbstractFactory {
-                public:
-                    GREATER_TEN(MessageType& f) : AbstractFactory(f) {
-                        id.appendMatch8((uint8_t) TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER__GREATER_TEN);
-                    }
-                };
-
-                ZERO_TO_TEN zero_to_ten() { return ZERO_TO_TEN(id); }
-
-                GREATER_TEN greater_ten() { return GREATER_TEN(id); }
-            };
-
-            RANDOM_NUMBER random_number() { return RANDOM_NUMBER(id); }
-        };
-
-        FROM() : id() { id.appendMatch8((uint8_t) TOPIC_VAL__FROM); }
-
-        EXAMPLE_MODULE_A example_module_a() { return EXAMPLE_MODULE_A(id); }
-    };
+class FROM {
+private:
+MessageType id;
+public:
+class EXAMPLE_MODULE_A : public AbstractFactory {
+public:
+EXAMPLE_MODULE_A(MessageType &f) : AbstractFactory(f) {id.appendMatch16((uint16_t) TOPIC_VAL__FROM__EXAMPLE_MODULE_A); }
+class RANDOM_NUMBER : public AbstractFactory {
+public:
+RANDOM_NUMBER(MessageType &f) : AbstractFactory(f) {id.appendMatch8((uint8_t) TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER); }
+class ZERO_TO_TEN : public AbstractFactory {
+public:
+ZERO_TO_TEN(MessageType &f) : AbstractFactory(f) {id.appendMatch8((uint8_t) TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER__ZERO_TO_TEN); }
+};
+class GREATER_TEN : public AbstractFactory {
+public:
+GREATER_TEN(MessageType &f) : AbstractFactory(f) {id.appendMatch8((uint8_t) TOPIC_VAL__FROM__EXAMPLE_MODULE_A__RANDOM_NUMBER__GREATER_TEN); }
+};
+ZERO_TO_TEN zero_to_ten() {return ZERO_TO_TEN(id);}
+GREATER_TEN greater_ten() {return GREATER_TEN(id);}
+};
+RANDOM_NUMBER random_number() {return RANDOM_NUMBER(id);}
+};
+FROM() : id() {id.appendMatch8((uint8_t) TOPIC_VAL__FROM); }
+EXAMPLE_MODULE_A example_module_a() {return EXAMPLE_MODULE_A(id);}
+};
 
 
 } // namespace examplemodulea_topics
