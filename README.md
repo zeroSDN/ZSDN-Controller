@@ -1,7 +1,10 @@
 # ZeroSDN Controller
 
-WORK IN PROGRESS - PLEASE DO NOT PULL
-Modular distributed Software-Defined Network Controller
+Zero Software Defined Networking(ZSDN) is a component based SDN controller. The software is fully distributed which means there are no central instances that control the whole network. 
+Instead it consists of multiple modules that are connected by a ZMQ (see http://zeromq.org) message BUS. The communication between modules is handled with google protobuffers. Currently ZeroSDN supports OpenFlow versions 1.0 und 1.3.
+
+The excecution of each module is controlled by an instance of the Zero Module Framework (ZMF). ZMF is a framework for distrubed, language independent module execution. Currently there are two implementations of ZMF: ZMF for C++ https://github.com/zeroSDN/ZMF and JMF for Java https://github.com/zeroSDN/JMF.
+
 
 ## Licence
 
