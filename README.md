@@ -5,6 +5,8 @@ Instead it consists of multiple modules that are connected by a ZMQ (see http://
 
 The excecution of each module is controlled by an instance of the Zero Module Framework (ZMF). ZMF is a framework for distrubed, language independent module execution. Currently there are two implementations of ZMF: ZMF for C++ https://github.com/zeroSDN/ZMF and JMF for Java https://github.com/zeroSDN/JMF.
 
+ZeroSDN was developed during a student project at the Distributed Systems department at the University of Stuttgart.
+
 
 ## Startup
 
