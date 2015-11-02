@@ -4,10 +4,11 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -D_DEBUG -Wl,--no-as-needed")
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/../../util/zsdn-dir_cmake.txt)
+# Get absolute ZSDN path (to avoid problems with make)
+include(${ZSDN_DIR_RELATIVE}/util/zsdn-dir_cmake.txt)
 
 
-include_directories("${ZSDN_DIR}/common/zsdn-commons")
+include_directories("${ZSDN_DIR}/common/cpp/zsdn-commons")
 include_directories("${ZSDN_DIR}/dependencies/include")
 include_directories("${ZSDN_DIR}/ZMF/dependencies/include")
 include_directories("${ZSDN_DIR}/ZMF/include")

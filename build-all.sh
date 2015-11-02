@@ -36,7 +36,7 @@ Verbose=false
 while getopts m:hb:tcv flag; do
   case $flag in
     m)
-        ModuleSetSelected="${OPTARG}.txt"
+        ModuleSetSelected="${OPTARG}"
         ;;
     h)
         echo "Build script to build ZSDN modules"
@@ -104,6 +104,8 @@ do
         CppModulesToBuild+=(${line:4})
     elif [[ ${line:0:5} =~ "java/" ]]; then
         JavaModulesToBuild+=(${line:5})
+    else
+        echo "Unknown module type $i"
     fi
 done < "$filename"
 
@@ -131,10 +133,11 @@ CmakeBuildArgs=""
 
 if [ "$SkiptTests" = true ] ; then
     echo "Build skipping Tests"
-    CommonsBuildArgs=$CommonsBuildArgs" -t"
     CmakeBuildArgs=$CmakeBuildArgs" -DNoTests=ON"
 else
     echo "Build with Tests"
+    CommonsBuildArgs=$CommonsBuildArgs" -t"
+    CmakeBuildArgs=$CmakeBuildArgs" -DNoTests=OFF"
 fi
 
 if [ "$BuildTarget" = "pi" ] ; then
@@ -158,7 +161,7 @@ if ./build-all-common.sh$CommonsBuildArgs; then
 else
     result=$?
     echo "!! Failed to Build ZSDN Commons: "${result}
-    #exit ${result}
+    exit ${result}
 fi
 cd ..
 
@@ -180,7 +183,7 @@ do
     find . -name CMakeFiles -type d -exec rm -rf {} +
     echo "# Cleared Module " $i
 done
-echo "# Cleared Modules " $i
+echo "# Cleared Modules"
 
 # Build
 echo

@@ -1,5 +1,6 @@
 
-include(${CMAKE_CURRENT_SOURCE_DIR}/../../cmake/cmake_module_ut_header.txt)
+# Include cmake module_ut header (this is only an additional header)
+include(${ZSDN_DIR_RELATIVE}/modules/cpp/cmake/cmake_module_ut_header.txt)
 
 # Generate specific gcov/lcov Output for code coverage analysis
 SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -g -O0 -Wall -fprofile-arcs -ftest-coverage -std=c++11 -Wl,--no-as-needed")

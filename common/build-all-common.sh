@@ -38,6 +38,7 @@ if [ "$SkiptTests" = true ] ; then
 	BuildArgs=$BuildArgs" -DNoTests=ON"
 else
 	echo "Build with Tests"
+  BuildArgs=$BuildArgs" -DNoTests=OFF"
 fi
 
 if [ "$BuildTarget" = "pi" ] ; then

@@ -1,10 +1,10 @@
 
 # Build zsdn commons pre-build
 add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
-                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../common/zsdn-commons/
+                   WORKING_DIRECTORY ${ZSDN_DIR}/common/cpp/zsdn-commons/
                    COMMAND cmake --build .)
 add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
-                   WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../../common/zsdn-commons/
+                   WORKING_DIRECTORY ${ZSDN_DIR}/common/cpp/zsdn-commons/
                    COMMAND cmake .)
 
 if(NOT NoTests)
