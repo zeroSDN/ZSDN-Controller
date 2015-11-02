@@ -32,6 +32,6 @@ If you have further questions you can find our contact information here: https:/
 
 ## Participation
 
-ZeroSDN is an open source project. If you have any bug reports, fixes, features or feature request feel free to create a pull request https://github.com/zeroSDN/ZSDN-Controller/compare or contact us https://github.com/zeroSDN.
+ZeroSDN is an open source project. If you have any bug reports, fixes, features or feature request feel free to create a pull request https://github.com/zeroSDN/ZSDN-Controller/pulls or contact us https://github.com/zeroSDN.
 
 We are looking forward to your participation!
