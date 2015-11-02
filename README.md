@@ -17,3 +17,10 @@ Pull the repository and run init-zsdn.sh.
 ## Build
 
 ZeroSDN uses CMake as build system. You can run *build-all.sh* to generate the library.
+
+
+## Support 
+
+mailto:contact.zsdn@gmail.com
+
+## Participation
