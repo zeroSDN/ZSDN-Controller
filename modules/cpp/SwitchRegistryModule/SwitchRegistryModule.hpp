@@ -7,11 +7,11 @@
 
 #include <zmf/AbstractModule.hpp>
 #include <thread>
-#include <zsdn/topics/SwitchRegistryModule_topics.hpp>
+#include <zsdn/topics/SwitchRegistryModuleTopics.hpp>
+#include "zsdn/topics/SwitchAdapterTopics.hpp"
 #include <zsdn/proto/CommonTopology.pb.h>
 #include <ModuleTypeIDs.hpp>
 #include "Switch.h"
-#include "zsdn/topics/SwitchAdapter_topics.hpp"
 
 /**
  * @brief This class contains information about available Switches.
@@ -118,25 +118,27 @@ private:
 
     //Map holding all the Switches
     SwitchMap switches;
-
+    // Builders for topic creation
+    zsdn::modules::SwitchRegistryModuleTopics<zmf::data::MessageType> switchRegistryTopics_;
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopics_;
     //Topic for Switch-Removed
-    zmf::data::MessageType topicsSwitchRemoved_ = switchregistrymodule_topics::FROM().switch_registry_module().switch_event().removed().build();
+    zmf::data::MessageType topicsSwitchRemoved_ = switchRegistryTopics_.from().switch_registry_module().switch_event().removed().build();
     //Topic for AllSwitches-Reply
-    zmf::data::MessageType topicsGetAllSwitchesReply_ = switchregistrymodule_topics::REPLY().switch_registry_module().get_all_switches().build();
+    zmf::data::MessageType topicsGetAllSwitchesReply_ = switchRegistryTopics_.reply().switch_registry_module().get_all_switches().build();
     //Topic for SwitchById-Reply
-    zmf::data::MessageType topicsGetSwitchByIdReply_ = switchregistrymodule_topics::REPLY().switch_registry_module().get_switch_by_id().build();
+    zmf::data::MessageType topicsGetSwitchByIdReply_ = switchRegistryTopics_.reply().switch_registry_module().get_switch_by_id().build();
     //Topic for Switch-Added
-    zmf::data::MessageType topicsSwitchAdded_ = switchregistrymodule_topics::FROM().switch_registry_module().switch_event().added().build();
+    zmf::data::MessageType topicsSwitchAdded_ = switchRegistryTopics_.from().switch_registry_module().switch_event().added().build();
     //Topic for Switch-Changed
-    zmf::data::MessageType topicsSwitchChanged_ = switchregistrymodule_topics::FROM().switch_registry_module().switch_event().changed().build();
+    zmf::data::MessageType topicsSwitchChanged_ = switchRegistryTopics_.from().switch_registry_module().switch_event().changed().build();
     //Topic for Multipart-Reply
-    zmf::data::MessageType topicsMultipartReply_ = switchadapter_topics::FROM().switch_adapter().openflow().of_1_0_barrier_reply_of_1_3_multipart_reply().build();
+    zmf::data::MessageType topicsMultipartReply_ = switchAdapterTopics_.from().switch_adapter().openflow().of_1_0_barrier_reply_of_1_3_multipart_reply().build();
     //Topic for Feature-Reply
-    zmf::data::MessageType topicsFeatureReply_ = switchadapter_topics::FROM().switch_adapter().openflow().features_reply().build();
+    zmf::data::MessageType topicsFeatureReply_ = switchAdapterTopics_.from().switch_adapter().openflow().features_reply().build();
     //Topic for Echo-Request from SwitchAdapter
-    zmf::data::MessageType topicsEchoRequest_ = switchadapter_topics::FROM().switch_adapter().openflow().echo_request().build();
+    zmf::data::MessageType topicsEchoRequest_ = switchAdapterTopics_.from().switch_adapter().openflow().echo_request().build();
     //Topic for Port-Status from SwitchAdapter
-    zmf::data::MessageType topicsPortStatus_ = switchadapter_topics::FROM().switch_adapter().openflow().port_status().build();
+    zmf::data::MessageType topicsPortStatus_ = switchAdapterTopics_.from().switch_adapter().openflow().port_status().build();
 
     /**
      * Handles Incoming Multipart-Replys from the SwitchAdapter.

@@ -19,21 +19,21 @@ SwitchRegistryModule::~SwitchRegistryModule() {
 bool SwitchRegistryModule::enable() {
     //subscribe to Multipart-Reply and Feature-Reply OpenFlow messages
     getZmf()->subscribe(topicsFeatureReply_,
-                        [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+                        [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                             processFeatureReply(msg, sender);
                         });
     getZmf()->subscribe(topicsMultipartReply_,
-                        [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+                        [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                             processMultipartReply(msg, sender);
                         });
 
     getZmf()->subscribe(topicsEchoRequest_,
-                        [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+                        [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                             processEcho(msg, sender);
                         });
 
     getZmf()->subscribe(topicsPortStatus_,
-                        [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+                        [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                             processPortStatus(msg, sender);
                         });
 
@@ -621,7 +621,7 @@ void SwitchRegistryModule::sendMultPortDescRequest(uint64_t switchID, of_version
     //create and send port_desc-Request
     of_port_desc_stats_request_t* portReq = of_port_desc_stats_request_new(ofVersion);
     std::string portReq_serialized = zsdn::of_object_serialize_to_data_string(portReq);
-    zmf::data::MessageType msgType = switchadapter_topics::TO().switch_adapter().switch_instance(
+    zmf::data::MessageType msgType = switchAdapterTopics_.to().switch_adapter().switch_instance(
             switchID).openflow().of_1_0_barrier_request_of_1_3_multipart_request().build();
     getZmf()->publish(zmf::data::ZmfMessage(msgType, portReq_serialized));
     of_object_delete(portReq);
@@ -632,7 +632,7 @@ void SwitchRegistryModule::sendFeatureRequest(uint64_t switchID, of_version_t of
     // create and send feature-request
     of_features_request_t* featReq = of_features_request_new(ofVersion);
     std::string featReq_serialized = zsdn::of_object_serialize_to_data_string(featReq);
-    zmf::data::MessageType msgType = switchadapter_topics::TO().switch_adapter().switch_instance(
+    zmf::data::MessageType msgType = switchAdapterTopics_.to().switch_adapter().switch_instance(
             switchID).openflow().features_request().build();
     getZmf()->publish(zmf::data::ZmfMessage(msgType, featReq_serialized));
     of_object_delete(featReq);
