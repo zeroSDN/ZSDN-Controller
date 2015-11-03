@@ -11,8 +11,9 @@
 #include "Poco/Thread.h"
 #include "Poco/Runnable.h"
 #include <LociExtensions.h>
-#include <zsdn/topics/SwitchRegistryModule_topics.hpp>
-#include <zsdn/topics/LinkDiscoveryModule_topics.hpp>
+#include <zsdn/topics/SwitchRegistryModuleTopics.hpp>
+#include <zsdn/topics/LinkDiscoveryModuleTopics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 
 /**
  * @details The LinkDiscoveryModule knows about all links between switches in the SDN-network.
@@ -259,25 +260,32 @@ private:
     std::mutex activeDevicesMutex_;
     /// Mutex to controle the access of the activeRequestOrder list and the activeRequest map
     std::mutex activeRequestMutex_;
+
+    // Builders for topic creation
+    zsdn::modules::SwitchRegistryModuleTopics<zmf::data::MessageType> switchRegistryTopics_;
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopicsZmfThread_;
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopicsDiscoveryThread_;
+    zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType> linkDiscoveryModuleTopics_;
+
     /// Message topics of the used message types.
     zmf::data::MessageType subscribeSwitchStateChangeTopic_ =
-            switchregistrymodule_topics::FROM().switch_registry_module().switch_event().build();
+            switchRegistryTopics_.from().switch_registry_module().switch_event().build();
     zmf::data::MessageType sendGetAllSwitchesRequestTopic_ =
-            switchregistrymodule_topics::REQUEST().switch_registry_module().get_all_switches().build();
+            switchRegistryTopics_.request().switch_registry_module().get_all_switches().build();
     zmf::data::MessageType publishSwitchLinkChangeAddTopic_ =
-            linkdiscoverymodule_topics::FROM().link_discovery_module().switch_link_event().added().build();
+            linkDiscoveryModuleTopics_.from().link_discovery_module().switch_link_event().added().build();
     zmf::data::MessageType publishSwitchLinkChangeRemovedTopic_ =
-            linkdiscoverymodule_topics::FROM().link_discovery_module().switch_link_event().removed().build();
+            linkDiscoveryModuleTopics_.from().link_discovery_module().switch_link_event().removed().build();
     zmf::data::MessageType sendGetLinksFromSwitchReply_ =
-            linkdiscoverymodule_topics::REPLY().link_discovery_module().get_links_from_switch().build();
+            linkDiscoveryModuleTopics_.reply().link_discovery_module().get_links_from_switch().build();
     zmf::data::MessageType sendGetLinksToSwitchReply_ =
-            linkdiscoverymodule_topics::REPLY().link_discovery_module().get_links_to_switch().build();
+            linkDiscoveryModuleTopics_.reply().link_discovery_module().get_links_to_switch().build();
     zmf::data::MessageType sendGetLinksOfSwitchReply_ =
-            linkdiscoverymodule_topics::REPLY().link_discovery_module().get_all_links_of_switch().build();
+            linkDiscoveryModuleTopics_.reply().link_discovery_module().get_all_links_of_switch().build();
     zmf::data::MessageType sendGetLinksBetweenSwitchesReply_ =
-            linkdiscoverymodule_topics::REPLY().link_discovery_module().get_links_between_two_switches().build();
+            linkDiscoveryModuleTopics_.reply().link_discovery_module().get_links_between_two_switches().build();
     zmf::data::MessageType sendGetAllSwitchLinksReply_ =
-            linkdiscoverymodule_topics::REPLY().link_discovery_module().get_all_switch_links().build();
+            linkDiscoveryModuleTopics_.reply().link_discovery_module().get_all_switch_links().build();
 
     /**
      * This starts the background thread if it is not currently running.

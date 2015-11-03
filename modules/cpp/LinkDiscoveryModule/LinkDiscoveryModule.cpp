@@ -4,13 +4,13 @@
 
 #include "LinkDiscoveryModule.hpp"
 #include <iostream>
-#include "zsdn/topics/LinkDiscoveryModule_topics.hpp"
+#include "zsdn/topics/LinkDiscoveryModuleTopics.hpp"
+#include <zsdn/topics/SwitchRegistryModuleTopics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 #include "zsdn/proto/LinkDiscoveryModule.pb.h"
 #include <algorithm>
 #include <zsdn/Configs.h>
 #include <zsdn/proto/SwitchRegistryModule.pb.h>
-#include <zsdn/topics/SwitchRegistryModule_topics.hpp>
-#include <zsdn/topics/SwitchAdapter_topics.hpp>
 
 #include <RequestUtils.h>
 
@@ -148,18 +148,18 @@ bool LinkDiscoveryModule::setupSubscription() {
         }
 
         for (int i = 0; i < multicastGroups; i++) {
-            zmf::data::MessageType subscribeOFPacketInTopic_ = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group(
+            zmf::data::MessageType subscribeOFPacketInTopic_ = switchAdapterTopicsZmfThread_.from().switch_adapter().openflow().packet_in().multicast_group(
                     i).custom_protocol(
                     LINK_DISCOVERY_MESSAGE_PAYLOAD_TYPE).build();
             this->getZmf()->subscribe(subscribeOFPacketInTopic_,
-                                      [this](const zmf::data::ZmfMessage& msg, const ModuleUniqueId& sender) {
+                                      [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                                           this->handlePacketIn(msg, sender);
                                       });
 
         }
         getLogger().trace("Setup OpenFLow::PacketIn subscription.");
         this->getZmf()->subscribe(subscribeSwitchStateChangeTopic_,
-                                  [this](const zmf::data::ZmfMessage& msg, const ModuleUniqueId& sender) {
+                                  [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                                       this->handleSwitchStateChanged(msg);
                                   });
         getLogger().trace("Setup SwitchRegistry::SwitchStateChange subscription.");
@@ -590,7 +590,7 @@ void LinkDiscoveryModule::backgroundLinkDiscoveryRun() {
                     of_list_action_delete(list);
                     //of_action_output_delete(output);
                     of_packet_out_delete(packetOut);
-                    zmf::data::MessageType packetOutTopic = switchadapter_topics::TO().switch_adapter().switch_instance(
+                    zmf::data::MessageType packetOutTopic = switchAdapterTopicsDiscoveryThread_.to().switch_adapter().switch_instance(
                             deviceIt->deviceId_).openflow().build();
 
                     this->getZmf()->publish(zmf::data::ZmfMessage(packetOutTopic, messageStr));
