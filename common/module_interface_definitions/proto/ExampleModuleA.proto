@@ -1,0 +1,57 @@
+package ExampleModuleA_Proto;
+
+option java_package = "zsdn.protocol";
+option java_outer_classname = "ExampleModuleAProtocol";
+
+
+// Main message type for messages TO ExampleModuleA
+
+message To {
+
+    oneof ToMsg {
+        SomeEvent someEvent = 1;
+        AnotherEvent anotherEvent = 2;
+        SomeRequest someRequest = 3;
+    }
+
+    // SubMessage definition of ExampleModuleA
+
+    message SomeEvent {
+        required string foo = 1;
+        optional uint32 bar = 2;
+    }
+
+    message AnotherEvent {
+        required string foo = 1;
+        optional uint32 bar = 2;
+    }
+
+    message SomeRequest {
+        repeated uint64 bar = 1;
+        repeated SomePayload payload = 2;
+    }
+}
+
+// Main message type for messages FROM ExampleModuleA
+
+message From {
+
+    oneof FromMsg {
+        RandomNumber randomNumbers = 1;
+    }
+
+    message RandomNumber {
+        required uint64 randomNumber = 1; 
+        optional SomePayload payload = 2;
+    }
+}
+
+
+
+
+// Message types used in both FROM and TO messages
+
+message SomePayload {
+    required string something = 1;
+    required bytes payload = 2;
+}

@@ -1,0 +1,108 @@
+import "CommonTopology.proto";
+
+option java_package = "zsdn.protocol";
+option java_outer_classname = "LinkDiscoveryModuleProtocol";
+
+package LinkDiscoveryModule_Proto;
+
+message From {
+
+    oneof FromMsg {
+        SwitchLinkEvent switch_link_event = 1;
+    }
+
+    message SwitchLinkEvent{
+        oneof SwitchLinkEventType {
+            common.topology.SwitchToSwitchLink switch_link_added = 1;
+            common.topology.SwitchToSwitchLink switch_link_removed = 2;
+        }
+    }
+}
+
+
+
+message Request  {
+
+    oneof RequestMsg {
+        GetAllSwitchLinksRequest get_all_switch_links_request = 1;
+        GetLinksFromSwitchRequest get_links_from_switch_request = 2;
+        GetLinksToSwitchRequest get_links_to_switch_request = 3;
+        GetAllLinksOfSwitchRequest get_all_links_of_switch_request = 4;
+        GetLinksBetweenTwoSwitchesRequest get_links_between_two_switches_request = 5;
+    }
+
+    // Request submessage definitions
+
+    message GetAllSwitchLinksRequest {}
+
+    message GetLinksFromSwitchRequest {
+        required uint64 switch_dpid = 1;
+    }
+
+    message GetLinksToSwitchRequest {
+        required uint64 switch_dpid = 1;
+    }
+
+    message GetAllLinksOfSwitchRequest {
+        required uint64 switch_dpid = 1;
+    }
+
+    message GetLinksBetweenTwoSwitchesRequest {
+        required uint64 switch_a_dpid = 1;
+        required uint64 switch_b_dpid = 2;
+    }
+
+}
+
+
+
+
+message Reply {
+
+    oneof ReplyMsg {
+        GetAllSwitchLinksReply get_all_switch_links_reply = 1;
+        GetLinksFromSwitchReply get_links_from_switch_reply = 2;
+        GetLinksToSwitchReply get_links_to_switch_reply = 3;
+        GetAllLinksOfSwitchReply get_all_links_of_switch_reply = 4;
+        GetLinksBetweenTwoSwitchesReply get_links_between_two_switches_reply = 5;
+    }
+
+
+
+    // Reply submessage definitions
+
+    message GetAllSwitchLinksReply {
+        repeated  common.topology.SwitchToSwitchLink switch_links = 1;
+    }
+
+    message GetLinksFromSwitchReply {
+        required bool switch_exists = 1;
+        repeated common.topology.SwitchToSwitchLink links_from_switch = 2;
+    }
+
+    message GetLinksToSwitchReply {
+        required bool switch_exists = 1;
+        repeated common.topology.SwitchToSwitchLink links_to_switch = 2;
+    }
+
+    message GetAllLinksOfSwitchReply {
+        required bool switch_exists = 1;
+        repeated common.topology.SwitchToSwitchLink links_from_switch = 2;
+        repeated common.topology.SwitchToSwitchLink links_to_switch = 3;
+    }
+
+    message GetLinksBetweenTwoSwitchesReply {
+        required bool both_switches_exists = 1;
+        repeated common.topology.SwitchToSwitchLink links_from_switch_a_to_switch_b = 2;
+        repeated common.topology.SwitchToSwitchLink links_from_switch_b_to_switch_a = 3;
+    }
+
+}
+
+message LinkDiscoveryMessage{
+
+    required uint64 uniqueId = 1;
+    required uint64 senTimestamp = 2;
+}
+
+

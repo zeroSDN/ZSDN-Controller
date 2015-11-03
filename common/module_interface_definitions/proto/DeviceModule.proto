@@ -1,0 +1,94 @@
+import "CommonTopology.proto";
+
+package DeviceModule_Proto;
+
+option java_package = "zsdn.protocol";
+option java_outer_classname = "DeviceModuleProtocol";
+
+// All From-messages the DeviceModule will publish
+
+
+message From {
+
+    oneof FromMsg {
+        DeviceEvent device_event = 1;
+    }
+
+    message DeviceEvent {
+        oneof DeviceEventType {
+            common.topology.Device device_added = 1;
+            common.topology.Device device_removed = 2;
+            DeviceChanged device_changed = 3;
+        }
+        message DeviceChanged {
+            required common.topology.Device device_before = 1;
+            required common.topology.Device device_now = 2;
+        }
+    }
+
+}
+
+
+
+
+
+// All Requests the DeviceModule will handle
+
+message Request  {
+
+    oneof RequestMsg {
+        GetAllDevicesRequest get_all_devices_request = 1;
+        GetDeviceByMACaddressRequest get_device_by_mac_address_request = 2;
+        GetDevicesByFilterRequest get_devices_by_filter_request = 3;
+    }
+
+
+
+    // Request submessage definitions
+
+    message GetAllDevicesRequest {}
+
+    message GetDeviceByMACaddressRequest {
+        required uint64 mac_address_of_device = 1;
+    }
+
+    message GetDevicesByFilterRequest {
+        optional uint64 MAC_address_filter = 1;
+        optional uint32 IPv4_address_filter = 2;
+        optional bytes IPv6_address_filter = 3; // 16 bytes
+        optional uint64 max_millis_since_last_seen_filter = 4;
+        optional uint64 switch_dpid_filter = 5;
+        optional common.topology.AttachmentPoint attachment_point_filter = 6;
+    }
+}
+
+
+
+
+
+// All replies the DeviceModule can send
+
+message Reply {
+
+    oneof ReplyMsg {
+        GetAllDevicesReply get_all_devices_reply = 1;
+        GetDeviceByMACaddressReply get_device_by_mac_address_reply = 2;
+        GetDevicesByFilterReply get_devices_by_filter_reply = 3;
+    }
+
+
+
+    // Reply submessage definitions
+
+    message GetAllDevicesReply {
+        repeated  common.topology.Device devices = 1;
+    }
+
+    message GetDeviceByMACaddressReply {
+        optional  common.topology.Device device = 1;
+    }
+
+    message GetDevicesByFilterReply {
+        repeated  common.topology.Device device = 1;
+    }
+}
