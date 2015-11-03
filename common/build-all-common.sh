@@ -30,6 +30,13 @@ while getopts hb:tc flag; do
 done
 
 
+# Build Cpp Topics
+cd ../util
+./build-topics-cpp.sh
+cd ../common
+
+
+
 # Construct BuildArgs
 BuildArgs=""
 
@@ -52,7 +59,9 @@ else
 fi
 
 
+
 # Build C++ Commons
+echo "# Start Building C++ Commons"
 cd cpp
 
 # Clear Commons
@@ -73,8 +82,16 @@ else
 	echo "!! Failed to Cmake Common: "${result}
 	exit ${result}
 fi
-cd ..
+cd ../..
 
-cd ..
+echo "# Finishef Building C++ Commons"
+
+
+
+echo "# Start Building Java Commons"
+cd java/zsdn-proto/
+
+echo "# Finishe Building Java Commons"
+
 
 echo "### Finished Build ZSDN Commons ###"

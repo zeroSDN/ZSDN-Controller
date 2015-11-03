@@ -25,6 +25,20 @@ git submodule init
 git submodule update
 
 
+
+echo "## Start Init hierarchy builder"
+cd util/hierarchy-builder/hierarchy-builder
+if mvn clean install; then
+	echo "# Init hierarchy builder success"
+else
+	result=$?
+	echo "!! Failed to init hierarchy builder"
+	exit ${result}
+fi
+cd ../../..
+
+
+
 cd ZMF
 echo
 echo "## Start init ZMF"
