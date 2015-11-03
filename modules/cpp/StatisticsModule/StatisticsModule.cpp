@@ -270,7 +270,7 @@ void StatisticsModule::sendDemandStatisticsRequest(uint64_t switchID, of_version
         of_table_stats_request_t* tableStatReq = of_table_stats_request_new(ofVersion);
         std::string tableStatReq_serialized = zsdn::of_object_serialize_to_data_string(tableStatReq);
 
-        zmf::data::MessageType tableStatMsgType = switchadapter_topics::TO().switch_adapter().switch_instance(
+        zmf::data::MessageType tableStatMsgType = switchAdapterTopics_.to().switch_adapter().switch_instance(
                 switchID).openflow().of_1_0_stats_request_of_1_3_port_mod().build();
         getZmf()->publish(zmf::data::ZmfMessage(tableStatMsgType, tableStatReq_serialized));
         of_object_delete(tableStatReq);
@@ -280,7 +280,7 @@ void StatisticsModule::sendDemandStatisticsRequest(uint64_t switchID, of_version
         // 0xffff is OFPP_NONE in of10 which means "all ports"
         of_port_stats_request_port_no_set(portStatReq, 0xffff);
         std::string portStatReq_serialized = zsdn::of_object_serialize_to_data_string(portStatReq);
-        zmf::data::MessageType portStatMsgType = switchadapter_topics::TO().switch_adapter().switch_instance(
+        zmf::data::MessageType portStatMsgType = switchAdapterTopics_.to().switch_adapter().switch_instance(
                 switchID).openflow().of_1_0_stats_request_of_1_3_port_mod().build();
         getZmf()->publish(zmf::data::ZmfMessage(portStatMsgType, portStatReq_serialized));
         of_object_delete(portStatReq);
@@ -291,7 +291,7 @@ void StatisticsModule::sendDemandStatisticsRequest(uint64_t switchID, of_version
         of_table_stats_request_t* tableStatReq = of_table_stats_request_new(ofVersion);
         std::string tableStatReq_serialized = zsdn::of_object_serialize_to_data_string(tableStatReq);
 
-        zmf::data::MessageType tableStatMsgType = switchadapter_topics::TO().switch_adapter().switch_instance(
+        zmf::data::MessageType tableStatMsgType = switchAdapterTopics_.to().switch_adapter().switch_instance(
                 switchID).openflow().of_1_0_barrier_request_of_1_3_multipart_request().build();
         getZmf()->publish(zmf::data::ZmfMessage(tableStatMsgType, tableStatReq_serialized));
         of_object_delete(tableStatReq);
@@ -301,7 +301,7 @@ void StatisticsModule::sendDemandStatisticsRequest(uint64_t switchID, of_version
         // 0xffffffff is OFPP_ANY in of13 which means "all ports"
         of_port_stats_request_port_no_set(portStatReq, 0xffffffff);
         std::string portStatReq_serialized = zsdn::of_object_serialize_to_data_string(portStatReq);
-        zmf::data::MessageType portStatMsgType = switchadapter_topics::TO().switch_adapter().switch_instance(
+        zmf::data::MessageType portStatMsgType = switchAdapterTopics_.to().switch_adapter().switch_instance(
                 switchID).openflow().of_1_0_barrier_request_of_1_3_multipart_request().build();
         getZmf()->publish(zmf::data::ZmfMessage(portStatMsgType, portStatReq_serialized));
         of_object_delete(portStatReq);

@@ -4,9 +4,9 @@
 #include <zmf/AbstractModule.hpp>
 #include <thread>
 #include <zsdn/proto/CommonTopology.pb.h>
-#include <zsdn/topics/SwitchRegistryModule_topics.hpp>
-#include <zsdn/topics/SwitchAdapter_topics.hpp>
-#include <zsdn/topics/StatisticsModule_topics.hpp>
+#include <zsdn/topics/SwitchRegistryModuleTopics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
+#include <zsdn/topics/StatisticsModuleTopics.hpp>
 #include "zsdn/proto/StatisticsModule.pb.h"
 #include <loci/loci_base.h>
 #include <loci/of_match.h>
@@ -74,9 +74,14 @@ private:
     std::atomic<bool> keepPolling;
 
     // FIXME ONLY WORKS WITH OF_13
-    zmf::data::MessageType StatisticSubscribeTopicOF13_ = switchadapter_topics::FROM().switch_adapter().openflow().of_1_0_barrier_reply_of_1_3_multipart_reply().build();
-    zmf::data::MessageType StatisticSubscribeTopicOF10_ = switchadapter_topics::FROM().switch_adapter().openflow().of_1_0_stats_reply_of_1_3_table_mod().build();
-    zmf::data::MessageType PublishNewStatisticReceivedTopic_ = statisticsmodule_topics::FROM().statistics_module().statistic_event().added().build();
+    // Builder for topic creation
+    zsdn::modules::StatisticsModuleTopics<zmf::data::MessageType> statisticsModuleTopics_;
+    // Builder for topic creation. used by multiple threads, however not concurrently.
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopics_;
+
+    zmf::data::MessageType StatisticSubscribeTopicOF13_ = switchAdapterTopics_.from().switch_adapter().openflow().of_1_0_barrier_reply_of_1_3_multipart_reply().build();
+    zmf::data::MessageType StatisticSubscribeTopicOF10_ = switchAdapterTopics_.from().switch_adapter().openflow().of_1_0_stats_reply_of_1_3_table_mod().build();
+    zmf::data::MessageType PublishNewStatisticReceivedTopic_ = statisticsModuleTopics_.from().statistics_module().statistic_event().added().build();
 
 
     /**
