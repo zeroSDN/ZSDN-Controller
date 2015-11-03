@@ -2,7 +2,7 @@ echo "### Building C++ Topics ###"
 
 ZDIR=$(<zsdn-dir.txt)
 
-SRC_DIR="${ZDIR}/common/module_interface_definitions"
+SRC_DIR="${ZDIR}/modules"
 OUT_DIR="${ZDIR}/common/cpp/zsdn-commons/zsdn/topics"
 
 echo "Topics Source Dir: ${SRC_DIR}"
