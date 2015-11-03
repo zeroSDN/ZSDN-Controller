@@ -9,6 +9,7 @@
 #include <LociExtensions.h>
 #include "LinkDiscoveryModuleTests.h"
 #include <UnittestConfigUtil.hpp>
+#include <zmf/ZmfInstance.hpp>
 
 // Test Params
 const std::uint32_t switchCount = 44;
@@ -345,7 +346,7 @@ void LinkDiscoveryModuleTests::testRequestCorruptedProtoGetAllLinks() {
     std::string requestAsString = request.SerializeAsString();
     std::string modifiedOne = requestAsString.substr(0, requestAsString.length() - 6);
     bool result = testerObjectRef->requestCorruptedForTopic(
-            linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_all_switch_links().build(), modifiedOne);
+    zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().request().link_discovery_module().get_all_switch_links().build(), modifiedOne);
     CPPUNIT_ASSERT(result);
 }
 
@@ -411,7 +412,7 @@ void LinkDiscoveryModuleTests::testRequestCorrptedGetLinksFromSwitch() {
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     LinkDiscoveryModule_Proto::Request request;
     CPPUNIT_ASSERT(testerObjectRef->requestCorruptedForTopic(
-            linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_links_from_switch().build(),
+            zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().request().link_discovery_module().get_links_from_switch().build(),
             request.SerializeAsString()));
 }
 
@@ -483,7 +484,7 @@ void LinkDiscoveryModuleTests::testRequestCorrptedGetLinksToSwitch() {
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     LinkDiscoveryModule_Proto::Request request;
     CPPUNIT_ASSERT(testerObjectRef->requestCorruptedForTopic(
-            linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_links_to_switch().build(),
+            zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().request().link_discovery_module().get_links_to_switch().build(),
             request.SerializeAsString()));
 }
 
@@ -561,7 +562,7 @@ void LinkDiscoveryModuleTests::testRequestCorrptedAllLinksOfSwitch() {
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     LinkDiscoveryModule_Proto::Request request;
     CPPUNIT_ASSERT(testerObjectRef->requestCorruptedForTopic(
-            linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_all_links_of_switch().build(),
+            zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().request().link_discovery_module().get_all_links_of_switch().build(),
             request.SerializeAsString()));
 }
 
@@ -653,7 +654,7 @@ void LinkDiscoveryModuleTests::testRequestCorrptedLinksBetweenTwoSwitches() {
     std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     LinkDiscoveryModule_Proto::Request request;
     CPPUNIT_ASSERT(testerObjectRef->requestCorruptedForTopic(
-            linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_links_between_two_switches().build(),
+            zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().request().link_discovery_module().get_links_between_two_switches().build(),
             request.SerializeAsString()));
 }
 
@@ -867,8 +868,8 @@ void SwitchAdapterModuleMok::setProcessMessages(bool pM) {
 
 bool SwitchAdapterModuleMok::enable() {
     this->getZmf()->subscribe(
-            switchadapter_topics::TO().switch_adapter().switch_instance(this->instanceId_).openflow().build(),
-            [this](const zmf::data::ZmfMessage& msg, const ModuleUniqueId& sender) {
+            zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().to().switch_adapter().switch_instance(this->instanceId_).openflow().build(),
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 if (processMessages) {
                     uint64_t hash = 0;
                     uint64_t timestamp = 0;
@@ -950,7 +951,7 @@ void SwitchAdapterModuleMok::sendMessageWithData(uint32_t port, uint64_t hash, u
     of_match_v3_delete(ofM);
     //zmf::data::MessageType packetInTopic = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().build();
 
-    zmf::data::MessageType packetInTopic = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group_default().custom_protocol(
+    zmf::data::MessageType packetInTopic = zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().from().switch_adapter().openflow().packet_in().multicast_group_default().custom_protocol(
             0x511F).build();
 
     if (this->isEnabled()) {
@@ -1000,7 +1001,7 @@ std::map<std::uint64_t, std::map<uint32_t, std::pair<uint64_t, uint32_t>>> Teste
             zsdn::RequestUtils::sendRequest(*getZmf(),
                                             request,
                                             reply,
-                                            linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_all_switch_links().build(),
+    zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().request().link_discovery_module().get_all_switch_links().build(),
                                             zsdn::MODULE_TYPE_ID_LinkDiscoveryModule,
                                             testLinkDiscoveryModuleObjectRef->getVersion());
     // Process the reply
@@ -1076,7 +1077,7 @@ std::map<std::uint64_t, std::map<uint32_t, std::pair<uint64_t, uint32_t>>> Teste
             zsdn::RequestUtils::sendRequest(*getZmf(),
                                             request,
                                             reply,
-                                            linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_all_links_of_switch().build(),
+    zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().request().link_discovery_module().get_all_links_of_switch().build(),
                                             zsdn::MODULE_TYPE_ID_LinkDiscoveryModule,
                                             testLinkDiscoveryModuleObjectRef->getVersion());
 
@@ -1177,7 +1178,7 @@ std::map<std::uint64_t, std::map<uint32_t, std::pair<uint64_t, uint32_t>>> Teste
             zsdn::RequestUtils::sendRequest(*getZmf(),
                                             request,
                                             reply,
-                                            linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_links_from_switch().build(),
+                                            zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().request().link_discovery_module().get_links_from_switch().build(),
                                             zsdn::MODULE_TYPE_ID_LinkDiscoveryModule,
                                             testLinkDiscoveryModuleObjectRef->getVersion());
 
@@ -1249,7 +1250,7 @@ std::map<std::uint64_t, std::map<uint32_t, std::pair<uint64_t, uint32_t>>> Teste
             zsdn::RequestUtils::sendRequest(*getZmf(),
                                             request,
                                             reply,
-                                            linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_links_to_switch().build(),
+                                            zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().request().link_discovery_module().get_links_to_switch().build(),
                                             zsdn::MODULE_TYPE_ID_LinkDiscoveryModule,
                                             testLinkDiscoveryModuleObjectRef->getVersion());
 
@@ -1318,7 +1319,7 @@ std::map<std::uint64_t, std::map<uint32_t, std::pair<uint64_t, uint32_t>>> Teste
             zsdn::RequestUtils::sendRequest(*getZmf(),
                                             request,
                                             reply,
-                                            linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_links_between_two_switches().build(),
+                                            zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().request().link_discovery_module().get_links_between_two_switches().build(),
                                             zsdn::MODULE_TYPE_ID_LinkDiscoveryModule,
                                             testLinkDiscoveryModuleObjectRef->getVersion());
 
@@ -1396,7 +1397,7 @@ std::map<std::uint64_t, std::map<uint32_t, std::pair<uint64_t, uint32_t>>> Teste
 bool TesterObject::requestCorruptedForTopic(zmf::data::MessageType type, std::string message) {
     bool result = false;
     try {
-        ZmfInReply reply = this->getZmf()->sendRequest(
+        zmf::data::ZmfInReply reply = this->getZmf()->sendRequest(
                 zmf::data::ModuleUniqueId(zsdn::MODULE_TYPE_ID_LinkDiscoveryModule, 0),
                 zmf::data::ZmfMessage(type, message));
         std::future_status status = reply.wait_for(std::chrono::milliseconds(2000));

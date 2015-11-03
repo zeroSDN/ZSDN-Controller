@@ -11,10 +11,10 @@
 #include <thread>
 #include <map>
 #include <LinkDiscoveryModule.hpp>
-#include <zsdn/topics/SwitchRegistryModule_topics.hpp>
-#include <zsdn/topics/LinkDiscoveryModule_topics.hpp>
+#include <zsdn/topics/SwitchRegistryModuleTopics.hpp>
+#include <zsdn/topics/LinkDiscoveryModuleTopics.hpp>
+#include "zsdn/topics/SwitchAdapterTopics.hpp"
 #include <zsdn/proto/LinkDiscoveryModule.pb.h>
-#include "zsdn/topics/SwitchAdapter_topics.hpp"
 #include <zmf/IZmfInstanceController.hpp>
 
 using namespace CppUnit;
@@ -410,9 +410,12 @@ private:
     std::thread* backgroundThread_ = nullptr;
     std::thread* changerThread_ = nullptr;
 
-    zmf::data::MessageType topicsSwitchRemoved_ = switchregistrymodule_topics::FROM().switch_registry_module().switch_event().removed().build();
-    zmf::data::MessageType topicsGetAllSwitchesReply_ = switchregistrymodule_topics::REPLY().switch_registry_module().get_all_switches().build();
-    zmf::data::MessageType topicsSwitchAdded_ = switchregistrymodule_topics::FROM().switch_registry_module().switch_event().added().build();
+    // Builders for topic creation
+    zsdn::modules::SwitchRegistryModuleTopics<zmf::data::MessageType> switchRegistryTopics_;
+
+    zmf::data::MessageType topicsSwitchRemoved_ = switchRegistryTopics_.from().switch_registry_module().switch_event().removed().build();
+    zmf::data::MessageType topicsGetAllSwitchesReply_ = switchRegistryTopics_.reply().switch_registry_module().get_all_switches().build();
+    zmf::data::MessageType topicsSwitchAdded_ = switchRegistryTopics_.from().switch_registry_module().switch_event().added().build();
 
 };
 
