@@ -82,6 +82,11 @@ for i in "${ModuleSets[@]}"
 do
     if [[ $ModuleSetSelected =~ $i ]]; then
         validModuleSet=true
+        break
+    elif [[ "${ModuleSetSelected}.txt" =~ $i ]]; then
+        validModuleSet=true
+        ModuleSetSelected="${ModuleSetSelected}.txt"
+        break
     fi
 done
 
@@ -91,6 +96,8 @@ if [ "$validModuleSet" = false ] ; then
     printHelp
     exit 1
 fi
+
+echo "Building module set ${ModuleSetSelected}"
 
 
 # Read modules to build from moduleset
