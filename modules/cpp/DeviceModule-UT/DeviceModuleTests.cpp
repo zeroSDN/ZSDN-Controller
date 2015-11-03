@@ -12,6 +12,7 @@
 #include "DeviceModuleTests.h"
 #include "dummyModules/DummyModule.hpp"
 #include <zsdn/proto/LinkDiscoveryModule.pb.h>
+#include <zsdn/topics/DeviceModuleTopics.hpp>
 #include <UnittestConfigUtil.hpp>
 
 
@@ -205,7 +206,7 @@ std::shared_ptr<zmf::data::ZmfMessage> DeviceModuleTests::build_DemoRequest_ZmfM
             break;
     }
 
-    zmf::data::MessageType topics_allDevicesRequest = devicemodule_topics::REQUEST().device_module().get_all_devices().build();
+    zmf::data::MessageType topics_allDevicesRequest = zsdn::modules::DeviceModuleTopics<zmf::data::MessageType>().request().device_module().get_all_devices().build();
     return std::shared_ptr<zmf::data::ZmfMessage>(
             new zmf::data::ZmfMessage(topics_allDevicesRequest, request.SerializeAsString()));
 }
@@ -502,7 +503,7 @@ void DeviceModuleTests::setUp() {
                                     reply.set_allocated_get_all_switch_links_reply(slReply);
 
                                     zmf::data::ZmfMessage msg(
-                                            linkdiscoverymodule_topics::REPLY().link_discovery_module().get_all_switch_links().build(),
+                                    zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().reply().link_discovery_module().get_all_switch_links().build(),
                                             reply.SerializeAsString());
 
                                     return zmf::data::ZmfOutReply::createImmediateReply(msg);
@@ -1184,7 +1185,7 @@ void DeviceModuleTests::testHandleRequestGetDeviceByFilterWithMacFilter() {
 void DeviceModuleTests::testHandleRequestInvalidProtobuf() {
     std::string invalidData = "qjweiqohbaosbnfas";
     zmf::data::ZmfOutReply reply = module_->UTAccessor_handleRequest(
-            zmf::data::ZmfMessage(devicemodule_topics::REQUEST().device_module().get_all_devices().build(),
+            zmf::data::ZmfMessage(zsdn::modules::DeviceModuleTopics<zmf::data::MessageType>().request().device_module().get_all_devices().build(),
                                   invalidData), demoModuleUniqueId_);
 
     CPPUNIT_ASSERT_EQUAL(zmf::data::ZmfOutReply::NO_REPLY, reply.type);

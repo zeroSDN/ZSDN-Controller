@@ -2,7 +2,7 @@
 #define DeviceModule_UT_H
 
 #include <cppunit/extensions/HelperMacros.h>
-#include <zsdn/topics/SwitchAdapter_topics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 #include <zmf/AbstractModule.hpp>
 #include "Device.h"
 #include "DeviceModule.hpp"
@@ -325,15 +325,20 @@ private:
     /// Vector holding some demo Switch Ports for testing.
     std::vector<uint32_t> demoSwitchPorts_;
 
+    /// Topic builder
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopics_;
+    zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType> linkDiscoveryModuleTopics_;
+
+
     /// Topic for ARP packet_in's
-    zmf::data::MessageType topicsArp_ = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group_default().arp().build();
+    zmf::data::MessageType topicsArp_ = switchAdapterTopics_.from().switch_adapter().openflow().packet_in().multicast_group_default().arp().build();
     /// Topic for IPv4 packet_in's
-    zmf::data::MessageType topicsIpv4_ = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group_default().ipv4().build();
+    zmf::data::MessageType topicsIpv4_ = switchAdapterTopics_.from().switch_adapter().openflow().packet_in().multicast_group_default().ipv4().build();
     /// Topic for IPv6 packet_in's
-    zmf::data::MessageType topicsIpv6_ = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group_default().ipv6().build();
+    zmf::data::MessageType topicsIpv6_ = switchAdapterTopics_.from().switch_adapter().openflow().packet_in().multicast_group_default().ipv6().build();
 
     /// Topic for LinkDiscoveryModule SwitchLink_Event
-    zmf::data::MessageType topicsSwitchLinkEvent_ = linkdiscoverymodule_topics::FROM().link_discovery_module().switch_link_event().build();
+    zmf::data::MessageType topicsSwitchLinkEvent_ = linkDiscoveryModuleTopics_.from().link_discovery_module().switch_link_event().build();
 
     /**
      * Builds a demo ARP packet for testing.
