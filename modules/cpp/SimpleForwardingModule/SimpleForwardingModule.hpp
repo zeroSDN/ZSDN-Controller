@@ -6,9 +6,10 @@
 #include <map>
 #include <mutex>
 #include <tins/ethernetII.h>
-#include <zsdn/topics/DeviceModule_topics.hpp>
+#include <zsdn/topics/DeviceModuleTopics.hpp>
 #include "ModuleTypeIDs.hpp"
 #include <RequestUtils.h>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 
 /**
  * The SimpleForwardingModule is a very simple packet forwarding moulde. It receives
@@ -80,11 +81,17 @@ private:
     std::map<std::uint64_t, zmf::data::MessageType> linkDevicePacketOutMessageTypeMap_;
     /// All the ethertypes in this list will be excluded from forwarding
     std::vector<uint16_t> ignoreEthertypes_;
+
+    // Builder for topic creation
+    zsdn::modules::DeviceModuleTopics<zmf::data::MessageType> deviceModuleTopics_;
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopics_;
+
+
     // Topics
-    zmf::data::MessageType requestDeviceByMacTopic_ = devicemodule_topics::REQUEST().device_module().get_device_by_mac_address()
+    zmf::data::MessageType requestDeviceByMacTopic_ = deviceModuleTopics_.request().device_module().get_device_by_mac_address()
             .build();
 
-    zmf::data::MessageType getAllDevicesMsgTopic_ = devicemodule_topics::REQUEST().device_module().get_all_devices().build();
+    zmf::data::MessageType getAllDevicesMsgTopic_ = deviceModuleTopics_.request().device_module().get_all_devices().build();
 
     /**
      * Setup of the devices map to know all devices at the  current state of the system.

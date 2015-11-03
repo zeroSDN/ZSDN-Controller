@@ -1,6 +1,6 @@
 #include "SimpleForwardingModule.hpp"
 #include <zsdn/proto/DeviceModule.pb.h>
-#include <zsdn/topics/SwitchAdapter_topics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 #include <Poco/StringTokenizer.h>
 #include "zsdn/Configs.h"
 
@@ -202,19 +202,19 @@ bool SimpleForwardingModule::setupSubscriptions() {
 
     // setup subscriptions to OpenFlow PacketIn events. Delegate to the handlePacketIn function
     for (uint8_t multicastGroup : multicastGroupsToSubscribeTo) {
-        zmf::data::MessageType packetInTopic = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group(
+        zmf::data::MessageType packetInTopic = switchAdapterTopics_.from().switch_adapter().openflow().packet_in().multicast_group(
                 multicastGroup).build();
         this->getZmf()->subscribe(packetInTopic,
-                                  [this](const zmf::data::ZmfMessage& msg, const ModuleUniqueId& sender) {
+                                  [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                                       this->handlePacketIn(msg);
                                   });
     }
 
     // setup subscriptions to DeviceManager Change events. Delegate to the handleDeviceStateChanged function
-    zmf::data::MessageType deviceStateChangeTopic = devicemodule_topics::FROM().device_module().device_event().build();
+    zmf::data::MessageType deviceStateChangeTopic = deviceModuleTopics_.from().device_module().device_event().build();
     this->getZmf()->subscribe(deviceStateChangeTopic,
                               [this](const zmf::data::ZmfMessage& msg,
-                                     const ModuleUniqueId& sender) { this->handleDeviceStateChanged(msg); });
+                                     const zmf::data::ModuleUniqueId& sender) { this->handleDeviceStateChanged(msg); });
     return true;
 };
 
@@ -421,7 +421,7 @@ SimpleForwardingModule::Device* SimpleForwardingModule::insertNewDevice(std::uin
     Device newDevice;
     newDevice.macAddress = mac;
     newDevice.switchDpid = switch_dpid;
-    zmf::data::MessageType packetOutTopic = switchadapter_topics::TO().switch_adapter()
+    zmf::data::MessageType packetOutTopic = switchAdapterTopics_.to().switch_adapter()
             .switch_instance(switch_dpid).openflow().build();
     linkDevicePacketOutMessageTypeMap_.emplace(mac, packetOutTopic);
     newDevice.switchPort = switch_port;
