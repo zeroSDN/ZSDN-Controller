@@ -91,7 +91,13 @@ echo "# Finishef Building C++ Commons"
 
 echo "# Start Building Java Commons"
 cd java/zsdn-proto/
-mvn clean install
+if mvn clean install; then
+  echo "# mvn install Java Common success"
+else
+  result=$?
+  echo "!! Failed to mvn install Java Common: "${result}
+  exit ${result}
+fi
 cd ../..
 
 echo "# Finished Building Java Commons"
