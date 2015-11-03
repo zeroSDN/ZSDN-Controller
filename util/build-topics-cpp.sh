@@ -10,6 +10,6 @@ echo "Topics Out Dir: ${OUT_DIR}"
 
 cd hierarchy-builder/hierarchy-builder/target/
 
-java -jar ./hierarchy-builder-0.0.1-SNAPSHOT-jar-with-dependencies.jar -src ${SRC_DIR} -r -out ${OUT_DIR} -lang cpp
+java -jar ./hierarchy-builder-0.0.1-SNAPSHOT-jar-with-dependencies.jar --source ${SRC_DIR} -r --out ${OUT_DIR} --language cpp -c "zsdn::modules"
 
 echo "### Finished Building C++ Topics ###"
