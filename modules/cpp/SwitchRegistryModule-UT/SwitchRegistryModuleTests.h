@@ -9,7 +9,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <zmf/MessageType.hpp>
 #include <zmf/ZmfMessage.hpp>
-#include <zsdn/topics/SwitchRegistryModule_topics.hpp>
+#include <zsdn/topics/SwitchRegistryModuleTopics.hpp>
 #include <dummyModules/DummyModule.hpp>
 #include <zmf/IZmfInstanceController.hpp>
 #include "SwitchRegistryModule.hpp"
@@ -239,14 +239,17 @@ private:
 
     std::vector<Switch> switchVector;
 
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopics_;
+    zsdn::modules::SwitchRegistryModuleTopics<zmf::data::MessageType> switchRegistryModuleTopics_;
+
     //topics requests
-    zmf::data::MessageType topicAllSwitches_ = switchregistrymodule_topics::REQUEST().switch_registry_module().get_all_switches().build();
-    zmf::data::MessageType topicSwitch_ = switchregistrymodule_topics::REQUEST().switch_registry_module().get_switch_by_id().build();
+    zmf::data::MessageType topicAllSwitches_ = switchRegistryModuleTopics_.request().switch_registry_module().get_all_switches().build();
+    zmf::data::MessageType topicSwitch_ = switchRegistryModuleTopics_.request().switch_registry_module().get_switch_by_id().build();
     //topics from Switch
-    zmf::data::MessageType topicsMultipartReply_ = switchadapter_topics::FROM().switch_adapter().openflow().of_1_0_barrier_reply_of_1_3_multipart_reply().build();
-    zmf::data::MessageType topicsFeatureReply_ = switchadapter_topics::FROM().switch_adapter().openflow().features_reply().build();
-    zmf::data::MessageType topicsEchoRequest_ = switchadapter_topics::FROM().switch_adapter().openflow().echo_request().build();
-    zmf::data::MessageType topicsPortStatus_ = switchadapter_topics::FROM().switch_adapter().openflow().port_status().build();
+    zmf::data::MessageType topicsMultipartReply_ = switchAdapterTopics_.from().switch_adapter().openflow().of_1_0_barrier_reply_of_1_3_multipart_reply().build();
+    zmf::data::MessageType topicsFeatureReply_ = switchAdapterTopics_.from().switch_adapter().openflow().features_reply().build();
+    zmf::data::MessageType topicsEchoRequest_ = switchAdapterTopics_.from().switch_adapter().openflow().echo_request().build();
+    zmf::data::MessageType topicsPortStatus_ = switchAdapterTopics_.from().switch_adapter().openflow().port_status().build();
 
     std::shared_ptr<zmf::data::ZmfMessage> build_DemoAllSwitchRequest_ZmfMessage();
 

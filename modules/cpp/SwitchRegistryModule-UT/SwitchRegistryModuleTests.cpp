@@ -106,20 +106,20 @@ void SwitchRegistryModuleTests::setUp() {
 
     // subscribe and count
 
-    MessageType deletedSwitch = switchregistrymodule_topics::FROM().switch_registry_module().switch_event().removed().build();
-    MessageType newSwitch = switchregistrymodule_topics::FROM().switch_registry_module().switch_event().added().build();
-    MessageType changedSwitch = switchregistrymodule_topics::FROM().switch_registry_module().switch_event().changed().build();
-    MessageType featureRequest = switchadapter_topics::TO().switch_adapter().switch_instance(
+    zmf::data::MessageType deletedSwitch = switchRegistryModuleTopics_.from().switch_registry_module().switch_event().removed().build();
+    zmf::data::MessageType newSwitch = switchRegistryModuleTopics_.from().switch_registry_module().switch_event().added().build();
+    zmf::data::MessageType changedSwitch = switchRegistryModuleTopics_.from().switch_registry_module().switch_event().changed().build();
+    zmf::data::MessageType featureRequest = switchAdapterTopics_.to().switch_adapter().switch_instance(
             switchVector[0].getSwitchID()).openflow().features_request().build();
-    MessageType featureRequest2 = switchadapter_topics::TO().switch_adapter().switch_instance(
+    zmf::data::MessageType featureRequest2 = switchAdapterTopics_.to().switch_adapter().switch_instance(
             switchVector[1].getSwitchID()).openflow().features_request().build();
-    MessageType featureRequest3 = switchadapter_topics::TO().switch_adapter().switch_instance(
+    zmf::data::MessageType featureRequest3 = switchAdapterTopics_.to().switch_adapter().switch_instance(
             3).openflow().features_request().build();
-    MessageType portDescRequest = switchadapter_topics::TO().switch_adapter().switch_instance(
+    zmf::data::MessageType portDescRequest = switchAdapterTopics_.to().switch_adapter().switch_instance(
             switchVector[0].getSwitchID()).openflow().of_1_0_barrier_request_of_1_3_multipart_request().build();
-    MessageType portDescRequest2 = switchadapter_topics::TO().switch_adapter().switch_instance(
+    zmf::data::MessageType portDescRequest2 = switchAdapterTopics_.to().switch_adapter().switch_instance(
             switchVector[1].getSwitchID()).openflow().of_1_0_barrier_request_of_1_3_multipart_request().build();
-    MessageType portDescRequest3 = switchadapter_topics::TO().switch_adapter().switch_instance(
+    zmf::data::MessageType portDescRequest3 = switchAdapterTopics_.to().switch_adapter().switch_instance(
             3).openflow().of_1_0_barrier_request_of_1_3_multipart_request().build();
 
 
@@ -131,63 +131,63 @@ void SwitchRegistryModuleTests::setUp() {
 
     dummy.get()->getZmfForUnittests()->subscribe(
             deletedSwitch,
-            [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_deletedSwitch++;
             }
     );
 
     dummy.get()->getZmfForUnittests()->subscribe(
             newSwitch,
-            [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_newSwitch++;
             }
     );
 
     dummy.get()->getZmfForUnittests()->subscribe(
             changedSwitch,
-            [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_changedSwitch++;
             }
     );
 
     dummy.get()->getZmfForUnittests()->subscribe(
             featureRequest,
-            [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_featureRequest++;
             }
     );
 
     dummy.get()->getZmfForUnittests()->subscribe(
             featureRequest2,
-            [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_featureRequest++;
             }
     );
 
     dummy.get()->getZmfForUnittests()->subscribe(
             featureRequest3,
-            [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_featureRequest++;
             }
     );
 
     dummy.get()->getZmfForUnittests()->subscribe(
             portDescRequest,
-            [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_portDescRequest++;
             }
     );
 
     dummy.get()->getZmfForUnittests()->subscribe(
             portDescRequest2,
-            [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_portDescRequest++;
             }
     );
 
     dummy.get()->getZmfForUnittests()->subscribe(
             portDescRequest3,
-            [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_portDescRequest++;
             }
     );
