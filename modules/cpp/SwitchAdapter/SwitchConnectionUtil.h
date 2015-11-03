@@ -4,7 +4,7 @@
 #include <Poco/Net/SocketStream.h>
 #include <memory>
 #include <zmf/MessageType.hpp>
-#include <zsdn/topics/SwitchAdapter_topics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 #include <tins/ethernetII.h>
 #include <tins/ip.h>
 #include <tins/ipv6.h>
@@ -209,7 +209,7 @@ public:
      * @param packetIn
      *        OpenFlow PACKET_IN message with an EthernetII frame as payload
      */
-    static inline void buildSimplePacketInTopic(MessageType& topic, of_packet_in_t* const packetIn) {
+    static inline void buildSimplePacketInTopic(zmf::data::MessageType& topic, of_packet_in_t* const packetIn) {
 
         of_octets_t payloadOfPacketIn;
         of_packet_in_data_get(packetIn, &payloadOfPacketIn);
@@ -244,7 +244,7 @@ public:
      *
      * @return a MessageType depending on the payload according to the definitions in SwitchAdapter.topics
      */
-    static inline void buildPacketInTopic(MessageType& topic, of_packet_in_t* const packetIn, const uint64_t switchId) {
+    static inline void buildPacketInTopic(zmf::data::MessageType& topic, of_packet_in_t* const packetIn, const uint64_t switchId) {
 
         of_octets_t payloadOfPacketIn;
         of_packet_in_data_get(packetIn, &payloadOfPacketIn);

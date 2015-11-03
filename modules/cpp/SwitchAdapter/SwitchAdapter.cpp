@@ -86,7 +86,7 @@ bool SwitchAdapter::enable() {
             new std::thread(&SwitchAdapter::handleOpenFlowFromSwitch, this));
 
     // subscribe to messages: ZMF -> Switch
-    zmf::data::MessageType openFlowTopic = switchadapter_topics::TO().switch_adapter().switch_instance(
+    zmf::data::MessageType openFlowTopic = zmfThreadTopics_.to().switch_adapter().switch_instance(
             this->instanceId_).openflow().build();
 
     getZmf()->subscribe(openFlowTopic,
@@ -332,7 +332,7 @@ void SwitchAdapter::handleOpenFlowFromSwitch() {
             }
             default: // any other openFlow message type.
             {
-                MessageType openFlowTopic = switchadapter_topics::FROM()
+                zmf::data::MessageType openFlowTopic = switchThreadTopics_.from()
                         .switch_adapter().openflow().custom_openflowtype(messageType).build();
 
                 getZmf()->publish(zmf::data::ZmfMessage(openFlowTopic, receiveBuffer, (size_t) message->length));

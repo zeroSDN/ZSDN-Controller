@@ -5,7 +5,7 @@
 #include <thread>
 #include <loci/loci_base.h>
 #include <Poco/Net/SocketStream.h>
-#include <zsdn/topics/SwitchAdapter_topics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 #include "ModuleTypeIDs.hpp"
 #include "Poco/Net/ServerSocket.h"
 
@@ -95,14 +95,19 @@ private:
     /// Switch to zmf message counter, used for distributing packetIns across multiple multicastgroups. can overflow.
     uint32_t messageCount = 0;
 
+    // SwitchAdapter topics builder for switch thread (reading from switch)
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchThreadTopics_;
+    // SwitchAdapter topics builder for zmf threads (e.g sending to switch)
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> zmfThreadTopics_;
+
     /// EchoRequest topic
-    zmf::data::MessageType echoRequestTopic_ = switchadapter_topics::FROM().switch_adapter().openflow().echo_request().build();
+    zmf::data::MessageType echoRequestTopic_ = zmfThreadTopics_.from().switch_adapter().openflow().echo_request().build();
 
     /// HandleOpenflowMessages reply topic
-    zmf::data::MessageType handleOpenflowMessagesReplyTopic_ = switchadapter_topics::REPLY().switch_adapter().openflow().handle_openflow_message().build();
+    zmf::data::MessageType handleOpenflowMessagesReplyTopic_ = zmfThreadTopics_.reply().switch_adapter().openflow().handle_openflow_message().build();
 
     /// packetInTopic which is reused for every publish - it gets reset to this length before every publish and individually rebuilt to represent its content
-    zmf::data::MessageType packetInTopic_ = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().build();
+    zmf::data::MessageType packetInTopic_ = zmfThreadTopics_.from().switch_adapter().openflow().packet_in().build();
 
     /// This modules version. Behaviour and other things might be different in other versions of this module.
     static const uint16_t MODULE_VERSION = 0;
