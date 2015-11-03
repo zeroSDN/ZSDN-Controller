@@ -19,11 +19,11 @@
 #include <thread>
 #include <map>
 #include <StatisticsModule.hpp>
-#include <zsdn/topics/SwitchRegistryModule_topics.hpp>
-#include <zsdn/topics/StatisticsModule_topics.hpp>
+#include <zsdn/topics/SwitchRegistryModuleTopics.hpp>
+#include "zsdn/topics/SwitchAdapterTopics.hpp"
+#include <zsdn/topics/StatisticsModuleTopics.hpp>
 #include <zsdn/proto/StatisticsModule.pb.h>
 #include <ModuleTypeIDs.hpp>
-#include "zsdn/topics/SwitchAdapter_topics.hpp"
 #include <zmf/IZmfInstanceController.hpp>
 
 using namespace CppUnit;
@@ -96,10 +96,13 @@ public:
 
     private:
         static const uint16_t MODULE_VERSION = 0;
-        static const uint16_t MODULE_TYPE_ID = zsdn::MODULE_TYPE_ID_SwitchAdapter;
+        static const uint16_t MODULE_TYPE_ID = zsdn::MODULE_TYPE_ID_StatisticsModule;
         uint64_t instanceId_;
-        zmf::data::MessageType StatReplyOF13MsgType = switchadapter_topics::FROM().switch_adapter().openflow().of_1_0_barrier_reply_of_1_3_multipart_reply().build();
-        zmf::data::MessageType StatReplyOF10MsgType = switchadapter_topics::FROM().switch_adapter().openflow().of_1_0_stats_reply_of_1_3_table_mod().build();
+
+        zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopics_;
+
+        zmf::data::MessageType StatReplyOF13MsgType = switchAdapterTopics_.from().switch_adapter().openflow().of_1_0_barrier_reply_of_1_3_multipart_reply().build();
+        zmf::data::MessageType StatReplyOF10MsgType = switchAdapterTopics_.from().switch_adapter().openflow().of_1_0_stats_reply_of_1_3_table_mod().build();
     };
 
 

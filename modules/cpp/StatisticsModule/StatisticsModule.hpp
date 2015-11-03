@@ -10,6 +10,7 @@
 #include "zsdn/proto/StatisticsModule.pb.h"
 #include <loci/loci_base.h>
 #include <loci/of_match.h>
+#include <ModuleTypeIDs.hpp>
 
 /**
  * @brief   A Module that gathers informations of all Switches.
@@ -62,8 +63,8 @@ protected:
 private:
     static const uint16_t SWITCH_REGISTRY_MODULE_DEP_VERSION = 0;
     static const uint16_t MODULE_VERSION = 0;
-    static const uint16_t MODULE_TYPE_ID = 0x0008;
-    static const uint16_t SWITCH_ADAPTER_MODULE_TYPE_ID = 0x0000;
+    static const uint16_t MODULE_TYPE_ID = zsdn::MODULE_TYPE_ID_StatisticsModule;
+    static const uint16_t SWITCH_ADAPTER_MODULE_TYPE_ID = zsdn::MODULE_TYPE_ID_SwitchAdapter;
     static const uint16_t POLLING_INTERVAL_IN_SECONDS = 5;
 
     /// Unique instance id fo the module inside the ZMF system.

@@ -78,9 +78,9 @@ bool StatisticsModuleTests::SwitchAdapterModuleMock::enable() {
     //OF13
     this->getZmf()->subscribe(
 
-            switchadapter_topics::TO().switch_adapter().switch_instance(
+            zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().to().switch_adapter().switch_instance(
                     getUniqueId().InstanceId).openflow().of_1_0_barrier_request_of_1_3_multipart_request().build(),
-            [this](const zmf::data::ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 of_object_t* ofObjectT = zsdn::of_object_new_from_data_string_copy(msg.getData());
                 if (ofObjectT->version == OF_VERSION_1_3) {
                     if (ofObjectT->object_id == OF_TABLE_STATS_REQUEST) {
@@ -156,9 +156,9 @@ bool StatisticsModuleTests::SwitchAdapterModuleMock::enable() {
     //OF10
     this->getZmf()->subscribe(
 
-            switchadapter_topics::TO().switch_adapter().switch_instance(
+            zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().to().switch_adapter().switch_instance(
                     getUniqueId().InstanceId).openflow().of_1_0_stats_request_of_1_3_port_mod().build(),
-            [this](const zmf::data::ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 of_object_t* ofObjectT = zsdn::of_object_new_from_data_string_copy(msg.getData());
                 if (ofObjectT->version == OF_VERSION_1_0) {
                     if (ofObjectT->object_id == OF_TABLE_STATS_REQUEST) {
@@ -265,8 +265,8 @@ void StatisticsModuleTests::TestStatisticsModule::disable() {
 
 bool StatisticsModuleTests::TestStatisticsModule::enable() {
     this->getZmf()->subscribe(
-            statisticsmodule_topics::FROM().statistics_module().statistic_event().added().build(),
-            [this](const zmf::data::ZmfMessage& msg, const ModuleUniqueId& sender) {
+            zsdn::modules::StatisticsModuleTopics<zmf::data::MessageType>().from().statistics_module().statistic_event().added().build(),
+            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 StatisticsModule_Proto::From statsProto;
                 bool sucess = statsProto.ParseFromString(msg.getData());
                 if (sucess) {
