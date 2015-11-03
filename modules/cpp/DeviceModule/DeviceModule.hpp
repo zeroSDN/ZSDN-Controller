@@ -4,9 +4,9 @@
 #include <zmf/AbstractModule.hpp>
 #include <thread>
 #include <zsdn/proto/DeviceModule.pb.h>
-#include <zsdn/topics/DeviceModule_topics.hpp>
-#include <zsdn/topics/SwitchAdapter_topics.hpp>
-#include <zsdn/topics/LinkDiscoveryModule_topics.hpp>
+#include <zsdn/topics/DeviceModuleTopics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
+#include <zsdn/topics/LinkDiscoveryModuleTopics.hpp>
 #include "Device.h"
 #include "tins/tins.h"
 #include "ModuleTypeIDs.hpp"
@@ -77,7 +77,7 @@ public:
             const DeviceModule_Proto::Request_GetDevicesByFilterRequest& filterRequest,
             Device& device) { return isDevicePassingFurtherFilters(filterRequest, device); };
 
-    void UTAccessor_handleSwitchLinkEvent(const ZmfMessage& message, const ModuleUniqueId& id) {
+    void UTAccessor_handleSwitchLinkEvent(const zmf::data::ZmfMessage& message, const zmf::data::ModuleUniqueId& id) {
         handleSwitchLinkEvent(message, id);
     };
 
@@ -112,23 +112,28 @@ private:
     /// Vector holding SwitchToSwitchLinks.
     std::vector<common::topology::SwitchToSwitchLink> switchToSwitchLinkCache_;
 
+    // Builders for topic creation
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopics_;
+    zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType> linkDiscoveryModuleTopics_;
+    zsdn::modules::DeviceModuleTopics<zmf::data::MessageType> deviceModuleTopics_;
+
     /// Topic for get_all_devices Reply
-    zmf::data::MessageType topicsAllDevicesReply_ = devicemodule_topics::REPLY().device_module().get_all_devices().build();
+    zmf::data::MessageType topicsAllDevicesReply_ = deviceModuleTopics_.reply().device_module().get_all_devices().build();
     /// Topic for get_device_by_mac_address Reply
-    zmf::data::MessageType topicsDeviceByMacReply_ = devicemodule_topics::REPLY().device_module().get_device_by_mac_address().build();
+    zmf::data::MessageType topicsDeviceByMacReply_ = deviceModuleTopics_.reply().device_module().get_device_by_mac_address().build();
     /// Topic for get_devices_by_filter Reply
-    zmf::data::MessageType topicsDevicesByFilterReply_ = devicemodule_topics::REPLY().device_module().get_devices_by_filter().build();
+    zmf::data::MessageType topicsDevicesByFilterReply_ = deviceModuleTopics_.reply().device_module().get_devices_by_filter().build();
     /// Topic for DEVICE_EVENT CHANGED Reply
-    zmf::data::MessageType topicsDeviceEventChanged_ = devicemodule_topics::FROM().device_module().device_event().changed().build();
+    zmf::data::MessageType topicsDeviceEventChanged_ = deviceModuleTopics_.from().device_module().device_event().changed().build();
     /// Topic for DEVICE_EVENT ADDED Reply
-    zmf::data::MessageType topicsDeviceEventAdded_ = devicemodule_topics::FROM().device_module().device_event().added().build();
+    zmf::data::MessageType topicsDeviceEventAdded_ = deviceModuleTopics_.from().device_module().device_event().added().build();
     /// Topic for DEVICE_EVENT REMOVED Reply
-    zmf::data::MessageType topicsDeviceEventRemoved_ = devicemodule_topics::FROM().device_module().device_event().removed().build();
+    zmf::data::MessageType topicsDeviceEventRemoved_ = deviceModuleTopics_.from().device_module().device_event().removed().build();
 
     /// Topic for LinkDiscoveryModule Switch_Link_Event
-    zmf::data::MessageType topicsSwitchLinkEvent_ = linkdiscoverymodule_topics::FROM().link_discovery_module().switch_link_event().build();
+    zmf::data::MessageType topicsSwitchLinkEvent_ = linkDiscoveryModuleTopics_.from().link_discovery_module().switch_link_event().build();
     /// Topic for requesting all SwitchToSwitchLinks from LinkDiscoveryModule
-    zmf::data::MessageType topicsGetAllSwitchLinks_ = linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_all_switch_links().build();
+    zmf::data::MessageType topicsGetAllSwitchLinks_ = linkDiscoveryModuleTopics_.request().link_discovery_module().get_all_switch_links().build();
 
     /**
      * Handles incoming packets.
@@ -183,7 +188,7 @@ private:
      * @param message The ZmfMessage that was submitted.
      * @param id The id of the Module that has submitted this ZmfMessage.
      */
-    void handleSwitchLinkEvent(const ZmfMessage& message, const ModuleUniqueId& id);
+    void handleSwitchLinkEvent(const zmf::data::ZmfMessage& message, const zmf::data::ModuleUniqueId& id);
 
     /**
      * Adds a new Switch to Switch Link to the SwitchToSwitchLinkCache.

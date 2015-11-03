@@ -1,4 +1,4 @@
-#include <zsdn/topics/DeviceModule_topics.hpp>
+#include <zsdn/topics/DeviceModuleTopics.hpp>
 #include <LociExtensions.h>
 #include "DeviceModule.hpp"
 #include <zsdn/proto/LinkDiscoveryModule.pb.h>
@@ -75,10 +75,10 @@ bool DeviceModule::enable() {
         getLogger().information("Using ARP protocol to find Hosts");
 
         for (int i = 0; i < multicastGroups; i++) {
-            zmf::data::MessageType topicsARP_ = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group(
+            zmf::data::MessageType topicsARP_ = switchAdapterTopics_.from().switch_adapter().openflow().packet_in().multicast_group(
                     i).arp().build();
             getZmf()->subscribe(topicsARP_,
-                                [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+                                [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                                     handlePacketIn(msg, sender);
                                 });
         }
@@ -89,10 +89,10 @@ bool DeviceModule::enable() {
         getLogger().information("Using IPv4 protocol to find Hosts");
 
         for (int i = 0; i < multicastGroups; i++) {
-            zmf::data::MessageType topicsIpv4_ = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group(
+            zmf::data::MessageType topicsIpv4_ = switchAdapterTopics_.from().switch_adapter().openflow().packet_in().multicast_group(
                     i).ipv4().build();
             getZmf()->subscribe(topicsIpv4_,
-                                [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+                                [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                                     handlePacketIn(msg, sender);
                                 });
         }
@@ -103,9 +103,9 @@ bool DeviceModule::enable() {
         getLogger().information("Using IPv6 protocol to find Hosts");
 
         for (int i = 0; i < multicastGroups; i++) {
-            zmf::data::MessageType topicsIpv6_ = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group(i).ipv6().build();
+            zmf::data::MessageType topicsIpv6_ = switchAdapterTopics_.from().switch_adapter().openflow().packet_in().multicast_group(i).ipv6().build();
             getZmf()->subscribe(topicsIpv6_,
-                                [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+                                [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                                     handlePacketIn(msg, sender);
                                 });
         }
@@ -113,7 +113,7 @@ bool DeviceModule::enable() {
 
     //  Request all SwitchToSwitchLinks and subscribe to Events.
     requestAllSwitchToSwitchLinksFromLinkDiscoveryModule();
-    getZmf()->subscribe(topicsSwitchLinkEvent_, [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+    getZmf()->subscribe(topicsSwitchLinkEvent_, [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
         handleSwitchLinkEvent(msg, sender);
     });
 
@@ -644,7 +644,7 @@ bool DeviceModule::isIPv6Broadcast(std::array<uint8_t, 16> ipv6Address) {
     return true;
 }
 
-void DeviceModule::handleSwitchLinkEvent(const ZmfMessage& message, const ModuleUniqueId& id) {
+void DeviceModule::handleSwitchLinkEvent(const zmf::data::ZmfMessage& message, const zmf::data::ModuleUniqueId& id) {
     // Container of the Zmf message
     LinkDiscoveryModule_Proto::From msgContainer;
 
