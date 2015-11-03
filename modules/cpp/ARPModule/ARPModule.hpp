@@ -3,7 +3,8 @@
 
 #include <zmf/AbstractModule.hpp>
 #include <thread>
-#include <zsdn/topics/DeviceModule_topics.hpp>
+#include <zsdn/topics/DeviceModuleTopics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 #include "ModuleTypeIDs.hpp"
 
 extern "C" {
@@ -87,7 +88,11 @@ private:
     uint64_t instanceId_;
 
 
-    zmf::data::MessageType requestTopic_ = devicemodule_topics::REQUEST().device_module().get_all_devices().build();
+    // Builders for topic creation
+    zsdn::modules::DeviceModuleTopics<zmf::data::MessageType> deviceModuleTopics_;
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopics_;
+
+    zmf::data::MessageType requestTopic_ = deviceModuleTopics_.request().device_module().get_all_devices().build();
 
 
     /**

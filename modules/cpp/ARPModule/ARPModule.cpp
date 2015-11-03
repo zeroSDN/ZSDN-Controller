@@ -1,5 +1,5 @@
 #include "ARPModule.hpp"
-#include <zsdn/topics/SwitchAdapter_topics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 #include <zsdn/proto/DeviceModule.pb.h>
 #include "zsdn/Configs.h"
 #include <RequestUtils.h>
@@ -49,17 +49,17 @@ bool ARPModule::enable() {
     // Subscribe to topic ARP from Switch Adapter
     // With this subscription the module gets the ARP packets in
     for (int i = 0; i < multicastGroups; i++) {
-        zmf::data::MessageType arpTopic = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group(i).arp().build();
+        zmf::data::MessageType arpTopic = switchAdapterTopics_.from().switch_adapter().openflow().packet_in().multicast_group(i).arp().build();
         getZmf()->subscribe(arpTopic,
-                            [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+                            [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                                 handleIncomingArp(msg, sender);
                             });
     }
     // Subscribe to topic deviceStateChangeTopic from Device Module
     // With this subscription the module gets the update of the known devices from Device Module
-    zmf::data::MessageType deviceStateChangeTopic = devicemodule_topics::FROM().device_module().device_event().build();
+    zmf::data::MessageType deviceStateChangeTopic = deviceModuleTopics_.from().device_module().device_event().build();
     getZmf()->subscribe(deviceStateChangeTopic,
-                        [this](const ZmfMessage& msg, const ModuleUniqueId& sender) { handleUpdateDevice(msg); });
+                        [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) { handleUpdateDevice(msg); });
     return true;
 }
 
@@ -190,7 +190,7 @@ void ARPModule::handleIncomingArp(const zmf::data::ZmfMessage& message, const zm
                 std::string messageBytes = zsdn::of_object_serialize_to_data_string(arpPacketOut);
                 of_packet_out_delete(arpPacketOut);
 
-                zmf::data::MessageType toSpecificSwitchTopic = switchadapter_topics::TO().switch_adapter().switch_instance(
+                zmf::data::MessageType toSpecificSwitchTopic = switchAdapterTopics_.to().switch_adapter().switch_instance(
                         destinationSwitchDpid).openflow().build();
 
                 this->getZmf()->publish(zmf::data::ZmfMessage(toSpecificSwitchTopic, messageBytes));
@@ -486,7 +486,7 @@ bool ARPModule::GetDeviceFromDeviceModule(std::uint32_t ipAddTargetPackIn, std::
     reqMsgByIp->set_ipv4_address_filter(ipAddTargetPackIn);
     containerMsg.set_allocated_get_devices_by_filter_request(reqMsgByIp);
 
-    MessageType requestDeviceByIpTopic = devicemodule_topics::REQUEST().device_module().get_devices_by_filter()
+    zmf::data::MessageType requestDeviceByIpTopic = deviceModuleTopics_.request().device_module().get_devices_by_filter()
             .build();
 
     DeviceModule_Proto::Reply replyMsg;
