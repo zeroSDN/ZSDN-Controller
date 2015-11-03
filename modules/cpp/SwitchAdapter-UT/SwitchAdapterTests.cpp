@@ -7,7 +7,7 @@
 #include <LociExtensions.h>
 #include "SwitchAdapterTests.h"
 #include "SwitchConnectionUtil.h"
-#include "zsdn/topics/SwitchAdapter_topics.hpp"
+#include "zsdn/topics/SwitchAdapterTopics.hpp"
 #include "MemUtils.h"
 #include "dummyModules/DummyModule.hpp"
 #include "zmf/ZmfInstance.hpp"
@@ -177,9 +177,9 @@ void SwitchAdapterTests::testPacketInOut(Poco::Net::StreamSocket& strSock, Poco:
 
     // PACKET IN ########################
 
-    MessageType packetIn = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group_default().build();
-    MessageType udp = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group_default().ipv4().udp().build();
-    MessageType arp = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group_default().arp().build();
+    zmf::data::MessageType packetIn = zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().from().switch_adapter().openflow().packet_in().multicast_group_default().build();
+    zmf::data::MessageType udp = zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().from().switch_adapter().openflow().packet_in().multicast_group_default().ipv4().udp().build();
+    zmf::data::MessageType arp = zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().from().switch_adapter().openflow().packet_in().multicast_group_default().arp().build();
 
 
     std::atomic_int counter_packet_in(0);
@@ -190,21 +190,21 @@ void SwitchAdapterTests::testPacketInOut(Poco::Net::StreamSocket& strSock, Poco:
 
     module.get()->getZmfForUnittests()->subscribe(
             packetIn,
-            [this, &counter_packet_in](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this, &counter_packet_in](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_packet_in++;
             }
     );
 
     module.get()->getZmfForUnittests()->subscribe(
             udp,
-            [this, &counter_udp](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this, &counter_udp](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_udp++;
             }
     );
 
     module.get()->getZmfForUnittests()->subscribe(
             arp,
-            [this, &counter_arp](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this, &counter_arp](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_arp++;
             }
     );
@@ -246,7 +246,7 @@ void SwitchAdapterTests::testPacketInOut(Poco::Net::StreamSocket& strSock, Poco:
 
     // PACKET OUT ########################
 
-    MessageType packetOut = switchadapter_topics::TO().switch_adapter().switch_instance(
+    zmf::data::MessageType packetOut = zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().to().switch_adapter().switch_instance(
             1).openflow().packet_out().build();
 
     std::cout << "START: testing module -> adapter -> switch" << &std::endl;
@@ -299,11 +299,11 @@ void SwitchAdapterTests::testSpecialCases(Poco::Net::StreamSocket& strSock, Poco
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
     }
     std::atomic_int counter_Events(0);
-    MessageType of = switchadapter_topics::FROM().switch_adapter().openflow().build();
+    zmf::data::MessageType of = zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().from().switch_adapter().openflow().build();
 
     module.get()->getZmfForUnittests()->subscribe(
             of,
-            [this, &counter_Events](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+            [this, &counter_Events](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                 counter_Events++;
             }
     );
@@ -321,7 +321,7 @@ void SwitchAdapterTests::testSpecialCases(Poco::Net::StreamSocket& strSock, Poco
 
         std::string ofObjSer = zsdn::of_object_serialize_to_data_string(obj);
         of_object_delete(obj);
-        MessageType ofTopic = switchadapter_topics::TO().switch_adapter().switch_instance(1).openflow().build();
+        zmf::data::MessageType ofTopic = zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().to().switch_adapter().switch_instance(1).openflow().build();
         zmf::data::ZmfMessage msg(ofTopic, ofObjSer);
         module->getZmfForUnittests()->publish(msg);
 
@@ -331,7 +331,7 @@ void SwitchAdapterTests::testSpecialCases(Poco::Net::StreamSocket& strSock, Poco
 
     // test frame too short to be openFlow
     std::string test = "ABC";
-    MessageType ofTopic = switchadapter_topics::TO().switch_adapter().switch_instance(1).openflow().build();
+    zmf::data::MessageType ofTopic = zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().to().switch_adapter().switch_instance(1).openflow().build();
     zmf::data::ZmfMessage msg(ofTopic, test);
     module->getZmfForUnittests()->publish(msg);
 
