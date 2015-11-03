@@ -9,7 +9,7 @@
 #include <NetUtils.h>
 #include <zsdn/Configs.h>
 #include <zsdn/proto/DeviceModule.pb.h>
-#include <zsdn/topics/DeviceModule_topics.hpp>
+#include <zsdn/topics/DeviceModuleTopics.hpp>
 #include <RequestUtils.h>
 #include <zsdn/proto/TopologyModule.pb.h>
 #include <Poco/StringTokenizer.h>
@@ -171,24 +171,24 @@ bool ForwardingModule::enable() {
 
         // setup subscriptions to OpenFlow PacketIn events. Delegate to the handlePacketIn function
         for (uint8_t multicastGroup : multicastGroupsToSubscribeTo) {
-            zmf::data::MessageType packetInTopic = switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group(
+            zmf::data::MessageType packetInTopic = switchAdapterTopics_.from().switch_adapter().openflow().packet_in().multicast_group(
                     multicastGroup).build();
             this->getZmf()->subscribe(packetInTopic,
-                                      [this](const zmf::data::ZmfMessage& msg, const ModuleUniqueId& sender) {
+                                      [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                                           this->handlePacketIn(msg);
                                       });
         }
 
         this->getZmf()->subscribe(deviceStateChangeTopic_,
                                   [this](const zmf::data::ZmfMessage& msg,
-                                         const ModuleUniqueId& sender) {
+                                         const zmf::data::ModuleUniqueId& sender) {
                                       this->handleDeviceStateChanged(msg);
                                   });
 
 
         this->getZmf()->subscribe(topologyChangedTopic_,
                                   [this](const zmf::data::ZmfMessage& msg,
-                                         const ModuleUniqueId& sender) {
+                                         const zmf::data::ModuleUniqueId& sender) {
                                       this->handleTopologyChanged(msg);
                                   });
         success = true;
@@ -505,7 +505,7 @@ void ForwardingModule::handleMessageForKnownTarget(const of_version_t ofVersion,
 
 }
 
-void ForwardingModule::handleTopologyChanged(const ZmfMessage& message) {
+void ForwardingModule::handleTopologyChanged(const zmf::data::ZmfMessage& message) {
     TopologyModule_Proto::From msgContainer;
     msgContainer.ParseFromString(message.getData());
     getLogger().information("Received new Topology.");
@@ -607,7 +607,7 @@ void ForwardingModule::installFlowRulesAlongPath(const of_version_t ofVersion,
             std::string serializedFlow = zsdn::of_object_serialize_to_data_string(flowToAdd);
             // could also use outPort.switchDpid, they have to be identical
 
-            MessageType toSpecificSwitch = switchadapter_topics::TO().switch_adapter().switch_instance(
+            zmf::data::MessageType toSpecificSwitch = switchAdapterTopics_.to().switch_adapter().switch_instance(
                     switchForFlow).openflow().packet_out().build();
 
 

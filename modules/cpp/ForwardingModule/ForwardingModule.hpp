@@ -8,10 +8,10 @@
 #include <zmf/AbstractModule.hpp>
 #include <thread>
 #include <ModuleTypeIDs.hpp>
-#include <zsdn/topics/SwitchAdapter_topics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 #include <tins/ethernetII.h>
-#include <zsdn/topics/DeviceModule_topics.hpp>
-#include <zsdn/topics/TopologyModule_topics.hpp>
+#include <zsdn/topics/DeviceModuleTopics.hpp>
+#include <zsdn/topics/TopologyModuleTopics.hpp>
 #include <zsdn/proto/CommonTopology.pb.h>
 #include <NetworkGraph.h>
 #include <loci/loci_base.h>
@@ -52,13 +52,20 @@ private:
     static const uint16_t deviceModuleDependencyType_ = zsdn::MODULE_TYPE_ID_DeviceModule;
 
     static const uint16_t deviceModuleDependencyVersion_ = 0;
-    /// Used for subscribing to all packetsIns in order to install routes in the network.
-    zmf::data::MessageType deviceStateChangeTopic_ = devicemodule_topics::FROM().device_module().device_event().build();
 
-    zmf::data::MessageType requestDeviceByMacTopic_ = devicemodule_topics::REQUEST().device_module().get_device_by_mac_address().build();
-    zmf::data::MessageType getAllDevicesMsgTopic_ = devicemodule_topics::REQUEST().device_module().get_all_devices().build();
-    zmf::data::MessageType getTopologyTopic_ = topologymodule_topics::REQUEST().topology_module().get_topology().build();
-    zmf::data::MessageType topologyChangedTopic_ = topologymodule_topics::FROM().topology_module().topology_changed_event().build();
+    // Builders for topic creation
+    zsdn::modules::DeviceModuleTopics<zmf::data::MessageType> deviceModuleTopics_;
+    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopics_;
+    zsdn::modules::TopologyModuleTopics<zmf::data::MessageType> topologyModuleTopics_;
+
+
+    /// Used for subscribing to all packetsIns in order to install routes in the network.
+    zmf::data::MessageType deviceStateChangeTopic_ = deviceModuleTopics_.from().device_module().device_event().build();
+
+    zmf::data::MessageType requestDeviceByMacTopic_ = deviceModuleTopics_.request().device_module().get_device_by_mac_address().build();
+    zmf::data::MessageType getAllDevicesMsgTopic_ = deviceModuleTopics_.request().device_module().get_all_devices().build();
+    zmf::data::MessageType getTopologyTopic_ = topologyModuleTopics_.request().topology_module().get_topology().build();
+    zmf::data::MessageType topologyChangedTopic_ = topologyModuleTopics_.from().topology_module().topology_changed_event().build();
     std::shared_ptr<zsdn::NetworkGraph> currentGraph;
 
 
@@ -80,13 +87,13 @@ private:
     zsdn::Device* insertNewDevice(zsdn::MAC mac, zsdn::DPID switch_dpid, zsdn::Port switch_port);
 
 
-    void handleDeviceStateChanged(const ZmfMessage& changeMsg);
+    void handleDeviceStateChanged(const zmf::data::ZmfMessage& changeMsg);
 
     void deleteDevice(zsdn::MAC mac);
 
     bool initiallyRequestAllDevices();
 
-    void handleTopologyChanged(const ZmfMessage& message);
+    void handleTopologyChanged(const zmf::data::ZmfMessage& message);
 
     void applyTopology(const common::topology::Topology& topology);
 
