@@ -30,9 +30,10 @@ while getopts hb:tc flag; do
 done
 
 
-# Build Cpp Topics
+# Build Cpp and Java Topics
 cd ../util
 ./build-topics-cpp.sh
+./build-topics-java.sh
 cd ../common
 
 
@@ -90,8 +91,10 @@ echo "# Finishef Building C++ Commons"
 
 echo "# Start Building Java Commons"
 cd java/zsdn-proto/
+mvn clean install
+cd ../..
 
-echo "# Finishe Building Java Commons"
+echo "# Finished Building Java Commons"
 
 
 echo "### Finished Build ZSDN Commons ###"

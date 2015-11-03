@@ -22,3 +22,5 @@ dependencies/*
 modules/*/CMakeFiles/*
 zsdn-dir.txt
 zsdn-dir_cmake.txt
+common/cpp/zsdn-commons/zsdn/topics/
+common/java/zsdn-proto/src/main/java/zsdn/topics/
