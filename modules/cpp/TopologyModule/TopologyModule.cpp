@@ -22,11 +22,11 @@ bool TopologyModule::enable() {
 
     // Subscribe at ZMF to Topics
     getZmf()->subscribe(topicsSwitchEvent_,
-                        [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+                        [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
                             handleSwitchEvent(msg, sender);
                         });
 
-    getZmf()->subscribe(topicsSwitchLinkEvent_, [this](const ZmfMessage& msg, const ModuleUniqueId& sender) {
+    getZmf()->subscribe(topicsSwitchLinkEvent_, [this](const zmf::data::ZmfMessage& msg, const zmf::data::ModuleUniqueId& sender) {
         handleSwitchLinkEvent(msg, sender);
     });
 
@@ -74,10 +74,10 @@ zmf::data::ZmfOutReply TopologyModule::handleRequest(const zmf::data::ZmfMessage
         }
         case TopologyModule_Proto::Request::REQUESTMSG_NOT_SET:
             getLogger().warning("Received Request where RequestMessage was not set.");
-            return ZmfOutReply::createNoReply();
+            return zmf::data::ZmfOutReply::createNoReply();
         default:
             getLogger().information("Received unknown Request");
-            return ZmfOutReply::createNoReply();
+            return zmf::data::ZmfOutReply::createNoReply();
     }
 }
 
@@ -173,7 +173,7 @@ void TopologyModule::requestAllSwitchToSwitchLinksFromLinkDiscoveryModule() {
 }
 
 
-void TopologyModule::handleSwitchEvent(const ZmfMessage& message, const ModuleUniqueId& id) {
+void TopologyModule::handleSwitchEvent(const zmf::data::ZmfMessage& message, const zmf::data::ModuleUniqueId& id) {
     // Container of the Zmf message
     SwitchRegistryModule_Proto::From msgContainer;
 
@@ -219,7 +219,7 @@ void TopologyModule::handleSwitchEvent(const ZmfMessage& message, const ModuleUn
 
 }
 
-void TopologyModule::handleSwitchLinkEvent(const ZmfMessage& message, const ModuleUniqueId& id) {
+void TopologyModule::handleSwitchLinkEvent(const zmf::data::ZmfMessage& message, const zmf::data::ModuleUniqueId& id) {
     // Container of the Zmf message
     LinkDiscoveryModule_Proto::From msgContainer;
 

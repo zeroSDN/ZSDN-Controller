@@ -2,9 +2,9 @@
 #define TopologyModule_H
 
 #include <zmf/AbstractModule.hpp>
-#include <zsdn/topics/SwitchRegistryModule_topics.hpp>
-#include <zsdn/topics/LinkDiscoveryModule_topics.hpp>
-#include <zsdn/topics/TopologyModule_topics.hpp>
+#include <zsdn/topics/SwitchRegistryModuleTopics.hpp>
+#include <zsdn/topics/LinkDiscoveryModuleTopics.hpp>
+#include <zsdn/topics/TopologyModuleTopics.hpp>
 #include <thread>
 #include <zsdn/proto/CommonTopology.pb.h>
 #include <ModuleTypeIDs.hpp>
@@ -55,11 +55,11 @@ public:
 
     const common::topology::Topology UTAccessor_getCurrentStableTopology() { return *currentStableTopology_; };
 
-    void UTAccessor_handleSwitchEvent(const ZmfMessage& message, const ModuleUniqueId& id) {
+    void UTAccessor_handleSwitchEvent(const zmf::data::ZmfMessage& message, const zmf::data::ModuleUniqueId& id) {
         handleSwitchEvent(message, id);
     };
 
-    void UTAccessor_handleSwitchLinkEvent(const ZmfMessage& message, const ModuleUniqueId& id) {
+    void UTAccessor_handleSwitchLinkEvent(const zmf::data::ZmfMessage& message, const zmf::data::ModuleUniqueId& id) {
         handleSwitchLinkEvent(message, id);
     };
 
@@ -108,23 +108,29 @@ private:
     /// (Stable means in this context that only links between Swichtes that are also registered in the SwitchesCache are part of the Topology)
     common::topology::Topology* currentStableTopology_ = nullptr;
 
+    // Builder for topic creation
+    zsdn::modules::SwitchRegistryModuleTopics<zmf::data::MessageType> switchRegistyTopics_;
+    zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType> linkDiscoveryTopics_;
+    zsdn::modules::TopologyModuleTopics<zmf::data::MessageType> topologyModuleTopics_;
+
+
     /// Topic for LinkDiscoveryModule Switch_Link_Event
-    zmf::data::MessageType topicsSwitchLinkEvent_ = linkdiscoverymodule_topics::FROM().link_discovery_module().switch_link_event().build();
+    zmf::data::MessageType topicsSwitchLinkEvent_ = linkDiscoveryTopics_.from().link_discovery_module().switch_link_event().build();
 
     /// Topic for SwitchRegistryModule Switch_Event
-    zmf::data::MessageType topicsSwitchEvent_ = switchregistrymodule_topics::FROM().switch_registry_module().switch_event().build();
+    zmf::data::MessageType topicsSwitchEvent_ = switchRegistyTopics_.from().switch_registry_module().switch_event().build();
 
     /// Topic for get_topology Reply
-    zmf::data::MessageType topicsGetTopologyReply_ = topologymodule_topics::REPLY().topology_module().get_topology().build();
+    zmf::data::MessageType topicsGetTopologyReply_ = topologyModuleTopics_.reply().topology_module().get_topology().build();
 
     /// Topic for TopologyModule TopologyChanged Event
-    zmf::data::MessageType topicsTopologyChangedEvent_ = topologymodule_topics::FROM().topology_module().topology_changed_event().build();
+    zmf::data::MessageType topicsTopologyChangedEvent_ = topologyModuleTopics_.from().topology_module().topology_changed_event().build();
 
     /// Topic for requesting all Switches from SwitchRegistryModule
-    zmf::data::MessageType topicsGetAllSwitches_ = switchregistrymodule_topics::REQUEST().switch_registry_module().get_all_switches().build();
+    zmf::data::MessageType topicsGetAllSwitches_ = switchRegistyTopics_.request().switch_registry_module().get_all_switches().build();
 
     /// Topic for requesting all SwitchToSwitchLinks from LinkDiscoveryModule
-    zmf::data::MessageType topicsGetAllSwitchLinks_ = linkdiscoverymodule_topics::REQUEST().link_discovery_module().get_all_switch_links().build();
+    zmf::data::MessageType topicsGetAllSwitchLinks_ = linkDiscoveryTopics_.request().link_discovery_module().get_all_switch_links().build();
 
     /**
      * Handles incoming packets of the SwitchRegistryModule for changing Switches.
@@ -135,7 +141,7 @@ private:
      * @param message The ZmfMessage that was submitted.
      * @param id The id of the Module that has submitted this ZmfMessage.
      */
-    void handleSwitchEvent(const ZmfMessage& message, const ModuleUniqueId& id);
+    void handleSwitchEvent(const zmf::data::ZmfMessage& message, const zmf::data::ModuleUniqueId& id);
 
     /**
      * Sends a request to the SwitchRegistryModule for all currently registered Switches and adds all the returned Switches to the SwitchCache.
@@ -170,7 +176,7 @@ private:
      * @param message The ZmfMessage that was submitted.
      * @param id The id of the Module that has submitted this ZmfMessage.
      */
-    void handleSwitchLinkEvent(const ZmfMessage& message, const ModuleUniqueId& id);
+    void handleSwitchLinkEvent(const zmf::data::ZmfMessage& message, const zmf::data::ModuleUniqueId& id);
 
     /**
      * Sends a request to the LinkDiscoveryModule for all currently registered SwitchToSwitchLinks and adds all the returned SwitchToSwitchLinks to the SwitchToSwitchLinkCache.
