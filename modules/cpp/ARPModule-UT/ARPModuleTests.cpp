@@ -63,7 +63,7 @@ void ARPModuleTests::setUp(void) {
                                     newProtoDevice->set_allocated_attachment_point(attP);
 
                                     zmf::data::ZmfMessage msg(
-                                            devicemodule_topics::REPLY().device_module().get_all_devices().build(),
+                                    zsdn::modules::DeviceModuleTopics<zmf::data::MessageType>().reply().device_module().get_all_devices().build(),
                                             reply.SerializeAsString());
 
                                     return zmf::data::ZmfOutReply::createImmediateReply(msg);
@@ -104,7 +104,7 @@ void ARPModuleTests::setUp(void) {
                                     }
 
                                     zmf::data::ZmfMessage msg(
-                                            devicemodule_topics::REPLY().device_module().get_devices_by_filter().build(),
+                                            zsdn::modules::DeviceModuleTopics<zmf::data::MessageType>().reply().device_module().get_devices_by_filter().build(),
                                             reply.SerializeAsString());
 
                                     return zmf::data::ZmfOutReply::createImmediateReply(msg);
@@ -516,7 +516,7 @@ std::shared_ptr<zmf::data::ZmfMessage> ARPModuleTests::build_DemoReqARP_ZmfMessa
 
     return std::shared_ptr<zmf::data::ZmfMessage>(
             new zmf::data::ZmfMessage(
-                    switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group_default().arp().build(),
+                    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().from().switch_adapter().openflow().packet_in().multicast_group_default().arp().build(),
                     data));
 }
 
@@ -561,7 +561,7 @@ std::shared_ptr<zmf::data::ZmfMessage> ARPModuleTests::build_DemoReqARP_ZmfMessa
 
     return std::shared_ptr<zmf::data::ZmfMessage>(
             new zmf::data::ZmfMessage(
-                    switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group_default().arp().build(),
+                    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().from().switch_adapter().openflow().packet_in().multicast_group_default().arp().build(),
                     data));
 }
 
@@ -593,7 +593,7 @@ std::shared_ptr<zmf::data::ZmfMessage> ARPModuleTests::build_DemoReplyARP_ZmfMes
 
     return std::shared_ptr<zmf::data::ZmfMessage>(
             new zmf::data::ZmfMessage(
-                    switchadapter_topics::FROM().switch_adapter().openflow().packet_in().multicast_group_default().arp().build(),
+                    zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType>().from().switch_adapter().openflow().packet_in().multicast_group_default().arp().build(),
                     data));
 
 }
@@ -636,7 +636,7 @@ std::shared_ptr<zmf::data::ZmfMessage> ARPModuleTests::build_DemoDeviceUpdate_Zm
     fromMsg.set_allocated_device_event(deviceEvent);
 
     return std::shared_ptr<zmf::data::ZmfMessage>(
-            new zmf::data::ZmfMessage(devicemodule_topics::FROM().device_module().device_event().changed().build(),
+            new zmf::data::ZmfMessage(zsdn::modules::DeviceModuleTopics<zmf::data::MessageType>().from().device_module().device_event().changed().build(),
                                       fromMsg.SerializeAsString()));
 }
 
@@ -660,7 +660,7 @@ std::shared_ptr<zmf::data::ZmfMessage> ARPModuleTests::build_DemoDeviceAdd_ZmfMe
     fromMsg.set_allocated_device_event(deviceEvent);
 
     return std::shared_ptr<zmf::data::ZmfMessage>(
-            new zmf::data::ZmfMessage(devicemodule_topics::FROM().device_module().device_event().added().build(),
+            new zmf::data::ZmfMessage(zsdn::modules::DeviceModuleTopics<zmf::data::MessageType>().from().device_module().device_event().added().build(),
                                       fromMsg.SerializeAsString()));
 }
 
@@ -688,7 +688,7 @@ std::shared_ptr<zmf::data::ZmfMessage> ARPModuleTests::build_DemoDeviceDelete_Zm
     fromMsg.set_allocated_device_event(deviceEvent);
 
     return std::shared_ptr<zmf::data::ZmfMessage>(
-            new zmf::data::ZmfMessage(devicemodule_topics::FROM().device_module().device_event().removed().build(),
+            new zmf::data::ZmfMessage(zsdn::modules::DeviceModuleTopics<zmf::data::MessageType>().from().device_module().device_event().removed().build(),
                                       fromMsg.SerializeAsString()));
 }
 

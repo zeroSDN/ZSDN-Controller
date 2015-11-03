@@ -3,7 +3,7 @@
 
 #include <cppunit/TestCase.h>
 #include <cppunit/extensions/HelperMacros.h>
-#include <zsdn/topics/SwitchAdapter_topics.hpp>
+#include <zsdn/topics/SwitchAdapterTopics.hpp>
 #include <zmf/AbstractModule.hpp>
 #include <zmf/IZmfInstanceController.hpp>
 #include "tins/tins.h"
@@ -131,6 +131,8 @@ public:
     void testHandleDeleteInexistentDevice(void);
 
 private:
+
+
     std::shared_ptr<zmf::IZmfInstanceController> arpModuleInstance_;
     std::shared_ptr<ARPModule> arpModPtr_;
 
