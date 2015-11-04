@@ -64,9 +64,9 @@ uint8_t packetOutLinkDiscovery[0x003f] = {0x04, 0x0d, 0x00, 0x3f, 0x00, 0x00, 0x
 void SwitchAdapterTests::testSwitchAdapter() {
 
 
-    Poco::Net::SocketAddress address("127.0.0.1:6633");
+    Poco::Net::SocketAddress address("127.0.0.1:16633");
 
-    SwitchAdapterRunner runner_13(OF_VERSION_1_3, 6633,
+    SwitchAdapterRunner runner_13(OF_VERSION_1_3, 16633,
                                   UT_CONFIG_FILE);
 
     // may fail when port blocked.
@@ -335,7 +335,7 @@ void SwitchAdapterTests::testSpecialCases(Poco::Net::StreamSocket& strSock, Poco
     zmf::data::ZmfMessage msg(ofTopic, test);
     module->getZmfForUnittests()->publish(msg);
 
-    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    std::this_thread::sleep_for(std:66:chrono::milliseconds(200));
     CPPUNIT_ASSERT_EQUAL(0, strSock.available());
 
     // check that we have not received any events. now we send an echoRequest, which will both be published to zmf
