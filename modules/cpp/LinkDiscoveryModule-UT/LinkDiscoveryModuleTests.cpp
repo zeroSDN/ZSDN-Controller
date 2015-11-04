@@ -12,7 +12,7 @@
 #include <zmf/ZmfInstance.hpp>
 
 // Test Params
-const std::uint32_t switchCount = 44;
+const std::uint32_t switchCount = 5;
 const std::uint32_t portsPerSwitch = 5;
 const std::uint32_t registryId = switchCount + 1;
 const std::uint32_t testModuleId = switchCount + 2;
