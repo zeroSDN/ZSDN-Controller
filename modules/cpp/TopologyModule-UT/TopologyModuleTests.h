@@ -191,14 +191,16 @@ private:
 
     zmf::data::ModuleUniqueId demoModuleUniqueId_ = zmf::data::ModuleUniqueId(demoSwitchTypeId_, demoSwitchInstanceId_);
 
+
+
     /// Topic for SwitchRegistryModule Switch_Event
-    zmf::data::MessageType topicsSwitchEvent_ = switchregistrymodule_topics::FROM().switch_registry_module().switch_event().build();
+    zmf::data::MessageType topicsSwitchEvent_ = zsdn::modules::SwitchRegistryModuleTopics<zmf::data::MessageType>().from().switch_registry_module().switch_event().build();
 
     /// Topic for LinkDiscoveryModule SwitchLink_Event
-    zmf::data::MessageType topicsSwitchLinkEvent_ = linkdiscoverymodule_topics::FROM().link_discovery_module().switch_link_event().build();
+    zmf::data::MessageType topicsSwitchLinkEvent_ = zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().from().link_discovery_module().switch_link_event().build();
 
     /// Topic for TopologyModule with GetTopologyRequest
-    zmf::data::MessageType topicsGetTopologyRequest_ = topologymodule_topics::REQUEST().topology_module().get_topology().build();
+    zmf::data::MessageType topicsGetTopologyRequest_ = zsdn::modules::TopologyModuleTopics<zmf::data::MessageType>().request().topology_module().get_topology().build();
 
     /**
      * Builds a demo ZmfMessage for the SwitchEvent Added from the SwitchRegistryModule for a given Switch.

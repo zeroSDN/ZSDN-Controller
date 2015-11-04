@@ -303,7 +303,7 @@ void TopologyModuleTests::setUp() {
                                     reply.set_allocated_get_all_switches_reply(asReply);
 
                                     zmf::data::ZmfMessage msg(
-                                            switchregistrymodule_topics::REPLY().switch_registry_module().get_all_switches().build(),
+                                    zsdn::modules::SwitchRegistryModuleTopics<zmf::data::MessageType>().reply().switch_registry_module().get_all_switches().build(),
                                             reply.SerializeAsString());
 
                                     return zmf::data::ZmfOutReply::createImmediateReply(msg);
@@ -353,7 +353,7 @@ void TopologyModuleTests::setUp() {
                                     reply.set_allocated_get_all_switch_links_reply(slReply);
 
                                     zmf::data::ZmfMessage msg(
-                                            linkdiscoverymodule_topics::REPLY().link_discovery_module().get_all_switch_links().build(),
+                                    zsdn::modules::LinkDiscoveryModuleTopics<zmf::data::MessageType>().reply().link_discovery_module().get_all_switch_links().build(),
                                             reply.SerializeAsString());
 
                                     return zmf::data::ZmfOutReply::createImmediateReply(msg);
