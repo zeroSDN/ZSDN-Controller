@@ -23,4 +23,12 @@ modules/*/CMakeFiles/*
 zsdn-dir.txt
 zsdn-dir_cmake.txt
 common/cpp/zsdn-commons/zsdn/topics/
+common/cpp/zsdn-commons/zsdn/proto/
 common/java/zsdn-proto/src/main/java/zsdn/topics/
+common/java/zsdn-proto/src/main/java/zsdn/protocol/
+common/java/zsdn-proto/.settings/
+common/java/zsdn-proto/.project
+common/java/zsdn-proto/target
+modules/java/RESTAdmin/.settings
+modules/java/RESTAdmin/target/
+.classpath
