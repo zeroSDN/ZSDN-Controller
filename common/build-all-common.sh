@@ -34,6 +34,8 @@ done
 cd ../util
 ./build-topics-cpp.sh
 ./build-topics-java.sh
+./build-proto-cpp.sh
+./build-proto-java.sh
 cd ../common
 
 

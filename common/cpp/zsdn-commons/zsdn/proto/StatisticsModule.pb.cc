@@ -20,12 +20,6 @@ namespace StatisticsModule_Proto {
 
 namespace {
 
-const ::google::protobuf::Descriptor* To_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  To_reflection_ = NULL;
-struct ToOneofInstance {
-  const ::StatisticsModule_Proto::FooBar* foo_;
-}* To_default_oneof_instance_ = NULL;
 const ::google::protobuf::Descriptor* From_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   From_reflection_ = NULL;
@@ -47,9 +41,6 @@ const ::google::protobuf::internal::GeneratedMessageReflection*
 const ::google::protobuf::Descriptor* From_SingleTableStatistics_descriptor_ = NULL;
 const ::google::protobuf::internal::GeneratedMessageReflection*
   From_SingleTableStatistics_reflection_ = NULL;
-const ::google::protobuf::Descriptor* FooBar_descriptor_ = NULL;
-const ::google::protobuf::internal::GeneratedMessageReflection*
-  FooBar_reflection_ = NULL;
 
 }  // namespace
 
@@ -60,25 +51,7 @@ void protobuf_AssignDesc_StatisticsModule_2eproto() {
     ::google::protobuf::DescriptorPool::generated_pool()->FindFileByName(
       "StatisticsModule.proto");
   GOOGLE_CHECK(file != NULL);
-  To_descriptor_ = file->message_type(0);
-  static const int To_offsets_[2] = {
-    PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(To_default_oneof_instance_, foo_),
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(To, ToMsg_),
-  };
-  To_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      To_descriptor_,
-      To::default_instance_,
-      To_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(To, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(To, _unknown_fields_),
-      -1,
-      To_default_oneof_instance_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(To, _oneof_case_[0]),
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(To));
-  From_descriptor_ = file->message_type(1);
+  From_descriptor_ = file->message_type(0);
   static const int From_offsets_[2] = {
     PROTO2_GENERATED_DEFAULT_ONEOF_FIELD_OFFSET(From_default_oneof_instance_, stats_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(From, FromMsg_),
@@ -186,20 +159,6 @@ void protobuf_AssignDesc_StatisticsModule_2eproto() {
       ::google::protobuf::DescriptorPool::generated_pool(),
       ::google::protobuf::MessageFactory::generated_factory(),
       sizeof(From_SingleTableStatistics));
-  FooBar_descriptor_ = file->message_type(2);
-  static const int FooBar_offsets_[1] = {
-  };
-  FooBar_reflection_ =
-    new ::google::protobuf::internal::GeneratedMessageReflection(
-      FooBar_descriptor_,
-      FooBar::default_instance_,
-      FooBar_offsets_,
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FooBar, _has_bits_[0]),
-      GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(FooBar, _unknown_fields_),
-      -1,
-      ::google::protobuf::DescriptorPool::generated_pool(),
-      ::google::protobuf::MessageFactory::generated_factory(),
-      sizeof(FooBar));
 }
 
 namespace {
@@ -213,8 +172,6 @@ inline void protobuf_AssignDescriptorsOnce() {
 void protobuf_RegisterTypes(const ::std::string&) {
   protobuf_AssignDescriptorsOnce();
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    To_descriptor_, &To::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     From_descriptor_, &From::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     From_SwitchStats_descriptor_, &From_SwitchStats::default_instance());
@@ -226,16 +183,11 @@ void protobuf_RegisterTypes(const ::std::string&) {
     From_SinglePortStatistics_descriptor_, &From_SinglePortStatistics::default_instance());
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
     From_SingleTableStatistics_descriptor_, &From_SingleTableStatistics::default_instance());
-  ::google::protobuf::MessageFactory::InternalRegisterGeneratedMessage(
-    FooBar_descriptor_, &FooBar::default_instance());
 }
 
 }  // namespace
 
 void protobuf_ShutdownFile_StatisticsModule_2eproto() {
-  delete To::default_instance_;
-  delete To_default_oneof_instance_;
-  delete To_reflection_;
   delete From::default_instance_;
   delete From_default_oneof_instance_;
   delete From_reflection_;
@@ -249,8 +201,6 @@ void protobuf_ShutdownFile_StatisticsModule_2eproto() {
   delete From_SinglePortStatistics_reflection_;
   delete From_SingleTableStatistics::default_instance_;
   delete From_SingleTableStatistics_reflection_;
-  delete FooBar::default_instance_;
-  delete FooBar_reflection_;
 }
 
 void protobuf_AddDesc_StatisticsModule_2eproto() {
@@ -261,36 +211,33 @@ void protobuf_AddDesc_StatisticsModule_2eproto() {
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
     "\n\026StatisticsModule.proto\022\026StatisticsModu"
-    "le_Proto\"<\n\002To\022-\n\003foo\030\001 \001(\0132\036.Statistics"
-    "Module_Proto.FooBarH\000B\007\n\005ToMsg\"\213\007\n\004From\022"
-    "9\n\005stats\030\001 \001(\0132(.StatisticsModule_Proto."
-    "From.SwitchStatsH\000\032\237\001\n\013SwitchStats\022\020\n\010un"
-    "iqueID\030\001 \002(\004\022=\n\tportStats\030\002 \001(\0132*.Statis"
-    "ticsModule_Proto.From.PortStatslist\022\?\n\nt"
-    "ableStats\030\003 \001(\0132+.StatisticsModule_Proto"
-    ".From.TableStatslist\032U\n\rPortStatslist\022D\n"
-    "\tportStats\030\001 \003(\01321.StatisticsModule_Prot"
-    "o.From.SinglePortStatistics\032X\n\016TableStat"
-    "slist\022F\n\ntableStats\030\001 \003(\01322.StatisticsMo"
-    "dule_Proto.From.SingleTableStatistics\032\330\002"
-    "\n\024SinglePortStatistics\022\022\n\nportNumber\030\001 \002"
-    "(\r\022 \n\030numberOfPackagesReceived\030\002 \001(\004\022\034\n\024"
-    "numberOfPackagesSent\030\003 \001(\004\022(\n numberOfPa"
-    "ckagesDropedByReceiver\030\004 \001(\004\022&\n\036numberOf"
-    "PackagesDropedBySender\030\005 \001(\004\022\032\n\022numberOf"
-    "Collisions\030\006 \001(\004\022 \n\030numberOfErrorsFromSe"
-    "nder\030\007 \001(\004\022\"\n\032numberOfErrorsFromReceiver"
-    "\030\010 \001(\004\022\035\n\025numberOfBytesReceived\030\t \001(\004\022\031\n"
-    "\021numberOfBytesSent\030\n \001(\004\032\216\001\n\025SingleTable"
-    "Statistics\022\017\n\007tableID\030\001 \002(\r\022\025\n\ractiveEnt"
-    "ries\030\002 \001(\r\022\030\n\020PackagesLookedUp\030\003 \001(\004\022\037\n\027"
-    "PackagesHittingTheTable\030\004 \001(\004\022\022\n\nmaxEntr"
-    "ies\030\005 \001(\rB\t\n\007FromMsg\"\010\n\006FooBarB)\n\rzsdn.p"
-    "rotocolB\030StatisticsModuleProtocol", 1073);
+    "le_Proto\"\213\007\n\004From\0229\n\005stats\030\001 \001(\0132(.Stati"
+    "sticsModule_Proto.From.SwitchStatsH\000\032\237\001\n"
+    "\013SwitchStats\022\020\n\010uniqueID\030\001 \002(\004\022=\n\tportSt"
+    "ats\030\002 \001(\0132*.StatisticsModule_Proto.From."
+    "PortStatslist\022\?\n\ntableStats\030\003 \001(\0132+.Stat"
+    "isticsModule_Proto.From.TableStatslist\032U"
+    "\n\rPortStatslist\022D\n\tportStats\030\001 \003(\01321.Sta"
+    "tisticsModule_Proto.From.SinglePortStati"
+    "stics\032X\n\016TableStatslist\022F\n\ntableStats\030\001 "
+    "\003(\01322.StatisticsModule_Proto.From.Single"
+    "TableStatistics\032\330\002\n\024SinglePortStatistics"
+    "\022\022\n\nportNumber\030\001 \002(\r\022 \n\030numberOfPackages"
+    "Received\030\002 \001(\004\022\034\n\024numberOfPackagesSent\030\003"
+    " \001(\004\022(\n numberOfPackagesDropedByReceiver"
+    "\030\004 \001(\004\022&\n\036numberOfPackagesDropedBySender"
+    "\030\005 \001(\004\022\032\n\022numberOfCollisions\030\006 \001(\004\022 \n\030nu"
+    "mberOfErrorsFromSender\030\007 \001(\004\022\"\n\032numberOf"
+    "ErrorsFromReceiver\030\010 \001(\004\022\035\n\025numberOfByte"
+    "sReceived\030\t \001(\004\022\031\n\021numberOfBytesSent\030\n \001"
+    "(\004\032\216\001\n\025SingleTableStatistics\022\017\n\007tableID\030"
+    "\001 \002(\r\022\025\n\ractiveEntries\030\002 \001(\r\022\030\n\020Packages"
+    "LookedUp\030\003 \001(\004\022\037\n\027PackagesHittingTheTabl"
+    "e\030\004 \001(\004\022\022\n\nmaxEntries\030\005 \001(\rB\t\n\007FromMsgB)"
+    "\n\rzsdn.protocolB\030StatisticsModuleProtoco"
+    "l", 1001);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "StatisticsModule.proto", &protobuf_RegisterTypes);
-  To::default_instance_ = new To();
-  To_default_oneof_instance_ = new ToOneofInstance;
   From::default_instance_ = new From();
   From_default_oneof_instance_ = new FromOneofInstance;
   From_SwitchStats::default_instance_ = new From_SwitchStats();
@@ -298,15 +245,12 @@ void protobuf_AddDesc_StatisticsModule_2eproto() {
   From_TableStatslist::default_instance_ = new From_TableStatslist();
   From_SinglePortStatistics::default_instance_ = new From_SinglePortStatistics();
   From_SingleTableStatistics::default_instance_ = new From_SingleTableStatistics();
-  FooBar::default_instance_ = new FooBar();
-  To::default_instance_->InitAsDefaultInstance();
   From::default_instance_->InitAsDefaultInstance();
   From_SwitchStats::default_instance_->InitAsDefaultInstance();
   From_PortStatslist::default_instance_->InitAsDefaultInstance();
   From_TableStatslist::default_instance_->InitAsDefaultInstance();
   From_SinglePortStatistics::default_instance_->InitAsDefaultInstance();
   From_SingleTableStatistics::default_instance_->InitAsDefaultInstance();
-  FooBar::default_instance_->InitAsDefaultInstance();
   ::google::protobuf::internal::OnShutdown(&protobuf_ShutdownFile_StatisticsModule_2eproto);
 }
 
@@ -316,255 +260,6 @@ struct StaticDescriptorInitializer_StatisticsModule_2eproto {
     protobuf_AddDesc_StatisticsModule_2eproto();
   }
 } static_descriptor_initializer_StatisticsModule_2eproto_;
-
-// ===================================================================
-
-#ifndef _MSC_VER
-const int To::kFooFieldNumber;
-#endif  // !_MSC_VER
-
-To::To()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:StatisticsModule_Proto.To)
-}
-
-void To::InitAsDefaultInstance() {
-  To_default_oneof_instance_->foo_ = const_cast< ::StatisticsModule_Proto::FooBar*>(&::StatisticsModule_Proto::FooBar::default_instance());
-}
-
-To::To(const To& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:StatisticsModule_Proto.To)
-}
-
-void To::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  clear_has_ToMsg();
-}
-
-To::~To() {
-  // @@protoc_insertion_point(destructor:StatisticsModule_Proto.To)
-  SharedDtor();
-}
-
-void To::SharedDtor() {
-  if (has_ToMsg()) {
-    clear_ToMsg();
-  }
-  if (this != default_instance_) {
-  }
-}
-
-void To::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* To::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return To_descriptor_;
-}
-
-const To& To::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_StatisticsModule_2eproto();
-  return *default_instance_;
-}
-
-To* To::default_instance_ = NULL;
-
-To* To::New() const {
-  return new To;
-}
-
-void To::clear_ToMsg() {
-  switch(ToMsg_case()) {
-    case kFoo: {
-      delete ToMsg_.foo_;
-      break;
-    }
-    case TOMSG_NOT_SET: {
-      break;
-    }
-  }
-  _oneof_case_[0] = TOMSG_NOT_SET;
-}
-
-
-void To::Clear() {
-  clear_ToMsg();
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool To::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:StatisticsModule_Proto.To)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-    switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // optional .StatisticsModule_Proto.FooBar foo = 1;
-      case 1: {
-        if (tag == 10) {
-          DO_(::google::protobuf::internal::WireFormatLite::ReadMessageNoVirtual(
-               input, mutable_foo()));
-        } else {
-          goto handle_unusual;
-        }
-        if (input->ExpectAtEnd()) goto success;
-        break;
-      }
-
-      default: {
-      handle_unusual:
-        if (tag == 0 ||
-            ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-            ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-          goto success;
-        }
-        DO_(::google::protobuf::internal::WireFormat::SkipField(
-              input, tag, mutable_unknown_fields()));
-        break;
-      }
-    }
-  }
-success:
-  // @@protoc_insertion_point(parse_success:StatisticsModule_Proto.To)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:StatisticsModule_Proto.To)
-  return false;
-#undef DO_
-}
-
-void To::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:StatisticsModule_Proto.To)
-  // optional .StatisticsModule_Proto.FooBar foo = 1;
-  if (has_foo()) {
-    ::google::protobuf::internal::WireFormatLite::WriteMessageMaybeToArray(
-      1, this->foo(), output);
-  }
-
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:StatisticsModule_Proto.To)
-}
-
-::google::protobuf::uint8* To::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:StatisticsModule_Proto.To)
-  // optional .StatisticsModule_Proto.FooBar foo = 1;
-  if (has_foo()) {
-    target = ::google::protobuf::internal::WireFormatLite::
-      WriteMessageNoVirtualToArray(
-        1, this->foo(), target);
-  }
-
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:StatisticsModule_Proto.To)
-  return target;
-}
-
-int To::ByteSize() const {
-  int total_size = 0;
-
-  switch (ToMsg_case()) {
-    // optional .StatisticsModule_Proto.FooBar foo = 1;
-    case kFoo: {
-      total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::MessageSizeNoVirtual(
-          this->foo());
-      break;
-    }
-    case TOMSG_NOT_SET: {
-      break;
-    }
-  }
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void To::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const To* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const To*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void To::MergeFrom(const To& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  switch (from.ToMsg_case()) {
-    case kFoo: {
-      mutable_foo()->::StatisticsModule_Proto::FooBar::MergeFrom(from.foo());
-      break;
-    }
-    case TOMSG_NOT_SET: {
-      break;
-    }
-  }
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void To::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void To::CopyFrom(const To& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool To::IsInitialized() const {
-
-  return true;
-}
-
-void To::Swap(To* other) {
-  if (other != this) {
-    std::swap(ToMsg_, other->ToMsg_);
-    std::swap(_oneof_case_[0], other->_oneof_case_[0]);
-    std::swap(_has_bits_[0], other->_has_bits_[0]);
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata To::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = To_descriptor_;
-  metadata.reflection = To_reflection_;
-  return metadata;
-}
-
 
 // ===================================================================
 
@@ -2551,180 +2246,6 @@ void From::Swap(From* other) {
   ::google::protobuf::Metadata metadata;
   metadata.descriptor = From_descriptor_;
   metadata.reflection = From_reflection_;
-  return metadata;
-}
-
-
-// ===================================================================
-
-#ifndef _MSC_VER
-#endif  // !_MSC_VER
-
-FooBar::FooBar()
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  // @@protoc_insertion_point(constructor:StatisticsModule_Proto.FooBar)
-}
-
-void FooBar::InitAsDefaultInstance() {
-}
-
-FooBar::FooBar(const FooBar& from)
-  : ::google::protobuf::Message() {
-  SharedCtor();
-  MergeFrom(from);
-  // @@protoc_insertion_point(copy_constructor:StatisticsModule_Proto.FooBar)
-}
-
-void FooBar::SharedCtor() {
-  _cached_size_ = 0;
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-}
-
-FooBar::~FooBar() {
-  // @@protoc_insertion_point(destructor:StatisticsModule_Proto.FooBar)
-  SharedDtor();
-}
-
-void FooBar::SharedDtor() {
-  if (this != default_instance_) {
-  }
-}
-
-void FooBar::SetCachedSize(int size) const {
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-}
-const ::google::protobuf::Descriptor* FooBar::descriptor() {
-  protobuf_AssignDescriptorsOnce();
-  return FooBar_descriptor_;
-}
-
-const FooBar& FooBar::default_instance() {
-  if (default_instance_ == NULL) protobuf_AddDesc_StatisticsModule_2eproto();
-  return *default_instance_;
-}
-
-FooBar* FooBar::default_instance_ = NULL;
-
-FooBar* FooBar::New() const {
-  return new FooBar;
-}
-
-void FooBar::Clear() {
-  ::memset(_has_bits_, 0, sizeof(_has_bits_));
-  mutable_unknown_fields()->Clear();
-}
-
-bool FooBar::MergePartialFromCodedStream(
-    ::google::protobuf::io::CodedInputStream* input) {
-#define DO_(EXPRESSION) if (!(EXPRESSION)) goto failure
-  ::google::protobuf::uint32 tag;
-  // @@protoc_insertion_point(parse_start:StatisticsModule_Proto.FooBar)
-  for (;;) {
-    ::std::pair< ::google::protobuf::uint32, bool> p = input->ReadTagWithCutoff(127);
-    tag = p.first;
-    if (!p.second) goto handle_unusual;
-  handle_unusual:
-    if (tag == 0 ||
-        ::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
-        ::google::protobuf::internal::WireFormatLite::WIRETYPE_END_GROUP) {
-      goto success;
-    }
-    DO_(::google::protobuf::internal::WireFormat::SkipField(
-          input, tag, mutable_unknown_fields()));
-  }
-success:
-  // @@protoc_insertion_point(parse_success:StatisticsModule_Proto.FooBar)
-  return true;
-failure:
-  // @@protoc_insertion_point(parse_failure:StatisticsModule_Proto.FooBar)
-  return false;
-#undef DO_
-}
-
-void FooBar::SerializeWithCachedSizes(
-    ::google::protobuf::io::CodedOutputStream* output) const {
-  // @@protoc_insertion_point(serialize_start:StatisticsModule_Proto.FooBar)
-  if (!unknown_fields().empty()) {
-    ::google::protobuf::internal::WireFormat::SerializeUnknownFields(
-        unknown_fields(), output);
-  }
-  // @@protoc_insertion_point(serialize_end:StatisticsModule_Proto.FooBar)
-}
-
-::google::protobuf::uint8* FooBar::SerializeWithCachedSizesToArray(
-    ::google::protobuf::uint8* target) const {
-  // @@protoc_insertion_point(serialize_to_array_start:StatisticsModule_Proto.FooBar)
-  if (!unknown_fields().empty()) {
-    target = ::google::protobuf::internal::WireFormat::SerializeUnknownFieldsToArray(
-        unknown_fields(), target);
-  }
-  // @@protoc_insertion_point(serialize_to_array_end:StatisticsModule_Proto.FooBar)
-  return target;
-}
-
-int FooBar::ByteSize() const {
-  int total_size = 0;
-
-  if (!unknown_fields().empty()) {
-    total_size +=
-      ::google::protobuf::internal::WireFormat::ComputeUnknownFieldsSize(
-        unknown_fields());
-  }
-  GOOGLE_SAFE_CONCURRENT_WRITES_BEGIN();
-  _cached_size_ = total_size;
-  GOOGLE_SAFE_CONCURRENT_WRITES_END();
-  return total_size;
-}
-
-void FooBar::MergeFrom(const ::google::protobuf::Message& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  const FooBar* source =
-    ::google::protobuf::internal::dynamic_cast_if_available<const FooBar*>(
-      &from);
-  if (source == NULL) {
-    ::google::protobuf::internal::ReflectionOps::Merge(from, this);
-  } else {
-    MergeFrom(*source);
-  }
-}
-
-void FooBar::MergeFrom(const FooBar& from) {
-  GOOGLE_CHECK_NE(&from, this);
-  mutable_unknown_fields()->MergeFrom(from.unknown_fields());
-}
-
-void FooBar::CopyFrom(const ::google::protobuf::Message& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-void FooBar::CopyFrom(const FooBar& from) {
-  if (&from == this) return;
-  Clear();
-  MergeFrom(from);
-}
-
-bool FooBar::IsInitialized() const {
-
-  return true;
-}
-
-void FooBar::Swap(FooBar* other) {
-  if (other != this) {
-    _unknown_fields_.Swap(&other->_unknown_fields_);
-    std::swap(_cached_size_, other->_cached_size_);
-  }
-}
-
-::google::protobuf::Metadata FooBar::GetMetadata() const {
-  protobuf_AssignDescriptorsOnce();
-  ::google::protobuf::Metadata metadata;
-  metadata.descriptor = FooBar_descriptor_;
-  metadata.reflection = FooBar_reflection_;
   return metadata;
 }
 

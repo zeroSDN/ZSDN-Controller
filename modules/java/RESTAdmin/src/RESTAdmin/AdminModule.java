@@ -41,7 +41,7 @@ public class AdminModule extends jmf.module.AbstractModule {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AdminModule.class);
 
 	private CassandraDB cassandraDB;
-	private static final MessageType TOPOLOGY_REQUEST = new TopologyModuleTopics.REQUEST().topology_module().get_topology()
+	private static final MessageType TOPOLOGY_REQUEST = TopologyModuleTopics.newCustomBuilderInstance(MessageType::new).request().topology_module().get_topology()
 			.build();
 	
 

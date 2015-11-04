@@ -33,110 +33,14 @@ void  protobuf_AddDesc_StatisticsModule_2eproto();
 void protobuf_AssignDesc_StatisticsModule_2eproto();
 void protobuf_ShutdownFile_StatisticsModule_2eproto();
 
-class To;
 class From;
 class From_SwitchStats;
 class From_PortStatslist;
 class From_TableStatslist;
 class From_SinglePortStatistics;
 class From_SingleTableStatistics;
-class FooBar;
 
 // ===================================================================
-
-class To : public ::google::protobuf::Message {
- public:
-  To();
-  virtual ~To();
-
-  To(const To& from);
-
-  inline To& operator=(const To& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const To& default_instance();
-
-  enum ToMsgCase {
-    kFoo = 1,
-    TOMSG_NOT_SET = 0,
-  };
-
-  void Swap(To* other);
-
-  // implements Message ----------------------------------------------
-
-  To* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const To& from);
-  void MergeFrom(const To& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // optional .StatisticsModule_Proto.FooBar foo = 1;
-  inline bool has_foo() const;
-  inline void clear_foo();
-  static const int kFooFieldNumber = 1;
-  inline const ::StatisticsModule_Proto::FooBar& foo() const;
-  inline ::StatisticsModule_Proto::FooBar* mutable_foo();
-  inline ::StatisticsModule_Proto::FooBar* release_foo();
-  inline void set_allocated_foo(::StatisticsModule_Proto::FooBar* foo);
-
-  inline ToMsgCase ToMsg_case() const;
-  // @@protoc_insertion_point(class_scope:StatisticsModule_Proto.To)
- private:
-  inline void set_has_foo();
-
-  inline bool has_ToMsg();
-  void clear_ToMsg();
-  inline void clear_has_ToMsg();
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  union ToMsgUnion {
-    ::StatisticsModule_Proto::FooBar* foo_;
-  } ToMsg_;
-  ::google::protobuf::uint32 _oneof_case_[1];
-
-  friend void  protobuf_AddDesc_StatisticsModule_2eproto();
-  friend void protobuf_AssignDesc_StatisticsModule_2eproto();
-  friend void protobuf_ShutdownFile_StatisticsModule_2eproto();
-
-  void InitAsDefaultInstance();
-  static To* default_instance_;
-};
-// -------------------------------------------------------------------
 
 class From_SwitchStats : public ::google::protobuf::Message {
  public:
@@ -791,135 +695,10 @@ class From : public ::google::protobuf::Message {
   void InitAsDefaultInstance();
   static From* default_instance_;
 };
-// -------------------------------------------------------------------
-
-class FooBar : public ::google::protobuf::Message {
- public:
-  FooBar();
-  virtual ~FooBar();
-
-  FooBar(const FooBar& from);
-
-  inline FooBar& operator=(const FooBar& from) {
-    CopyFrom(from);
-    return *this;
-  }
-
-  inline const ::google::protobuf::UnknownFieldSet& unknown_fields() const {
-    return _unknown_fields_;
-  }
-
-  inline ::google::protobuf::UnknownFieldSet* mutable_unknown_fields() {
-    return &_unknown_fields_;
-  }
-
-  static const ::google::protobuf::Descriptor* descriptor();
-  static const FooBar& default_instance();
-
-  void Swap(FooBar* other);
-
-  // implements Message ----------------------------------------------
-
-  FooBar* New() const;
-  void CopyFrom(const ::google::protobuf::Message& from);
-  void MergeFrom(const ::google::protobuf::Message& from);
-  void CopyFrom(const FooBar& from);
-  void MergeFrom(const FooBar& from);
-  void Clear();
-  bool IsInitialized() const;
-
-  int ByteSize() const;
-  bool MergePartialFromCodedStream(
-      ::google::protobuf::io::CodedInputStream* input);
-  void SerializeWithCachedSizes(
-      ::google::protobuf::io::CodedOutputStream* output) const;
-  ::google::protobuf::uint8* SerializeWithCachedSizesToArray(::google::protobuf::uint8* output) const;
-  int GetCachedSize() const { return _cached_size_; }
-  private:
-  void SharedCtor();
-  void SharedDtor();
-  void SetCachedSize(int size) const;
-  public:
-  ::google::protobuf::Metadata GetMetadata() const;
-
-  // nested types ----------------------------------------------------
-
-  // accessors -------------------------------------------------------
-
-  // @@protoc_insertion_point(class_scope:StatisticsModule_Proto.FooBar)
- private:
-
-  ::google::protobuf::UnknownFieldSet _unknown_fields_;
-
-  ::google::protobuf::uint32 _has_bits_[1];
-  mutable int _cached_size_;
-  friend void  protobuf_AddDesc_StatisticsModule_2eproto();
-  friend void protobuf_AssignDesc_StatisticsModule_2eproto();
-  friend void protobuf_ShutdownFile_StatisticsModule_2eproto();
-
-  void InitAsDefaultInstance();
-  static FooBar* default_instance_;
-};
 // ===================================================================
 
 
 // ===================================================================
-
-// To
-
-// optional .StatisticsModule_Proto.FooBar foo = 1;
-inline bool To::has_foo() const {
-  return ToMsg_case() == kFoo;
-}
-inline void To::set_has_foo() {
-  _oneof_case_[0] = kFoo;
-}
-inline void To::clear_foo() {
-  if (has_foo()) {
-    delete ToMsg_.foo_;
-    clear_has_ToMsg();
-  }
-}
-inline const ::StatisticsModule_Proto::FooBar& To::foo() const {
-  return has_foo() ? *ToMsg_.foo_
-                      : ::StatisticsModule_Proto::FooBar::default_instance();
-}
-inline ::StatisticsModule_Proto::FooBar* To::mutable_foo() {
-  if (!has_foo()) {
-    clear_ToMsg();
-    set_has_foo();
-    ToMsg_.foo_ = new ::StatisticsModule_Proto::FooBar;
-  }
-  return ToMsg_.foo_;
-}
-inline ::StatisticsModule_Proto::FooBar* To::release_foo() {
-  if (has_foo()) {
-    clear_has_ToMsg();
-    ::StatisticsModule_Proto::FooBar* temp = ToMsg_.foo_;
-    ToMsg_.foo_ = NULL;
-    return temp;
-  } else {
-    return NULL;
-  }
-}
-inline void To::set_allocated_foo(::StatisticsModule_Proto::FooBar* foo) {
-  clear_ToMsg();
-  if (foo) {
-    set_has_foo();
-    ToMsg_.foo_ = foo;
-  }
-}
-
-inline bool To::has_ToMsg() {
-  return ToMsg_case() != TOMSG_NOT_SET;
-}
-inline void To::clear_has_ToMsg() {
-  _oneof_case_[0] = TOMSG_NOT_SET;
-}
-inline To::ToMsgCase To::ToMsg_case() const {
-  return To::ToMsgCase(_oneof_case_[0]);
-}
-// -------------------------------------------------------------------
 
 // From_SwitchStats
 
@@ -1521,10 +1300,6 @@ inline void From::clear_has_FromMsg() {
 inline From::FromMsgCase From::FromMsg_case() const {
   return From::FromMsgCase(_oneof_case_[0]);
 }
-// -------------------------------------------------------------------
-
-// FooBar
-
 
 // @@protoc_insertion_point(namespace_scope)
 
