@@ -1,9 +1,0 @@
-node {
-    size: 20px;
-    fill-color: #777;
-}
-edge {
-    shape: line;
-    fill-color: #222;
-    arrow-size: 3px, 2px;
-}
