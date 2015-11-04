@@ -113,7 +113,7 @@ public class AdminModule extends jmf.module.AbstractModule {
 			if(mHandle == null)
 				return "Module handle is null!";
 			//Fill Module object with values from Concurrent map
-			module.setVersion(mHandle.getVersion().shortValue());
+			module.setVersion(mHandle.getVersion());
 			module.setName(mHandle.getName());
 			module.setUniqueId(mHandle.getUniqueId().toString());
 			module.setCurrentState(getFramework().getPeerRegistry().getPeerState(mHandle).toString());
@@ -147,7 +147,7 @@ public class AdminModule extends jmf.module.AbstractModule {
 
 			//Fill Module object with values from ModuleHandle
 			Module module = new Module();
-			module.setVersion(mHandle.getVersion().shortValue());
+			module.setVersion(mHandle.getVersion());
 			module.setName(mHandle.getName());
 			module.setUniqueId(mHandle.getUniqueId().toString());
 			module.setCurrentState(getFramework().getPeerRegistry().getPeerState(mHandle).toString());
@@ -322,8 +322,8 @@ public class AdminModule extends jmf.module.AbstractModule {
 		
 		//Get the handle of the TopologyModule
 		ModuleHandle topoModule = getFramework().getPeerRegistry().getAnyPeerWithTypeVersion(
-				UnsignedInteger.valueOf(6),
-				UnsignedInteger.valueOf(0),
+				(short)6,
+				(short)0,
 				true);
 		//Check if handle is valid
 		if (topoModule != null) {
