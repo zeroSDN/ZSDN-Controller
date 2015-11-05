@@ -96,7 +96,7 @@ public:
 
     private:
         static const uint16_t MODULE_VERSION = 0;
-        static const uint16_t MODULE_TYPE_ID = zsdn::MODULE_TYPE_ID_StatisticsModule;
+        static const uint16_t MODULE_TYPE_ID = zsdn::MODULE_TYPE_ID_SwitchAdapter;
         uint64_t instanceId_;
 
         zsdn::modules::SwitchAdapterTopics<zmf::data::MessageType> switchAdapterTopics_;
