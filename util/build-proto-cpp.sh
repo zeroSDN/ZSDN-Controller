@@ -11,9 +11,10 @@ echo "### Building C++ Protobuf files ###"
 # absolute path to root folder of the zsdn controller
 zsdnFolder=$(<zsdn-dir.txt)
 
+protoc="$zsdnFolder/ZMF/dependencies/bin/protoc"
 requiredProtocVersion="libprotoc 2.6.1"
 
-protocVersion=$(protoc --version)
+protocVersion=$($protoc --version)
 
 
 # Create proto out dir
@@ -42,7 +43,7 @@ protosInTemp=$(find $tempFolder -name '*.proto')
 for i in $protosInTemp
 do
 	echo "Processing $i";
-	protoc $i "--proto_path=$tempFolder" "--cpp_out=$zsdnFolder/common/cpp/zsdn-commons/zsdn/proto"
+	$protoc $i "--proto_path=$tempFolder" "--cpp_out=$zsdnFolder/common/cpp/zsdn-commons/zsdn/proto"
 done
 
 rm -r "$tempFolder"
