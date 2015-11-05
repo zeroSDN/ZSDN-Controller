@@ -16,6 +16,11 @@ requiredProtocVersion="libprotoc 2.6.1"
 
 protocVersion=$($protoc --version)
 
+
+# Create proto out dir
+mkdir $zsdnFolder/common/cpp/zsdn-commons/zsdn/proto/
+
+
 tempFolder="$zsdnFolder/util/.temp/"
 
 

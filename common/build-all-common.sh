@@ -87,7 +87,7 @@ else
 fi
 cd ../..
 
-echo "# Finishef Building C++ Commons"
+echo "# Finished Building C++ Commons"
 
 
 

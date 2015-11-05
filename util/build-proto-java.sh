@@ -17,6 +17,11 @@ requiredProtocVersion="libprotoc 2.6.1"
 
 protocVersion=$($protoc --version)
 
+
+# Create proto out dir
+mkdir -p $zsdnFolder/common/java/zsdn-proto/src/main/java/
+
+
 tempFolder="$zsdnFolder/util/.temp/"
 
 
