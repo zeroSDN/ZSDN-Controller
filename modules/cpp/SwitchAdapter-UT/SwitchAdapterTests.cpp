@@ -335,7 +335,7 @@ void SwitchAdapterTests::testSpecialCases(Poco::Net::StreamSocket& strSock, Poco
     zmf::data::ZmfMessage msg(ofTopic, test);
     module->getZmfForUnittests()->publish(msg);
 
-    std::this_thread::sleep_for(std:66:chrono::milliseconds(200));
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
     CPPUNIT_ASSERT_EQUAL(0, strSock.available());
 
     // check that we have not received any events. now we send an echoRequest, which will both be published to zmf
