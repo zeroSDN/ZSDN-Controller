@@ -7,7 +7,6 @@
  * Starts a standalone server waiting for incoming connections from SDN-switches
  */
 int main(int argc, char* argv[]) {
-
     if (zsdn::StartupHelper::paramsOkay(argc, argv, "Usage: configFile openflowVersion(e.g.\"1.0\") openflowPort", 4)) {
 
         zmf::logging::ZmfLogging::initializeLogging("SwitchAdapterRunner", argv[1]);
@@ -31,6 +30,7 @@ int main(int argc, char* argv[]) {
             version = OF_VERSION_1_4;
         } else {
             std::cerr << "Unknown openflow version, stopping execution (allowed: 1.0, 1.1, etc) " << &std::endl;
+            google::protobuf::ShutdownProtobufLibrary();
             return 1;
         }
         std::cout << "Using OpenFlow version " << ofVersionString << &std::endl;
@@ -42,11 +42,13 @@ int main(int argc, char* argv[]) {
 
             if (ofPort < 0 || ofPort > 65535) {
                 std::cerr << "Port must be in range [0,65535]" << "\n";
+                google::protobuf::ShutdownProtobufLibrary();
                 return 1;
             }
         }
         catch (std::invalid_argument ia) {
             std::cerr << "Could not parse port as a number" << "\n";
+            google::protobuf::ShutdownProtobufLibrary();
             return 1;
         }
 
@@ -56,12 +58,15 @@ int main(int argc, char* argv[]) {
             std::cout << "Press enter to stop the SwitchAdapterRunner.";
             std::cin.ignore();
             switchAdapterServer.stop();
+            google::protobuf::ShutdownProtobufLibrary();
             return 0;
         } else {
+            google::protobuf::ShutdownProtobufLibrary();
             return 1;
         }
 
     } else {
+        google::protobuf::ShutdownProtobufLibrary();
         return 1;
     }
 
