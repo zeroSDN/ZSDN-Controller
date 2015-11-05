@@ -11,9 +11,11 @@ echo "### Building Java Protobuf files ###"
 # absolute path to root folder of the zsdn controller
 zsdnFolder=$(<zsdn-dir.txt)
 
+
+protoc="$zsdnFolder/ZMF/dependencies/bin/protoc"
 requiredProtocVersion="libprotoc 2.6.1"
 
-protocVersion=$(protoc --version)
+protocVersion=$($protoc --version)
 
 tempFolder="$zsdnFolder/util/.temp/"
 
@@ -37,7 +39,7 @@ protosInTemp=$(find $tempFolder -name '*.proto')
 for i in $protosInTemp
 do
 	echo "Processing $i";
-	protoc $i "--proto_path=$tempFolder" "--java_out=$zsdnFolder/common/java/zsdn-proto/src/main/java/"
+	$protoc $i "--proto_path=$tempFolder" "--java_out=$zsdnFolder/common/java/zsdn-proto/src/main/java/"
 done
 
 rm -r "$tempFolder"
