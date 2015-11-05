@@ -2,6 +2,7 @@
 #include <zmf/AbstractModule.hpp>
 #include "zsdn/StartupHelper.h"
 #include "SwitchRegistryModule.hpp"
+#include <google/protobuf/stubs/common.h>
 
 int main(int argc, char* argv[]) {
     int returnCode;

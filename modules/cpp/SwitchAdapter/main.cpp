@@ -2,6 +2,7 @@
 #include <zmf/AbstractModule.hpp>
 #include "zsdn/StartupHelper.h"
 #include "SwitchAdapterRunner.h"
+#include <google/protobuf/stubs/common.h>
 
 /**
  * Starts a standalone server waiting for incoming connections from SDN-switches
