@@ -3,6 +3,7 @@
 #include <cppunit/extensions/HelperMacros.h>
 #include <UnittestConfigUtil.hpp>
 #include "ForwardingModuleTests.h"
+#include <google/protobuf/stubs/common.h>
 
 using namespace CppUnit;
 
@@ -22,6 +23,7 @@ int main (int argc, char* argv[]) {
     TestFactoryRegistry &registry = TestFactoryRegistry::getRegistry();
     runner.addTest( registry.makeTest() );
     bool failed = runner.run();
+    google::protobuf::ShutdownProtobufLibrary();
     return !failed;
 
 }
