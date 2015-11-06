@@ -1,0 +1,23 @@
+
+// Main message type for messages TO TemplateModule
+
+message To {
+
+    oneof ToMsg {
+        FooBar foo = 1;
+    }
+
+
+}
+
+// Main message type for messages FROM TemplateModule
+
+message From {
+
+    oneof FromMsg {
+        FooBar bar = 1;
+    }
+
+}
+
+message FooBar{}
