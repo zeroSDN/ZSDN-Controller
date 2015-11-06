@@ -60,16 +60,14 @@
       <groupId>com.jayway.restassured</groupId>
       <artifactId>rest-assured</artifactId>
       <version>2.6.0</version>
-      <scope>test</scope>
+      <scope>provided</scope>
 </dependency>
 <dependency>
       <groupId>com.jayway.restassured</groupId>
       <artifactId>json-schema-validator</artifactId>
       <version>2.6.0</version>
-      <scope>test</scope>
+      <scope>provided</scope>
 </dependency>
-
-
   	<dependency>
   		<groupId>zsdn</groupId>
   		<artifactId>zsdn-proto</artifactId>
@@ -79,6 +77,14 @@
 	<groupId>junit</groupId>
 	<artifactId>junit</artifactId>
 	<version>4.12</version>
+	<scope>provided</scope>
+</dependency>
+  	<dependency>
+	<groupId>jersey-bundle-1.19</groupId>
+	<artifactId>com.sun.jersey</artifactId>
+	<version>1.19</version>
+	<scope>system</scope>
+	<systemPath>${project.basedir}/WebContent/WEB-INF/lib/jersey-bundle-1.19.jar</systemPath>
 </dependency>
   	
   </dependencies>
