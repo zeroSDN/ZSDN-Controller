@@ -8,4 +8,4 @@ cpp/ARPModule
 cpp/SimpleForwardingModule
 cpp/ForwardingModule
 cpp/LoggingModule
-java/RestAdminModule
+java/RESTAdmin

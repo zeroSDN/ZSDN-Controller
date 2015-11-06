@@ -139,10 +139,12 @@ echo
 # Construct Build Parameters
 CommonsBuildArgs=""
 CmakeBuildArgs=""
+MavenBuildArgs=""
 
 if [ "$SkiptTests" = true ] ; then
     echo "Build skipping Tests"
     CmakeBuildArgs=$CmakeBuildArgs" -DNoTests=ON"
+    MavenBuildArgs="$MavenBuildArgs -DskipTests=true"
 else
     echo "Build with Tests"
     CommonsBuildArgs=$CommonsBuildArgs" -t"
@@ -153,6 +155,7 @@ if [ "$Verbose" = true ] ; then
     echo "Build Verbose"
     CommonsBuildArgs=$CommonsBuildArgs" -v"
     CmakeBuildArgs=$CmakeBuildArgs" -DVerbose=ON"
+    # TODO Maven verbosity
 fi
 
 if [ "$BuildTarget" = "pi" ] ; then
@@ -229,7 +232,25 @@ echo "### Finished Build C++ Modules ###"
 
 
 # Build Java Modules
+echo "### Starting Build Java Modules ###"
+
+cd $JavaModulesPath
+for i in "${JavaModulesToBuild[@]}"
+do
+    cd $i
+    if ! mvn clean install${MavenBuildArgs}; then
+        result=$?
+        echo "!! Failed to build java module $i"
+        exit ${result}
+    fi
+
+    # Copy to module jars to build
+    cp target*/*.jar ../../../build/modules/$BuildTarget
+    cp target*/*.war ../../../build/modules/$BuildTarget
+done
+
+cd ../..
 echo "### Finished Build Java Modules ###"
-# TODO: MVN and copy to buildfolder
+
 
 echo "### Finished Build ZSDN Modules ###"
