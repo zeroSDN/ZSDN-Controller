@@ -57,8 +57,7 @@ while getopts m:hb:tcv flag; do
         ;;
     v)
         # TODO Implement verbose output
-        echo "!!! Verbose Output NOT IMPLEMENTED YET"
-        #echo "Verbose Output enabled"
+        echo "Verbose Output enabled"
         Verbose=true
         ;;
     ?)
@@ -145,6 +144,12 @@ else
     echo "Build with Tests"
     CommonsBuildArgs=$CommonsBuildArgs" -t"
     CmakeBuildArgs=$CmakeBuildArgs" -DNoTests=OFF"
+fi
+
+if [ "$SkiptTests" = true ] ; then
+    echo "Build Verbose"
+    CommonsBuildArgs=$CommonsBuildArgs" -v"
+    CmakeBuildArgs=$CmakeBuildArgs" -DVerbose=ON"
 fi
 
 if [ "$BuildTarget" = "pi" ] ; then

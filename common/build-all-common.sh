@@ -5,8 +5,10 @@ echo "### Start Build ZSDN Commons ###"
 # Parse Parameters
 SkiptTests=true
 BuildTarget="default"
+Verbose=false
 
-while getopts hb:tc flag; do
+
+while getopts hb:tcv flag; do
   case $flag in
     h)
       echo "--- HELP ---:";
@@ -20,6 +22,11 @@ while getopts hb:tc flag; do
     t)
       SkiptTests=$false;
       ;;
+    v)
+        # TODO Implement verbose output
+        echo "Verbose Output enabled"
+        Verbose=true
+        ;;
     c)
       echo "Clear parameter redundant"
       ;;
@@ -49,6 +56,11 @@ if [ "$SkiptTests" = true ] ; then
 else
 	echo "Build with Tests"
   BuildArgs=$BuildArgs" -DNoTests=OFF"
+fi
+
+if [ "$SkiptTests" = true ] ; then
+    echo "Build Verbose"
+    BuildArgs=$BuildArgs" -DVerbose=ON"
 fi
 
 if [ "$BuildTarget" = "pi" ] ; then

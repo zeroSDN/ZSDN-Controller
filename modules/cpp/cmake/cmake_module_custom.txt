@@ -8,12 +8,13 @@ add_custom_command(TARGET ${PROJECT_NAME} PRE_BUILD
                    COMMAND cmake .)
 
 if(NOT NoTests)
-	# Build unittest post-build
-  	message("### BUILDING UNITTESTS")
-	add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+	 # Build unittest post-build
+    message("### BUILDING UNITTESTS")
+
+	 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../${PROJECT_NAME}-UT
                    COMMAND cmake .)
-	add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+	 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
                    WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/../${PROJECT_NAME}-UT
                    COMMAND cmake --build .)
 	# Execute unittests afterwards
