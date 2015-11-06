@@ -38,6 +38,21 @@ fi
 cd ../../..
 
 
+echo "## Start Init module creator"
+cd util/module-creator
+if mvn clean install -DskipTests=true; then
+	echo "# Init module creator success"
+else
+	result=$?
+	echo "!! Failed to init module creator"
+	exit ${result}
+fi
+cd ../..
+
+
+# TODO Startup tool init
+
+
 cd util
 
 # Init ZMF
