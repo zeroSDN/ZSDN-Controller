@@ -73,6 +73,7 @@ cp ${BuildFolder}/. ${ExportFolder}/ -R
 echo "# Copied modules"
 
 # Copy depencencies
+# TODO Adapt for pi build?
 mkdir -p ${ExportFolder}/lib
 cp dependencies/lib*/*.so* ${ExportFolder}/lib
 cp ZMF/dependencies/lib*/*.so* ${ExportFolder}/lib
