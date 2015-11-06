@@ -58,7 +58,7 @@ else
   BuildArgs=$BuildArgs" -DNoTests=OFF"
 fi
 
-if [ "$SkiptTests" = true ] ; then
+if [ "$Verbose" = true ] ; then
     echo "Build Verbose"
     BuildArgs=$BuildArgs" -DVerbose=ON"
 fi

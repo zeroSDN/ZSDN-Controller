@@ -1,3 +1,5 @@
+#!/bin/bash
+
 echo "### Installing ZSDN environment ###"
 echo ""
 echo "Initializing zhe ZSDN environment"

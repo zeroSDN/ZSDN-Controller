@@ -24,6 +24,7 @@ function printHelp {
     echo "   -b [target]>   (optional) set build target, otherwise system default";
     echo "                  [target] pi build for Raspberry Pi ARM"
     echo "   -c             (optional) clean up build output directory before build";
+    echo "   -v             (optional) enable verbose output";
 }
 
 
@@ -32,6 +33,7 @@ SkiptTests=true
 BuildTarget="default"
 ModuleSetSelected=""
 Verbose=false
+ClearBuildFolder=false
 
 while getopts m:hb:tcv flag; do
   case $flag in
@@ -54,6 +56,7 @@ while getopts m:hb:tcv flag; do
         ;;
     c)
         echo "-c Clearing build folder"
+        ClearBuildFolder=true
         ;;
     v)
         # TODO Implement verbose output
@@ -146,7 +149,7 @@ else
     CmakeBuildArgs=$CmakeBuildArgs" -DNoTests=OFF"
 fi
 
-if [ "$SkiptTests" = true ] ; then
+if [ "$Verbose" = true ] ; then
     echo "Build Verbose"
     CommonsBuildArgs=$CommonsBuildArgs" -v"
     CmakeBuildArgs=$CmakeBuildArgs" -DVerbose=ON"
@@ -162,6 +165,12 @@ else
     exit 1
 fi
 
+
+# Clean up build folder
+if [ "$ClearBuildFolder" = true ] ; then
+    rm -r "build/modules/$BuildTarget"
+    echo "# Cleared output folder"
+fi
 
 
 # Build ZSDN Commons
@@ -219,7 +228,8 @@ cd ..
 echo "### Finished Build C++ Modules ###"
 
 
-# TODO Java Modules
+# Build Java Modules
 echo "### Finished Build Java Modules ###"
+# TODO: MVN and copy to buildfolder
 
 echo "### Finished Build ZSDN Modules ###"
