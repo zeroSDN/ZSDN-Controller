@@ -46,13 +46,13 @@ done
 
 
 echo "### Start building selected modules"
-#if ./build-all.sh${BuildParams}; then
-#	echo "# Build modules success"
-#else
-#	result=$?
-#	echo "!! Failed to build modules"
-#	exit ${result}
-#fi
+if ./build-all.sh${BuildParams}; then
+	echo "# Build modules success"
+else
+	result=$?
+	echo "!! Failed to build modules"
+	exit ${result}
+fi
 
 
 BuildFolder="build/modules/$BuildTarget" 
