@@ -26,7 +26,11 @@ import zsdn.startup_selector.MainApp;
 import zsdn.startup_selector.model.Module;
 
 
-
+/**
+ * Class that handles the main GUI screen.
+ * @author Matthias Hoppe
+ *
+ */
 public class ModuleOverviewController {
 	@FXML
 	private TextArea outputBox;
@@ -92,9 +96,6 @@ public class ModuleOverviewController {
 			pathLabel.setText(module.getPath());
 			pathConfigFileLabel.setText(module.getConfigFilePath());
 			parametersLabel.setText(module.getParameters());
-
-			// TODO: We need a way to convert the birthday into a String!
-			// birthdayLabel.setText(...);
 		} else {
 			// module is null, remove all the text.
 			moduleNameLabel.setText("");
@@ -102,8 +103,6 @@ public class ModuleOverviewController {
 			pathLabel.setText("");
 			pathConfigFileLabel.setText("");
 			parametersLabel.setText("");
-
-			// parametersLabel.setText("");
 		}
 	}
 
@@ -129,8 +128,6 @@ public class ModuleOverviewController {
 						(observable, oldValue, newValue) -> showModuleDetails(newValue));
 	}
 
-	// dirty, dirty
-	// called to destroy selected modules process
 	@FXML
 	private void handleStopModule() {
 		Module selectedModule = moduleTable.getSelectionModel()
@@ -167,11 +164,6 @@ public class ModuleOverviewController {
 			}
 			else
 				System.out.println("couldn't stop module"); // TODO
-			// System.out.println(selectedModule.getmoduleName() +" is alive: "
-			// + p.isAlive());
-			 
-			 
-
 		}
 	}
 
@@ -195,14 +187,14 @@ public class ModuleOverviewController {
 		}
 	}
 
-	/*
+	/**
 	 * adds found modules to modules list in the GUI. called by handleOpenDir()
 	 */
 	public void addNewFoundModules() {
 
-		java.net.URL url = getClass().getResource("moduleTemp.config");
-		File file = new File(url.getPath());
-
+		//java.net.URL url = getClass().getResource("moduleTemp.config");
+		//File file = new File(url.getPath());
+		File file = new File("moduleTemp.config");
 		try (BufferedReader br = new BufferedReader(new FileReader(file))) {
 			for (String line; (line = br.readLine()) != null;) {
 				// process the line.
@@ -222,20 +214,12 @@ public class ModuleOverviewController {
 					pathConfigFileLabel.setText(tempModule.getConfigFilePath());
 					parametersLabel.setText(tempModule.getParameters());
 
-				} else {
-					// module is null, remove all the text.
-					moduleNameLabel.setText("");
-					moduleDescriptionLabel.setText("");
-					pathLabel.setText("");
-					pathConfigFileLabel.setText("");
-					parametersLabel.setText("");
-
-					// parametersLabel.setText("");
 				} 
 				mainApp.getModuleData().add(tempModule);
 				mainApp.setModuleFilePath(file);
 
 			}
+			file.delete();
 			// line is not visible here.
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -286,7 +270,7 @@ public class ModuleOverviewController {
 		}
 	}
 
-	/*
+	/**
 	 * searches selected directories for executables (all files that don't
 	 * contain a "." and are executable) then calls addNewFoundModules() to add
 	 * them to modules list in the GUI
@@ -306,7 +290,13 @@ public class ModuleOverviewController {
 		}
 		Crawler crawler = new Crawler();
 		crawler.run(selectedDirectory);
+		
+		
 		addNewFoundModules();
+			
+		
+			
+		
 
 	}
 
@@ -334,19 +324,12 @@ public class ModuleOverviewController {
 					+ selectedModule.getConfigFilePath() + " "
 					+ selectedModule.getParameters();
 			String[] para = paraTemp.split("\\ ", -1);
-
-			//ProcessBuilder pb = new ProcessBuilder(para);
-			
-			//ProcessBuilder pb = new ProcessBuilder(para);
 			ModuleProcessHandler pb = new ModuleProcessHandler(this,"","./" + selectedModule.getmoduleName(),para);
 			
 			try {
 				// is a process of this module already running?
 				if (ModuleProcesses.get(selectedModule.getmoduleName()) == null||!(ModuleProcesses.get(selectedModule.getmoduleName())
 						.isAlive())) {
-
-					//Process p = pb.start();
-					
 					pb.start();
 					selectedModule.setstatusProperty("Running");
 					ModuleProcesses.put(selectedModule.getmoduleName(), pb);
@@ -356,8 +339,14 @@ public class ModuleOverviewController {
 				else{ System.out.println("Module is already running");}
 
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.initOwner(mainApp.getPrimaryStage());
+				alert.setTitle("Can't start Module");
+				alert.setHeaderText("Module: "+selectedModule.getmoduleName()+" can't be started.");
+				alert.setContentText("No valid module file or parameters.");
+
+				alert.showAndWait();
+				
 			}
 		}
 
@@ -371,25 +360,6 @@ public class ModuleOverviewController {
 		for (Module currentModule : selectedModules) {
 			startModule(currentModule);
 
-			/*if (selectedModules != null) {
-
-				// builds string array from file, configpath and parameters
-				String paraTemp = "./" + currentModule.getmoduleName() + " "
-						+ currentModule.getConfigFilePath() + " "
-						+ currentModule.getParameters();
-				String[] para = paraTemp.split("\\ ", -1);
-
-				//ProcessBuilder pb = new ProcessBuilder(para);
-				ModuleProcessHandler pb = new ModuleProcessHandler(this,"","./" + currentModule.getmoduleName(), currentModule.getConfigFilePath(),
-						currentModule.getParameters());
-				try {
-					pb.start();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}*/
 
 		}
 

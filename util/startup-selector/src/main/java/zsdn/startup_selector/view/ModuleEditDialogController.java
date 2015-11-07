@@ -1,7 +1,6 @@
 package zsdn.startup_selector.view;
 
 import java.io.File;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -13,7 +12,7 @@ import zsdn.startup_selector.model.Module;
 /**
  * Dialog to edit details of a module.
  * 
- * @author Mc
+ * @author Matthias Hoppe
  */
 public class ModuleEditDialogController {
 
@@ -70,8 +69,6 @@ public class ModuleEditDialogController {
         }else{
         	ParametersField.setText(module.getParameters());
         }
-        //ConfigFileField.setText(module.getConfigFilePath());
-       // ParametersField.setText(module.getParameters());
     }
 
     /**
@@ -110,6 +107,10 @@ public class ModuleEditDialogController {
     }
 
 
+	/**
+	 * Called when user clicks on "select" next to the Path TextBox.
+	 * Allows to select a module file.
+	 */
 	@FXML
 	private void handleOpenModule(){
 
@@ -118,33 +119,23 @@ public class ModuleEditDialogController {
 		
 		PathField.setText(selectedFile.toString());
 		//sets Module Name according to the selected file
+		//by cutting path in front of the module name
 		String[] bits = selectedFile.toString().split("/");
 		String lastOne = bits[bits.length-1];
 		ModuleNameField.setText(lastOne);
-	
-	/*	if (selectedFile != null) {		 
-		    actionStatus.setText("File selected: " + selectedFile.getName());
-		}
-		else {
-		    actionStatus.setText("File selection cancelled.");
-		}*/
 	}
 
     
+	/**
+	 * Called when user clicks on "select" next to the Config File Path TextBox.
+	 * Allows to select a config file.
+	 */
 	@FXML
 	private void handleOpenConfig(){
 
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showOpenDialog(null);
-	//	module.setConfigFilePath(selectedFile.toString());
 		ConfigFileField.setText(selectedFile.toString());
-	
-	/*	if (selectedFile != null) {		 
-		    actionStatus.setText("File selected: " + selectedFile.getName());
-		}
-		else {
-		    actionStatus.setText("File selection cancelled.");
-		}*/
 	}
 
     /**
@@ -167,9 +158,6 @@ public class ModuleEditDialogController {
         if (ConfigFileField.getText() == null || ConfigFileField.getText().length() == 0) {
             errorMessage += "No valid path!\n"; 
         }
-     /*   if (ParametersField.getText() == null || ParametersField.getText().length() == 0) {
-            errorMessage += "No valid parameters!\n"; 
-        }*/
 
         if (errorMessage.length() == 0) {
             return true;

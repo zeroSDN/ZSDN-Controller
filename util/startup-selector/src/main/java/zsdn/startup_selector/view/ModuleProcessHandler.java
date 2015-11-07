@@ -5,6 +5,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+/**
+ * Handler to start Module Processes.
+ * @author Jan Strauss
+ */
 public class ModuleProcessHandler implements Runnable {
 	private boolean running = false;
 	private Process process;

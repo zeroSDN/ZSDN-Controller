@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
  * Helper class to wrap a list of Modules. This is used for saving the
  * list of persons to XML.
  * 
- * @author Mc
+ * @author Matthias Hoppe
  */
 @XmlRootElement(name = "modules")
 public class ModuleListWrapper {
