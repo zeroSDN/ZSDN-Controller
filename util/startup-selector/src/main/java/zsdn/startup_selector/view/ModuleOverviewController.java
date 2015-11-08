@@ -147,23 +147,31 @@ public class ModuleOverviewController {
 	
 	private void stopModule(Module selectedModule){
 		if (selectedModule != null) {
-			ModuleProcessHandler pb = ModuleProcesses.get(selectedModule.getmoduleName());
+			
 			try {
-				pb.destroy();
+				if (ModuleProcesses.get(selectedModule.getmoduleName()).isAlive()){
+				 ModuleProcesses.get(selectedModule.getmoduleName()).destroy();
+				 
+					if (!ModuleProcesses.get(selectedModule.getmoduleName()).isAlive()){
+						selectedModule.setstatusProperty("Stopped");
+						System.out.println("Module Stopped");
+					}
+					else
+						System.out.println("couldn't stop module");
+				}
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (IOException e) {
+				
+			} 
+			catch (NullPointerException np){
+				np.printStackTrace();
+			}
+			catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		
-			if (!pb.isAlive()){
-				selectedModule.setstatusProperty("Stopped");
-				System.out.println("Module Stopped");
-			}
-			else
-				System.out.println("couldn't stop module"); // TODO
 		}
 	}
 
@@ -282,21 +290,22 @@ public class ModuleOverviewController {
 		directoryChooser.setTitle("Open Resource File");
 		Window stage = null;
 		// directoryChooser.showDialog(stage);
+		try{
 		File selectedDirectory = directoryChooser.showDialog(stage);
-		if (selectedDirectory.getAbsolutePath() != null) {
+
 			System.out.println(selectedDirectory.getAbsolutePath());
-		} else {
+		
+		
 			System.out.println("No directory selected.");
-		}
+		
 		Crawler crawler = new Crawler();
 		crawler.run(selectedDirectory);
-		
-		
+
 		addNewFoundModules();
-			
-		
-			
-		
+		}
+		catch (NullPointerException np) {
+			System.out.println("No directory was selected.");
+		}	
 
 	}
 
@@ -331,12 +340,21 @@ public class ModuleOverviewController {
 				if (ModuleProcesses.get(selectedModule.getmoduleName()) == null||!(ModuleProcesses.get(selectedModule.getmoduleName())
 						.isAlive())) {
 					pb.start();
-					selectedModule.setstatusProperty("Running");
 					ModuleProcesses.put(selectedModule.getmoduleName(), pb);
 					System.out.println("outputBOX: ");
+					try {
+						Thread.sleep(100);
+						if(pb.isAlive())
+							selectedModule.setstatusProperty("Running");
+					
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				
 							}
-				else{ System.out.println("Module is already running");}
+				else{ if(pb.isAlive())
+						System.out.println("Module is already running");}
 
 			} catch (IOException e) {
 				Alert alert = new Alert(AlertType.WARNING);

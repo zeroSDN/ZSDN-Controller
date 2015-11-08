@@ -1,6 +1,7 @@
 package zsdn.startup_selector.view;
 
 import java.io.File;
+
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -113,7 +114,7 @@ public class ModuleEditDialogController {
 	 */
 	@FXML
 	private void handleOpenModule(){
-
+		try{
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showOpenDialog(null);
 		
@@ -123,6 +124,10 @@ public class ModuleEditDialogController {
 		String[] bits = selectedFile.toString().split("/");
 		String lastOne = bits[bits.length-1];
 		ModuleNameField.setText(lastOne);
+		}
+		catch (NullPointerException np) {
+			System.out.println("No File was selected.");
+		}
 	}
 
     
@@ -132,10 +137,14 @@ public class ModuleEditDialogController {
 	 */
 	@FXML
 	private void handleOpenConfig(){
-
+		try{
 		FileChooser fileChooser = new FileChooser();
 		File selectedFile = fileChooser.showOpenDialog(null);
 		ConfigFileField.setText(selectedFile.toString());
+		}
+		catch (NullPointerException np) {
+			System.out.println("No File was selected.");
+		}
 	}
 
     /**

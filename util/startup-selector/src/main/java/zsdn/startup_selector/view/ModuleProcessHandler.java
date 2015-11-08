@@ -58,8 +58,8 @@ public class ModuleProcessHandler implements Runnable {
 
 	public void destroy() throws InterruptedException, IOException {
 		if (running) {
-			process.getOutputStream().write("stop\n".getBytes());
-			process.getOutputStream().flush();
+			//process.getOutputStream().write("stop\n".getBytes());
+			//process.getOutputStream().flush();
 			running = false;
 		}
 	}

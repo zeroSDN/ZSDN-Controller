@@ -103,6 +103,7 @@ public class Module {
 	}
 
 	public String getParameters() {
+	
 		return parameters.get();
 	}
 
