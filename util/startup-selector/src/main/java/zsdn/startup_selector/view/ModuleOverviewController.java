@@ -339,18 +339,14 @@ public class ModuleOverviewController {
 				// is a process of this module already running?
 				if (ModuleProcesses.get(selectedModule.getmoduleName()) == null||!(ModuleProcesses.get(selectedModule.getmoduleName())
 						.isAlive())) {
-					pb.start();
+					
+					pb.start(selectedModule.getPathWithoutModule());
 					ModuleProcesses.put(selectedModule.getmoduleName(), pb);
 					System.out.println("outputBOX: ");
-					try {
-						Thread.sleep(100);
+					
 						if(pb.isAlive())
 							selectedModule.setstatusProperty("Running");
 					
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
 				
 							}
 				else{ if(pb.isAlive())

@@ -8,6 +8,7 @@ import java.io.InputStreamReader;
 /**
  * Handler to start Module Processes.
  * @author Jan Strauss
+ * @author Matthias Hopp
  */
 public class ModuleProcessHandler implements Runnable {
 	private boolean running = false;
@@ -27,8 +28,8 @@ public class ModuleProcessHandler implements Runnable {
 		System.arraycopy(params, 0, launch, 1, params.length);
 	}
 
-	public void start() throws IOException {
-		process = new ProcessBuilder(launch).directory(new File("/home/zsdn/zsdn-git/build/modules/default/")).redirectErrorStream(true).start();
+	public void start(String modulePath) throws IOException {
+		process = new ProcessBuilder(launch).directory(new File(modulePath)).redirectErrorStream(true).start();
 
 		thread.start();
 
