@@ -30,8 +30,6 @@ common/java/zsdn-proto/src/main/java/zsdn/protocol/
 common/java/zsdn-proto/.settings/
 common/java/zsdn-proto/.project
 common/java/zsdn-proto/target
-modules/java/RESTAdmin/.settings
-modules/java/RESTAdmin/target/
 .classpath
 util/module-creator/.gitignore
 util/module-creator/.project
