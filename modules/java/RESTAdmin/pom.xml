@@ -5,27 +5,94 @@
 	<artifactId>RESTAdminModule</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
+
+	<!-- BUILD PLUGINS -->
 	<build>
-		<sourceDirectory>src</sourceDirectory>
+		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
+
+
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.3</version>
+				<version>2.5.1</version>
+				<executions>
+					<execution>
+						<id>default-testCompile</id>
+						<phase>test-compile</phase>
+						<goals>
+							<goal>testCompile</goal>
+						</goals>
+						<configuration>
+							<source>1.8</source>
+							<target>1.8</target>
+							<forceJavacCompilerUse>true</forceJavacCompilerUse>
+						</configuration>
+					</execution>
+					<execution>
+						<id>default-compile</id>
+						<phase>compile</phase>
+						<goals>
+							<goal>compile</goal>
+						</goals>
+						<configuration>
+							<source>1.8</source>
+							<target>1.8</target>
+							<forceJavacCompilerUse>true</forceJavacCompilerUse>
+						</configuration>
+					</execution>
+				</executions>
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+					<forceJavacCompilerUse>true</forceJavacCompilerUse>
 				</configuration>
 			</plugin>
+
+
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
-				<version>2.6</version>
+				<version>2.3</version>
+				<executions>
+					<execution>
+						<id>default-war</id>
+						<phase>package</phase>
+						<goals>
+							<goal>war</goal>
+						</goals>
+						<configuration>
+							<failOnMissingWebXml>false</failOnMissingWebXml>
+						</configuration>
+					</execution>
+				</executions>
 				<configuration>
-					<warSourceDirectory>WebContent</warSourceDirectory>
 					<failOnMissingWebXml>false</failOnMissingWebXml>
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.0</version>
+				<executions>
+					<execution>
+						<id>tomcat-run</id>
+						<phase>package</phase>
+						<goals>
+							<goal>exec-war-only</goal>
+						</goals>
+						<configuration>
+							<path>/</path>
+							<enableNaming>false</enableNaming>
+							<finalName>webgui-standalone.jar</finalName>
+							<charset>utf-8</charset>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+			
 		</plugins>
 	</build>
+
+
 	<dependencies>
 		<dependency>
 			<groupId>asm</groupId>
@@ -56,6 +123,7 @@
 			<groupId>javax.servlet</groupId>
 			<artifactId>servlet-api</artifactId>
 			<version>2.5</version>
+			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.jayway.restassured</groupId>
@@ -81,11 +149,9 @@
 			<scope>provided</scope>
 		</dependency>
 		<dependency>
-			<groupId>jersey-bundle-1.19</groupId>
-			<artifactId>com.sun.jersey</artifactId>
+			<groupId>com.sun.jersey</groupId>
+			<artifactId>jersey-bundle</artifactId>
 			<version>1.19</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/WebContent/WEB-INF/lib/jersey-bundle-1.19.jar</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.slf4j</groupId>
