@@ -1,6 +1,24 @@
+command_exists () {
+    type "$1" &> /dev/null ;
+}
+
 echo "LIBTINS UPGRADE SCRIPT"
-echo "make sure flex and byacc are installed so libpcap will compile"
-sudo apt-get install flex byacc
+
+echo "libtins depends on libpcap. to compile libpcap flex and byacc are required. if the following checks fail, install them, e.g: 'apt-get install flex byacc'"
+
+echo "checking if flex is installed.."
+if !  command_exists flex  ; then
+	echo "flex is not installed, can't compile libpcap, aborting"
+	exit 1
+fi
+echo "checking if flex is installed.. OK"
+
+echo "checking if byacc is installed.."
+if  !  command_exists byacc  ; then
+	echo "byacc is not installed, can't compile libpcap, aborting"
+	exit 1
+fi
+echo "checking if byacc is installed.. OK"
 
 ZDIR=$(<zsdn-dir.txt)
 echo "ZSDN-Dir: $ZDIR"
