@@ -2,14 +2,13 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>zsdn</groupId>
-	<artifactId>RESTAdminModule</artifactId>
+	<artifactId>web-admin</artifactId>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
 
 	<!-- BUILD PLUGINS -->
 	<build>
 		<sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-
 
 		<plugins>
 			<plugin>
@@ -48,7 +47,6 @@
 				</configuration>
 			</plugin>
 
-
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.3</version>
@@ -82,7 +80,7 @@
 						<configuration>
 							<path>/</path>
 							<enableNaming>false</enableNaming>
-							<finalName>webgui-standalone.jar</finalName>
+							<finalName>web-admin-standalone.jar</finalName>
 							<charset>utf-8</charset>
 						</configuration>
 					</execution>
