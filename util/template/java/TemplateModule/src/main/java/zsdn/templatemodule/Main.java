@@ -13,7 +13,6 @@ public class Main {
 		long instanceId = 0;
 
 		IFrameworkController instance = Launcher.createInstance(new TemplateModule(instanceId), Optional.empty());
-		instance.joinExecution();
 
         JmfConsole console = new JmfConsole(instance);
         console.startConsole();
