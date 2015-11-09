@@ -40,7 +40,7 @@
 				<configuration>
 					<archive>
 						<manifest>
-							<mainClass>de.andre_kutzleb.hierarchy.builder.Main</mainClass>
+							<mainClass>zsdn.startup_selector.MainApp</mainClass>
 						</manifest>
 					</archive>
 
