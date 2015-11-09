@@ -19,7 +19,7 @@ app.controller('moduleCtrl', [ '$scope','$http', function(scope, http) {
 	 * Sends XHR to server to get the data.
 	 */
 	function XHRUpdate() {
-		http.get(url + '/RESTAdmin/rest/modules',{cache: false}).
+		http.get(url + '/rest/modules',{cache: false}).
 			then(function (response){
 				scope.rowCollection = response.data;
 				scope.displayedCollection = [].concat(scope.rowCollection);
@@ -27,7 +27,7 @@ app.controller('moduleCtrl', [ '$scope','$http', function(scope, http) {
 			}, function(response){
 				// errorCallback
 				//window.alert(response.message);
-				console.warn("Error while calling RESTAdmin/rest/modules. Status Code: " + response.status + " " + response.statusText);
+				console.warn("Error while calling rest/modules. Status Code: " + response.status + " " + response.statusText);
 		});
 	};
 	
@@ -37,7 +37,7 @@ app.controller('moduleCtrl', [ '$scope','$http', function(scope, http) {
 	scope.changeState = function changeState(row) {
 		if(row.currentState == "Active") {
 			// disable
-			http.put(url + '/RESTAdmin/rest/modules/control?id='+ row.UniqueId + '&action=disable').
+			http.put(url + '/rest/modules/control?id='+ row.UniqueId + '&action=disable').
 				then(function(response){
 					XHRUpdate();
 				}, function(response){
@@ -48,7 +48,7 @@ app.controller('moduleCtrl', [ '$scope','$http', function(scope, http) {
 			});
 		} else if (row.currentState == "Inactive") {
 			// enable
-			http.put(url + '/RESTAdmin/rest/modules/control?id='+ row.UniqueId + '&action=enable').
+			http.put(url + '/rest/modules/control?id='+ row.UniqueId + '&action=enable').
 				then(function(response){
 					XHRUpdate();
 				}, function(response){
@@ -64,7 +64,7 @@ app.controller('moduleCtrl', [ '$scope','$http', function(scope, http) {
 	 * Stop a running module.
 	 */
 	scope.stopModule = function stopModule(row) { 
-		http.put(url + '/RESTAdmin/rest/modules/control?id='+ row.UniqueId + '&action=stop').
+		http.put(url + '/rest/modules/control?id='+ row.UniqueId + '&action=stop').
 			then(function(response){
 				XHRUpdate();
 			}, function(response){

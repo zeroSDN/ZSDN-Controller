@@ -61,7 +61,7 @@
 			 * Sends XHR to server 
 			 */
 			function getDataXHR() {
-				d3.xhr(url + "/RESTAdmin/rest/topo", function(error, response) {
+				d3.xhr(url + "/rest/topo", function(error, response) {
 					data = JSON.parse(response.response);
 					if (response.response != lastResponse) {
 						data.links.forEach(function(link) {
