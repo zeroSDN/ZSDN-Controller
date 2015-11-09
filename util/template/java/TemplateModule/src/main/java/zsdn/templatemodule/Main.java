@@ -2,6 +2,7 @@ package zsdn.templatemodule;
 
 import java.util.Optional;
 
+import jmf.JmfConsole;
 import jmf.Launcher;
 import jmf.module.IFrameworkController;
 
@@ -13,6 +14,9 @@ public class Main {
 
 		IFrameworkController instance = Launcher.createInstance(new TemplateModule(instanceId), Optional.empty());
 		instance.joinExecution();
+
+        JmfConsole console = new JmfConsole(instance);
+        console.startConsole();
 	}
 
 }
