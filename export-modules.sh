@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Script for building and exporting a module set
+
 CppModulesPath="modules/cpp"
 JavaModulesPath="modules/java"
 
@@ -46,7 +48,7 @@ done
 
 
 echo "### Start building selected modules"
-if ./build-all.sh${BuildParams}; then
+if ./build-modules.sh${BuildParams}; then
 	echo "# Build modules success"
 else
 	result=$?

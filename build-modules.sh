@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# Script for building a module set
+
 ModuleSetPath="modules/module-sets"
 CppModulesPath="modules/cpp"
 JavaModulesPath="modules/java"
@@ -174,6 +176,7 @@ if [ "$ClearBuildFolder" = true ] ; then
     rm -r "build/modules/$BuildTarget"
     echo "# Cleared output folder"
 fi
+mkdir -p "build/modules/$BuildTarget"
 
 
 # Build ZSDN Commons
@@ -227,7 +230,7 @@ do
     cd ..
 done
 
-cd ..
+cd ../..
 echo "### Finished Build C++ Modules ###"
 
 
@@ -247,6 +250,8 @@ do
     # Copy to module jars to build
     cp target*/*.jar ../../../build/modules/$BuildTarget
     cp target*/*.war ../../../build/modules/$BuildTarget
+
+    cd ..
 done
 
 cd ../..
