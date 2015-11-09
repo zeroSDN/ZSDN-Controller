@@ -36,4 +36,7 @@ util/module-creator/.gitignore
 util/module-creator/.project
 util/module-creator/.settings
 .temp
-export
+exportutil/startup-selector/target/
+util/startup-selector/.project
+util/startup-selector/.settings/
+util/startup-selector/moduleTemp.config
