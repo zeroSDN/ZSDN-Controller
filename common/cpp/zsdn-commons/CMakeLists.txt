@@ -5,6 +5,7 @@ set(PROJECT_NAME zsdn-commons)
 project(${PROJECT_NAME})
 
 option(NoTests "NoTests" ON)
+option(Verbose "Verbose" OFF)
 
 include(${CMAKE_CURRENT_SOURCE_DIR}/../../../util/zsdn-dir_cmake.txt)
 
@@ -12,6 +13,10 @@ include(${CMAKE_CURRENT_SOURCE_DIR}/../../../util/zsdn-dir_cmake.txt)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${ZSDN_DIR}/dependencies/lib)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -O3")
+if(Verbose)
+  message("# Verbose enabled")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -v")
+endif()
 
 include_directories("${ZSDN_DIR}/ZMF/dependencies/include")
 include_directories("${ZSDN_DIR}/ZMF/include")
