@@ -5,6 +5,7 @@
 # *.[oa]
 # *~
 .idea/
+*.iml
 CMakeCache.txt
 CMakeFiles/
 Makefile
@@ -35,5 +36,11 @@ modules/java/RESTAdmin/target/
 util/module-creator/.gitignore
 util/module-creator/.project
 util/module-creator/.settings
+util/module-creator/target
 .temp
+exportutil/startup-selector/target/
+util/startup-selector/.project
+util/startup-selector/.settings/
+util/startup-selector/moduleTemp.config
+util/startup-selector/target
 export
