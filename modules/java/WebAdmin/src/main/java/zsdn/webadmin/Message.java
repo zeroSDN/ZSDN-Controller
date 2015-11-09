@@ -1,7 +1,6 @@
-package RESTAdmin;
+package zsdn.webadmin;
 
 import java.math.BigInteger;
-import java.util.Date;
 
 /**
  * @author Maksim Pahlberg

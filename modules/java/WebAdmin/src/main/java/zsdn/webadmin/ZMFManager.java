@@ -1,22 +1,20 @@
-package RESTAdmin;
+package zsdn.webadmin;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
 
 import com.google.common.primitives.UnsignedInteger;
-import com.google.common.primitives.UnsignedInts;
 import com.google.common.primitives.UnsignedLong;
 
 import jmf.Launcher;
 import jmf.data.ModuleUniqueId;
 import jmf.module.IFrameworkController;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-
 /**
  * Manages Java Module
  * @author Maksim Pahlberg
  *
  */
-
 public class ZMFManager extends HttpServlet {
 	
 	private static final int MODULE_ENABLE_WAIT_TIME = 5;

@@ -1,21 +1,20 @@
-package RESTAdmin;
+package zsdn.webadmin;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
  
 /**
  * @author Maksim Pahlberg
  * REST Interface for logging messages
- * access at /RESTAdmin/rest/topo
+ * access at /rest/topo
  */
 @Path("/topo")
 public class RESTTopology {
  
 	
 	/**
-	 * Is requested at /RESTAdmin/rest/topo and provides topology JSON
+	 * Is requested at /rest/topo and provides topology JSON
 	 * @return	topology in JSON format
 	 */
 	@GET

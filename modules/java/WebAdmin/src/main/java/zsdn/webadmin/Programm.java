@@ -1,4 +1,4 @@
-package RESTAdmin;
+package zsdn.webadmin;
 
 public class Programm {
 	

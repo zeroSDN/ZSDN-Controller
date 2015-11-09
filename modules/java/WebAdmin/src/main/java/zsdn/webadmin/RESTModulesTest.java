@@ -1,4 +1,4 @@
-package RESTAdmin;
+package zsdn.webadmin;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.parsing.Parser;
 
@@ -24,7 +24,7 @@ public class RESTModulesTest {
 	@Test 
 	public void testModulesAccess() { 
 		RestAssured.registerParser("text/plain", Parser.JSON);
-		expect().get("/RESTAdmin/rest/modules").then().statusCode(200).assertThat().body("[0].name", Matchers.notNullValue());
+		expect().get("/rest/modules").then().statusCode(200).assertThat().body("[0].name", Matchers.notNullValue());
 	}
 	
 	/** 
@@ -37,7 +37,7 @@ public class RESTModulesTest {
 	@Test 
 	public void testModulesFilteredAccess() { 
 		RestAssured.registerParser("text/plain", Parser.JSON);
-		expect().get("/RESTAdmin/rest/modules/filtered?id=0:1").then().statusCode(200).assertThat().body("[0].name", Matchers.notNullValue());		
+		expect().get("/rest/modules/filtered?id=0:1").then().statusCode(200).assertThat().body("[0].name", Matchers.notNullValue());		
 	}
 	
 	

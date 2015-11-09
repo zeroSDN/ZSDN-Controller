@@ -1,4 +1,4 @@
-package RESTAdmin;
+package zsdn.webadmin;
 
 import com.datastax.driver.core.Cluster;
 import com.datastax.driver.core.ResultSet;

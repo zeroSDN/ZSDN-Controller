@@ -1,4 +1,4 @@
-package RESTAdmin;
+package zsdn.webadmin;
 
 import static com.jayway.restassured.RestAssured.expect;
 
@@ -20,14 +20,14 @@ public class RESTMessagesTest {
 
 	/** 
 	 * Junit test method for general messages access
-	 * Tests if /RESTAdmin/rest/messages returns status code OK (200)
+	 * Tests if /rest/messages returns status code OK (200)
 	 * Tests if the returned JSON contains a field "id"
 	 * 
 	 */
 	@Test 
 	public void testMessages() { 
 		RestAssured.registerParser("text/plain", Parser.JSON);
-		expect().get("/RESTAdmin/rest/messages").then().statusCode(200).assertThat().body("[0].id", Matchers.notNullValue());
+		expect().get("/rest/messages").then().statusCode(200).assertThat().body("[0].id", Matchers.notNullValue());
 	}
 	
 	/** 
@@ -41,7 +41,7 @@ public class RESTMessagesTest {
 	public void testMessagesFiltered() { 
 		RestAssured.registerParser("text/plain", Parser.JSON);
 		long unixTime = System.currentTimeMillis();
-		expect().get("/RESTAdmin/rest/messages/filtered?starttime=128946816000&endtime="+unixTime).then().statusCode(200).assertThat().body("[0].id", Matchers.notNullValue());		
+		expect().get("/rest/messages/filtered?starttime=128946816000&endtime="+unixTime).then().statusCode(200).assertThat().body("[0].id", Matchers.notNullValue());		
 		
 	}
 

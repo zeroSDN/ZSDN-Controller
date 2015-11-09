@@ -1,4 +1,4 @@
-package RESTAdmin;
+package zsdn.webadmin;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.PUT;
@@ -9,7 +9,7 @@ import javax.ws.rs.core.Response;
 /**
  * @author Maksim Pahlberg
  * REST interface for module management
- * access at Rest /RESTAdmin/rest/modules
+ * access at Rest /rest/modules
  */
 
 @Path("/modules")

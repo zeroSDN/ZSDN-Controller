@@ -1,4 +1,4 @@
-package RESTAdmin;
+package zsdn.webadmin;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -8,14 +8,14 @@ import javax.ws.rs.core.Response;
 /**
  * @author Maksim Pahlberg
  * REST Interface for logging messages
- * access at /RESTAdmin/rest/messages
+ * access at /rest/messages
  */
 @Path("/messages")
 public class RESTMessages {
  
 	
 	/**
-	 * Is requested at /RESTAdmin/rest/messages and provides all logging messages
+	 * Is requested at /rest/messages and provides all logging messages
 	 * @return	All logging messages in JSON format
 	 */
 	@GET
@@ -30,7 +30,7 @@ public class RESTMessages {
 	}
 	
 	/**
-	 * Is requested at /RESTAdmin/rest/messages/filtered? and requires 
+	 * Is requested at /rest/messages/filtered? and requires 
 	 * the  starttime and endtime parameter
 	 * @param time
 	 * @param starttime

@@ -1,4 +1,4 @@
-package RESTAdmin;
+package zsdn.webadmin;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentMap;
@@ -218,7 +218,7 @@ public class AdminModule extends jmf.module.AbstractModule {
 
 		for (Row row : results) {
 
-			RESTAdmin.Message msg = new RESTAdmin.Message();
+			zsdn.webadmin.Message msg = new zsdn.webadmin.Message();
 			byte[] asByteArray = row.getBytes("messageType").array();
 			int[] asIntArray = new int[asByteArray.length];
 			for(int i = 0; i < asIntArray.length;i++) {

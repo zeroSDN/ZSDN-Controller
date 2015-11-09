@@ -1,4 +1,4 @@
-package RESTAdmin;
+package zsdn.webadmin;
 
 import static com.jayway.restassured.RestAssured.expect;
 
@@ -19,25 +19,25 @@ public class RESTTopologyTest {
 	
 	/** 
 	 * Junit test method for topology nodes
-	 * Tests if /RESTAdmin/rest/topo returns status code OK (200)
+	 * Tests if /rest/topo returns status code OK (200)
 	 * Tests if the returned JSON contains a field "nodes"
 	 * 
 	 */
 	@Test 
 	public void testTopologyNodes() { 
 		RestAssured.registerParser("text/plain", Parser.JSON);
-		expect().get("/RESTAdmin/rest/topo").then().statusCode(200).assertThat().body("nodes", Matchers.notNullValue());
+		expect().get("/rest/topo").then().statusCode(200).assertThat().body("nodes", Matchers.notNullValue());
 	}
 	
 	/** 
 	 * Junit test method for topology links
-	 * Tests if the returned JSON from /RESTAdmin/rest/topo contains a field "links"
+	 * Tests if the returned JSON from /rest/topo contains a field "links"
 	 * 
 	 */
 	@Test 
 	public void testTopologyLinks() { 
 		RestAssured.registerParser("text/plain", Parser.JSON);
-		expect().get("/RESTAdmin/rest/topo").then().assertThat().body("links", Matchers.notNullValue());
+		expect().get("/rest/topo").then().assertThat().body("links", Matchers.notNullValue());
 	}
 
 
