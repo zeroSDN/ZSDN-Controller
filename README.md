@@ -38,7 +38,7 @@ contact.zsdn@gmail.com
 
 # Participate
 
-ZeroSDN is an open source project. You have own ideas or plans concerning ZSDN or found a bug? Share them with us!
+ZeroSDN is an open source project. You have own ideas or plans concerning ZSDN or found bugs? Share them with us!
 Under the following links you may commit your pull requests:
 
 ZeroSDN:
