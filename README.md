@@ -4,6 +4,8 @@ Zero Software Defined Networking(ZSDN) is a distributed SDN controller. It consi
 
 ZeroSDN was developed by 13 students during a software engineering project at the [Distributed Systems department](https://www.ipvs.uni-stuttgart.de/abteilungen/vs?__locale=en) at the [University of Stuttgart](http://www.uni-stuttgart.de/home/).
 
+![Overview](http://alki.square7.de/zsdn/MessageBus_modules.png)
+
 # Why another SDN-Controller?
 
 We felt  that many controllers are either _too monolithic_, _too hard to understand_, or _not scalable_ enough.
