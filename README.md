@@ -26,7 +26,7 @@ This is why we created a controller that:
 
 ## How to install/use ZeroSDN?
 
-It's easy, just check out https://github.com/zeroSDN/ZSDN-Controller/wiki for more information.
+It's easy, take a look at https://github.com/zeroSDN/ZSDN-Controller/wiki for more information.
 
 # Support
 
