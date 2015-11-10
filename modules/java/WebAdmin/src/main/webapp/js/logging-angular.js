@@ -16,7 +16,7 @@ app.controller('mainCtrl', [ '$scope','$http', function(scope, http) {
 	scope.update = function update() {
 		var startTime = new Date(scope.displayedCollection[0].timeStamp).getTime();
 		var endTime = new Date().getTime();
-		http.get(url + '/rest/messages/filtered?starttime=' + startTime + '&endtime=' + endTime).
+		http.get(url + '/messages/filtered?starttime=' + startTime + '&endtime=' + endTime).
 			then(function(response){
 				scope.rowCollection = scope.rowCollection.concat(response.data);
 				scope.displayedCollection = scope.displayedCollection.concat(scope.rowCollection);
@@ -33,7 +33,7 @@ app.controller('mainCtrl', [ '$scope','$http', function(scope, http) {
 	 * Sends XHR to server to get the data.
 	 */
 	function XHRUpdate() {
-		http.get(url + '/rest/messages', {cache: false}).
+		http.get(url + '/messages', {cache: false}).
 			then(function(response){
 				scope.rowCollection = response.data;
 				scope.displayedCollection = [].concat(scope.rowCollection);
