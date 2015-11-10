@@ -24,25 +24,18 @@ This is why we created a controller that:
 
 ![ZeroSDN StartUpSelector initial screen](http://alki.square7.de/zsdn/throughput_4_node.png)
 
-## Detailed Information
+## How to install/use ZeroSDN?
 
-Please consult our [Wiki](https://github.com/zeroSDN/ZSDN-Controller/wiki) for detailed information about the controller.
-
+It's easy, just check out https://github.com/zeroSDN/ZSDN-Controller/wiki for more information.
 
 # Support
-
-You can find the ZeroSDN documentation in our github wiki at https://github.com/zeroSDN/ZSDN-Controller/wiki
 
 If you need help, don't hesitate to contact us:
 contact.zsdn@gmail.com
 
 # Participate
 
-ZeroSDN is an open source project. You have own ideas or plans concerning ZSDN or found bugs? Share them with us!
-Under the following links you may commit your pull requests:
-
-ZeroSDN:
-https://github.com/zeroSDN/ZSDN-Controller/compare
+ZeroSDN is an open source project. You have own ideas or plans concerning ZSDN or found bugs? Share them with us.
 
 We are looking forward to your participation!
 
