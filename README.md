@@ -10,7 +10,7 @@ We felt  that many controllers are either _too monolithic_, _too hard to underst
 
 This is why we created a controller that:
 
-* Can run on **any hardware** (Raspberry Pi, Cloud environment, even on SDN switches themselves)
+* Can run on **any hardware** (Raspberry Pi, Cloud environment, even on SDN switches)
 
 * Is **language independent** (currently Java and C++ supported)
 
