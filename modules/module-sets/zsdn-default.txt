@@ -1,3 +1,4 @@
+Core controller functionality as well as forwarding-by-controller, Layer-2-flow-installation, and ARP-handling. One instance of each module type.
 cpp/SwitchAdapter
 cpp/SwitchRegistryModule
 cpp/DeviceModule

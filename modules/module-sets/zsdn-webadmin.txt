@@ -1,3 +1,4 @@
+Module set zsdn-default + WebAdmin (REST interface and Web GUI)
 cpp/SwitchAdapter
 cpp/SwitchRegistryModule
 cpp/DeviceModule

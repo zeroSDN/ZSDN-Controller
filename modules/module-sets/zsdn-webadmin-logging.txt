@@ -1,3 +1,4 @@
+Module set zsdn-webadmin + LoggingModule logging controller messages (requires Apache Cassandra)
 cpp/SwitchAdapter
 cpp/SwitchRegistryModule
 cpp/DeviceModule
@@ -7,5 +8,5 @@ cpp/StatisticsModule
 cpp/ARPModule
 cpp/SimpleForwardingModule
 cpp/ForwardingModule
-cpp/LoggingModule
 java/WebAdmin
+cpp/LoggingModule

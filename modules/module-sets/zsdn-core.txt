@@ -1,3 +1,4 @@
+Module set of all ZSDN core modules. This is the controller with all it's core functionality. Will not do much on it's own. One instance of each module type.
 cpp/SwitchAdapter
 cpp/SwitchRegistryModule
 cpp/DeviceModule

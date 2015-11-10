@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Script for building a module set
+# Script for building a selected module set
 
 ModuleSetPath="modules/module-sets"
 CppModulesPath="modules/cpp"
@@ -9,24 +9,25 @@ JavaModulesPath="modules/java"
 
 # Scan all module sets
 ModuleSets=()
-for file in ${ModuleSetPath}/*; do
-  ModuleSets+=(${file:20})
+for file in ${ModuleSetPath}/*txt; do
+	# Load module set
+	fileNoExt=${file%%.*}
+	setName=${fileNoExt:20}
+  	ModuleSets+=($setName)
 done
 
 
 # Help output
 function printHelp {
     echo "Options:"    
-    echo "   -m [moduleset] (mandatory) specify module set to build"    
-    for i in "${ModuleSets[@]}"
-    do
-        echo "                  [moduleset] $i"
-    done
-    echo "   -t             (optional) execute unittests during build";
-    echo "   -b [target]>   (optional) set build target, otherwise system default";
-    echo "                  [target] pi build for Raspberry Pi ARM"
-    echo "   -c             (optional) clean up build output directory before build";
-    echo "   -v             (optional) enable verbose output";
+    echo "   -m [set]  (mandatory) specify module set to build" 
+    ./util/print-modulesets.sh
+    echo "   -t        (optional) execute unittests during build";
+    echo "   -b [targ] (optional) set build target, otherwise system default";
+    echo "                default Build system default"
+    echo "                pi      Build for Raspberry Pi ARM"
+    echo "   -c         (optional) clean up build output directory before build";
+    echo "   -v         (optional) enable verbose output";
 }
 
 
@@ -79,17 +80,12 @@ if [ "$ModuleSetSelected" == "" ] ; then
     exit 1
 fi
 
-
 # Check if existing module set
 validModuleSet=false
 for i in "${ModuleSets[@]}"
 do
     if [[ $ModuleSetSelected =~ $i ]]; then
         validModuleSet=true
-        break
-    elif [[ "${ModuleSetSelected}.txt" =~ $i ]]; then
-        validModuleSet=true
-        ModuleSetSelected="${ModuleSetSelected}.txt"
         break
     fi
 done
@@ -108,7 +104,7 @@ echo "Building module set ${ModuleSetSelected}"
 CppModulesToBuild=()
 JavaModulesToBuild=()
 
-filename="$ModuleSetPath/$ModuleSetSelected"
+filename="$ModuleSetPath/${ModuleSetSelected}.txt"
 while read -r line || [ -n "$line" ]; 
 do
     if [[ ${line:0:4} =~ "cpp/" ]]; then

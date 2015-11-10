@@ -1,32 +1,31 @@
 #!/bin/bash
 
-# Script for building and exporting a module set
+# Script for building and exporting a selected module set
 
 CppModulesPath="modules/cpp"
 JavaModulesPath="modules/java"
 
 
-
 # Help output
 function printHelp {
     echo "Options:"    
-    echo "   -m [moduleset] (mandatory) specify module set to build"    
-    for i in "${ModuleSets[@]}"
-    do
-        echo "                  [moduleset] $i"
-    done
-    echo "   -b [target]>   (optional) set build target, otherwise system default";
-    echo "                  [target] pi build for Raspberry Pi ARM"
+    echo "   -m [set]  (mandatory) specify module set to build" 
+    ./util/print-modulesets.sh
+    echo "   -b [targ] (optional) set build target, otherwise system default";
+    echo "                default Build system default"
+    echo "                pi      Build for Raspberry Pi ARM"
 }
 
 
 # Parse Parameters
 BuildParams=" -c"
 BuildTarget="default"
+ModuleSetSelected=""
 
 while getopts m:hb: flag; do
   case $flag in
     m)
+        ModuleSetSelected="${OPTARG}"
         BuildParams="${BuildParams} -m ${OPTARG}"
         ;;
     h)

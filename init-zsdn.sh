@@ -87,7 +87,7 @@ cd ..
 
 echo
 echo "## Start build ZSDN core modules"
-if ./build-modules.sh -m zsdn-core; then
+if ./build-modules.sh -m zsdn-webadmin; then
 	echo "# Build ALL success"
 else
 	result=$?
