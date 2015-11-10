@@ -4,7 +4,7 @@ Zero Software Defined Networking(ZSDN) is a distributed SDN controller. It consi
 
 The excecution of each module is controlled by an instance of the Zero Module Framework (ZMF). ZMF is a framework for distrubed, language independent module execution. Currently there are two implementations of ZMF: ZMF for C++ https://github.com/zeroSDN/ZMF and JMF for Java https://github.com/zeroSDN/JMF.
 
-ZeroSDN was developed during a student project at the Distributed Systems department at the University of Stuttgart.
+ZeroSDN was developed by 13 Students during a software engineering project at the [Distributed Systems department](https://www.ipvs.uni-stuttgart.de/abteilungen/vs?__locale=en) at the [University of Stuttgart](http://www.uni-stuttgart.de/home/).
 
 # Why another SDN-Controller?
 
