@@ -39,7 +39,7 @@ ZeroSDN is an open source project. You have own ideas or plans concerning ZSDN o
 
 We are looking forward to your participation!
 
-## Licence
+# Licence
 
 ZeroSDN is licenced under the Apache License Version 2.0, see LICENCE.md
 
