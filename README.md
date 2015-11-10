@@ -2,7 +2,7 @@
 
 Zero Software Defined Networking(ZSDN) is a distributed SDN controller. It consists of multiple independent modules that are connected by a messaging middleware, ZMQ (see http://zeromq.org). Currently ZeroSDN supports OpenFlow versions 1.0 und 1.3.
 
-ZeroSDN was developed by 13 Students during a software engineering project at the [Distributed Systems department](https://www.ipvs.uni-stuttgart.de/abteilungen/vs?__locale=en) at the [University of Stuttgart](http://www.uni-stuttgart.de/home/).
+ZeroSDN was developed by Students during a software engineering project at the [Distributed Systems department](https://www.ipvs.uni-stuttgart.de/abteilungen/vs?__locale=en) at the [University of Stuttgart](http://www.uni-stuttgart.de/home/).
 
 # Why another SDN-Controller?
 
