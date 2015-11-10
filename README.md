@@ -29,22 +29,24 @@ This is why we created a controller that:
 Please consult our [Wiki](https://github.com/zeroSDN/ZSDN-Controller/wiki) for detailed information about the controller.
 
 
+# Support
+
+You can find the ZeroSDN documentation in our github wiki at https://github.com/zeroSDN/ZSDN-Controller/wiki
+
+If you need help, don't hesitate to contact us:
+contact.zsdn@gmail.com
+
+# Participate
+
+ZeroSDN is an open source project. You have own ideas or plans concerning ZSDN or found a bug? Share them with us!
+Under the following links you may commit your pull requests:
+
+ZeroSDN:
+https://github.com/zeroSDN/ZSDN-Controller/compare
+
+We are looking forward to your participation!
+
 ## Licence
 
 ZeroSDN is licenced under the Apache License Version 2.0, see LICENCE.md
 
-
-## Support 
-
-You can find the ZeroSDN documentation in our github wiki at https://github.com/zeroSDN/ZSDN-Controller/wiki
-
-For ZMF/JMF releated questions please visit the ZMF page https://github.com/zeroSDN/ZMF or the JMF page https://github.com/zeroSDN/JMF
-
-If you have further questions you can find our contact information here: https://github.com/zeroSDN
-
-
-## Participation
-
-ZeroSDN is an open source project. If you have any bug reports, fixes, features or feature request feel free to create a pull request https://github.com/zeroSDN/ZSDN-Controller/pulls or contact us https://github.com/zeroSDN.
-
-We are looking forward to your participation!
