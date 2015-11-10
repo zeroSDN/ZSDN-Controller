@@ -37,6 +37,8 @@ contact.zsdn@gmail.com
 
 ZeroSDN is an open source project. You have own ideas or plans concerning ZSDN or found bugs? Share them with us.
 
+You can create pull requests at https://github.com/zeroSDN/ZSDN-Controller/pulls or contact us at https://github.com/zeroSDN
+
 We are looking forward to your participation!
 
 # Licence
