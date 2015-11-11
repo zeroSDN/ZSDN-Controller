@@ -8,23 +8,30 @@ ZeroSDN was developed by 13 students during a software engineering project at th
 
 ![Overview](http://alki.square7.de/zsdn/MessageBus_modules.png)
 
-# Why another SDN-Controller?
+# Why yet another SDN-Controller?
 
-We felt  that many controllers are either _too monolithic_, _too hard to understand_, or _not scalable_ enough.
+We felt that many controllers are either _too monolithic_, _too hard to understand_, or _not scalable enough_. 
 
 This is why we created a controller that:
 
-* Can run on **any hardware** (Raspberry Pi, Cloud environment, even on SDN switches)
+## Is highly modularized
+Every functionality in ZeroSDN is a single artifact running independently, no matter if on the same machine or distributed; there is no huge monolithic controller instance.
 
-* Is **highly modularized**: every functionality in ZSDN is a single artifact running independently, no matter if on the same machine or distributed: **there is no huge monolithic controller instance**.<br> 
+## Can run on any hardware
+We deployed the full controller on a single Raspberry Pi, in a cloud environment and even directly on physical SDN switches.
 
-* Is **language independent** (currently Java and C++ supported)
+## Is language independent
+Currently supported languages are Java and C++.
 
-* Can be easily **understood and extended**. 
+## Can be easily understood and extended
+We made sure to document all functionality thoroughly.
 
-* Filters events on the sender side: Using hierarchical topic-based subscriptions, we **avoid unecessary event-delivery**. This includes the Switch itself. If no one wants to receive e.g. UDP packets, the Switch will not even send them.
+## Avoids unecessary event-delivery
+ZeroSDN filters events at sending modules using hierarchical topic-based publish/subscribe. 
+If, for example, no module is subscribed to UDP packets from the network, the switches will not even attempt to deliver them.
 
-* **Performs very well**: ZeroSDN won't play to its advantages when running locally only, however, we were able to perform very well when scaling out (Tested using CBench (see http://archive.openflow.org/wk/index.php/Oflops), Throughput mode):
+## Performs very well
+While ZeroSDN can be run locally on one machine without a problem, it really plays to its advantage once distributed2:
 
 ![ZeroSDN StartUpSelector initial screen](http://alki.square7.de/zsdn/throughput_4_node.png)
 
