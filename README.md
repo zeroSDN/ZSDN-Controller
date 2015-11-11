@@ -24,7 +24,7 @@ This is why we created a controller that:
 
 * Filters events on the sender side: Using hierarchical topic-based subscriptions, we **avoid unecessary event-delivery**. This includes the Switch itself. If no one wants to receive e.g. UDP packets, the Switch will not even send them.
 
-* **Performs very well**: ZeroSDN won't play to its advantages when running locally only, however, we were able to perform very well when scaling out (Tested using [CBench](http://archive.openflow.org/wk/index.php/Oflops), Throughput mode):
+* **Performs very well**: ZeroSDN won't play to its advantages when running locally only, however, we were able to perform very well when scaling out (Tested using CBench (see http://archive.openflow.org/wk/index.php/Oflops), Throughput mode):
 
 ![ZeroSDN StartUpSelector initial screen](http://alki.square7.de/zsdn/throughput_4_node.png)
 
