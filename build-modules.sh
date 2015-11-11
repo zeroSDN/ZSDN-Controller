@@ -189,6 +189,9 @@ fi
 cd ..
 
 
+# Copy module starter jar
+cp util/module-starter/target/zsdn-module-starter-1.0.0-jar-with-dependencies.jar build/modules/default/module-starter.jar
+
 
 # Build C++ modules
 echo
@@ -207,6 +210,7 @@ do
     echo "# Cleared Module " $i
 done
 echo "# Cleared Modules"
+
 
 # Build
 echo

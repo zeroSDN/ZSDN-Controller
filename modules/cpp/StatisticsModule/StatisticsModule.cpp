@@ -109,7 +109,7 @@ void StatisticsModule::onStatisticsOF13Reply(const zmf::data::ZmfMessage& messag
         }
 
         if (ofObjectT->object_id == OF_TABLE_STATS_REPLY) {
-            getLogger().information(
+            getLogger().trace(
                     "received OF13 Table Statistics Reply from Switch: " + std::to_string(sender.InstanceId));
             of_list_table_stats_entry_t* table_stats_entry_t = of_table_stats_reply_entries_get(ofObjectT);
             //of_table_stats_entry_t* statsEntry = of_table_stats_entry_new(ofObjectT->version);
@@ -133,7 +133,7 @@ void StatisticsModule::onStatisticsOF13Reply(const zmf::data::ZmfMessage& messag
             of_list_table_stats_entry_delete(table_stats_entry_t);
         }
         else if (ofObjectT->object_id == OF_PORT_STATS_REPLY) {
-            getLogger().information(
+            getLogger().trace(
                     "received OF10 Port Statistics Reply from Switch: " + std::to_string(sender.InstanceId));
             of_list_port_stats_entry_t* port_stats_entry_t = of_port_stats_reply_entries_get(ofObjectT);
             //of_port_stats_entry_t* statsEntry = of_port_stats_entry_new(ofObjectT->version);
@@ -197,7 +197,7 @@ void StatisticsModule::onStatisticsOF10Reply(const zmf::data::ZmfMessage& messag
         }
 
         if (ofObjectT->object_id == OF_TABLE_STATS_REPLY) {
-            getLogger().information(
+            getLogger().trace(
                     "received OF10 Table Statistics Reply from Switch: " + std::to_string(sender.InstanceId));
             of_list_table_stats_entry_t* table_stats_entry_t = of_table_stats_reply_entries_get(ofObjectT);
             //of_table_stats_entry_t* statsEntry = of_table_stats_entry_new(ofObjectT->version);
@@ -221,7 +221,7 @@ void StatisticsModule::onStatisticsOF10Reply(const zmf::data::ZmfMessage& messag
             of_list_table_stats_entry_delete(table_stats_entry_t);
         }
         else if (ofObjectT->object_id == OF_PORT_STATS_REPLY) {
-            getLogger().information(
+            getLogger().trace(
                     "received OF10 Port Statistics Reply from Switch: " + std::to_string(sender.InstanceId));
             of_list_port_stats_entry_t* port_stats_entry_t = of_port_stats_reply_entries_get(ofObjectT);
             //of_port_stats_entry_t* statsEntry = of_port_stats_entry_new(ofObjectT->version);
@@ -274,7 +274,7 @@ void StatisticsModule::sendDemandStatisticsRequest(uint64_t switchID, of_version
                 switchID).openflow().of_1_0_stats_request_of_1_3_port_mod().build();
         getZmf()->publish(zmf::data::ZmfMessage(tableStatMsgType, tableStatReq_serialized));
         of_object_delete(tableStatReq);
-        getLogger().information("sent OF10 Table Statistics Request to Switch: " + std::to_string(switchID));
+        getLogger().trace("sent OF10 Table Statistics Request to Switch: " + std::to_string(switchID));
 
         of_port_stats_request_t* portStatReq = of_port_stats_request_new(ofVersion);
         // 0xffff is OFPP_NONE in of10 which means "all ports"
@@ -284,7 +284,7 @@ void StatisticsModule::sendDemandStatisticsRequest(uint64_t switchID, of_version
                 switchID).openflow().of_1_0_stats_request_of_1_3_port_mod().build();
         getZmf()->publish(zmf::data::ZmfMessage(portStatMsgType, portStatReq_serialized));
         of_object_delete(portStatReq);
-        getLogger().information("sent OF10 Port Statistics Request to Switch: " + std::to_string(switchID));
+        getLogger().trace("sent OF10 Port Statistics Request to Switch: " + std::to_string(switchID));
     }
 
     if (ofVersion == OF_VERSION_1_3) {
@@ -295,7 +295,7 @@ void StatisticsModule::sendDemandStatisticsRequest(uint64_t switchID, of_version
                 switchID).openflow().of_1_0_barrier_request_of_1_3_multipart_request().build();
         getZmf()->publish(zmf::data::ZmfMessage(tableStatMsgType, tableStatReq_serialized));
         of_object_delete(tableStatReq);
-        getLogger().information("sent OF13 Table Statistics Request to Switch: " + std::to_string(switchID));
+        getLogger().trace("sent OF13 Table Statistics Request to Switch: " + std::to_string(switchID));
 
         of_port_stats_request_t* portStatReq = of_port_stats_request_new(ofVersion);
         // 0xffffffff is OFPP_ANY in of13 which means "all ports"
@@ -305,7 +305,7 @@ void StatisticsModule::sendDemandStatisticsRequest(uint64_t switchID, of_version
                 switchID).openflow().of_1_0_barrier_request_of_1_3_multipart_request().build();
         getZmf()->publish(zmf::data::ZmfMessage(portStatMsgType, portStatReq_serialized));
         of_object_delete(portStatReq);
-        getLogger().information("sent OF13 Port Statistics Request to Switch: " + std::to_string(switchID));
+        getLogger().trace("sent OF13 Port Statistics Request to Switch: " + std::to_string(switchID));
     }
 
 }

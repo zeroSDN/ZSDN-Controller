@@ -4,9 +4,7 @@
 echo "### Module Starter ###"
 
 
-trap 'kill $(jobs -p)' EXIT
-
-
+# Check parameters
 if [ $# -ne 2 ]; then
 	echo "Illegal number of parameters. Usage: "
 	echo "<module folder> <config file>"
@@ -15,16 +13,19 @@ if [ $# -ne 2 ]; then
 fi
 
 
-# Start modules
-nohup $1/SwitchRegistryModule $2 &
-nohup $1/DeviceModule $2 &
-nohup $1/LinkDiscoveryModule $2 &
-nohup $1/TopologyModule $2 &
-nohup $1/StatisticsModule $2 &
-nohup $1/ARPModule $2 &
-nohup $1/SimpleForwardingModule $2 &
-nohup $1/ForwardingModule $2 &
-nohup java -jar $1/web-admin-standalone.jar &
+# Modules to start
+modulStarts=(
+	"$1/SwitchAdapter $2 1.0 6633"
+	"$1/SwitchRegistryModule $2"
+	"$1/DeviceModule $2"
+	"$1/LinkDiscoveryModule $2"
+	"$1/TopologyModule $2"
+	"$1/StatisticsModule $2"
+	"$1/ARPModule $2"
+	"$1/SimpleForwardingModule $2 0"
+	"$1/ForwardingModule $2 0"
+	"java -jar $1/web-admin-standalone.jar")
 
-# Start SwitchAdapter last
-$1/SwitchAdapter $2 1.0 6633 
+
+# Run module starter
+java -jar $1/module-starter.jar "${modulStarts[@]}"

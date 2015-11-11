@@ -30,7 +30,7 @@ function printHelp {
 
 
 # Parse Parameters
-BuildParams=" -c"
+BuildParams=""
 BuildTarget="default"
 ModuleSetSelected=""
 Rebuild=false
@@ -103,4 +103,4 @@ fi
 
 echo "Starting module set ${ModuleSetSelected}"
 
-${ModuleSetPath}/${ModuleSetSelected}.sh "./build/modules/${BuildTarget}" "./config/default.config"
+${ModuleSetPath}/${ModuleSetSelected}.sh "build/modules/${BuildTarget}" "./config/default.config"

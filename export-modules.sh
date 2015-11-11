@@ -70,15 +70,15 @@ echo "# Created temporary export folder $ExportFolder"
 
 
 # Copy modules
-cp ${BuildFolder}/. ${ExportFolder}/ -R
+cp ${BuildFolder}/. ${ExportFolder}/modules -R
 echo "# Copied modules"
 
 # Copy depencencies
 # TODO Adapt for pi build?
-mkdir -p ${ExportFolder}/lib
-cp dependencies/lib*/*.so* ${ExportFolder}/lib
-cp ZMF/dependencies/lib*/*.so* ${ExportFolder}/lib
-cp ZMF/lib*/*.so* ${ExportFolder}/lib
+mkdir -p ${ExportFolder}/modules/lib
+cp dependencies/lib*/*.so* ${ExportFolder}/modules/lib
+cp ZMF/dependencies/lib*/*.so* ${ExportFolder}/modules/lib
+cp ZMF/lib*/*.so* ${ExportFolder}/modules/lib
 echo "# Copied dependencies"
 
 
