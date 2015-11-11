@@ -4,9 +4,7 @@
 echo "### Module Starter ###"
 
 
-trap 'kill $(jobs -p)' EXIT
-
-
+# Check parameters
 if [ $# -ne 2 ]; then
 	echo "Illegal number of parameters. Usage: "
 	echo "<module folder> <config file>"
@@ -15,14 +13,13 @@ if [ $# -ne 2 ]; then
 fi
 
 
-# Start modules
-# $2 is config file name
-#nohup $1/MyCppModule $2 myparam &
-#nohup java -jar $1/MyJavaModule.jar $2 myparam &
+# Modules to start
+# $1 is module folder parameter
+# $2 is config file parameter
+modulStarts=(
+	"$1/MyCppModule $2"
+	"java -jar $1/MyJavaModule.jar")
 
 
-sleep 0.5
-echo 
-echo "Modules started"
-echo "Press enter to stop controller"
-read
+# Run module starter
+java -jar $1/module-starter.jar "${modulStarts[@]}"
