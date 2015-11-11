@@ -2,6 +2,7 @@
 
 # Script for building and exporting a selected module set
 
+ModuleSetPath="modules/module-sets"
 CppModulesPath="modules/cpp"
 JavaModulesPath="modules/java"
 
@@ -57,7 +58,7 @@ fi
 
 
 BuildFolder="build/modules/$BuildTarget" 
-BuildName="zsdn_${BuildTarget}-target"
+BuildName="${ModuleSetSelected}_${BuildTarget}"
 ExportFolder=".temp/export/${BuildName}" 
 
 
@@ -82,13 +83,16 @@ cp ZMF/lib*/*.so* ${ExportFolder}/modules/lib
 echo "# Copied dependencies"
 
 
-# TODO Library path script?
-# TODO Run all script?
-
 
 # Copy config folder
 cp config/. ${ExportFolder}/config -R
 echo "Exported config folder"
+
+
+# Copy module run script
+cp ${ModuleSetPath}/${ModuleSetSelected}.sh ${ExportFolder}/modules/starter.sh -R
+cp util/module-starter/run-modules.sh ${ExportFolder}/run.sh -R
+echo "Copied run scripts"
 
 
 # Create export archive
