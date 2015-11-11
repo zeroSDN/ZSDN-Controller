@@ -16,11 +16,11 @@ This is why we created a controller that:
 
 * Can run on **any hardware** (Raspberry Pi, Cloud environment, even on SDN switches)
 
+* Is **highly modularized**: every functionality in ZSDN is a single artifact running independently, no matter if on the same machine or distributed: **there is no huge monolithic controller instance**.<br> 
+
 * Is **language independent** (currently Java and C++ supported)
 
 * Can be easily **understood and extended**. 
-
-* Is **highly modularized**: every functionality in ZSDN is a single artifact running independently, no matter if on the same machine or distributed: **there is no huge monolithic controller instance**.<br> 
 
 * Filters events on the sender side: Using hierarchical topic-based subscriptions, we **avoid unecessary event-delivery**. This includes the Switch itself. If no one wants to receive e.g. UDP packets, the Switch will not even send them.
 
