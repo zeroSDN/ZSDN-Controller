@@ -54,7 +54,28 @@ fi
 cd ../..
 
 
-# TODO Startup tool init
+echo "## Start Init module starter"
+cd util/module-starter
+if mvn clean install -DskipTests=true; then
+	echo "# Init module starter success"
+else
+	result=$?
+	echo "!! Failed to init module starter"
+	exit ${result}
+fi
+cd ../..
+
+
+echo "## Start Init startup selector"
+cd util/startup-selector
+if mvn clean install -DskipTests=true; then
+	echo "# Init startup selector success"
+else
+	result=$?
+	echo "!! Failed to init startup selector"
+	exit ${result}
+fi
+cd ../..
 
 
 cd util
