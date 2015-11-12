@@ -12,32 +12,33 @@ ZeroSDN was developed by 13 students during a software engineering project at th
 
 We felt that many controllers are either _too monolithic_, _too hard to understand_, or _not scalable enough_. 
 
-This is why we created a controller that:
+This is why we created a controller which does not have these limitations.
 
-### Is highly modularized
+### Highly modularized, distributed design
 
-Every functionality in ZeroSDN is a single artifact running independently, no matter if on the same machine or distributed; there is no huge monolithic controller instance.
+Rather than using a monolithic design, ZeroSDN encapsulates controller functions into modules communicating through the ZeroMQ high-perfomance messaging library. These modules can run on a single host or can be distributed between several hosts. Modules can also be added to or removed from a running controller easily.
 
-### Can run on any hardware
+### Lightweight
 
-We deployed the full controller on a single Raspberry Pi, in a cloud environment and even directly on physical SDN switches.
+ZeroSDN can run on hosts spanning a large performance range including a simple Raspberry Pi, cloud servers, or even on a switch itself.
 
-### Is language independent
+### Language independent
 
-Currently supported languages are Java and C++.
+Out of the box, ZeroSDN supports modules implemented in Java or C++. However, since ZeroSDN utilizes ZeroMQ as messaging library _(which supports many more languages!)_ support for other languages can be added to ZeroSDN easily.
 
-### Can be easily understood and extended
+### Extensive documentation
 
-We made sure to document all functionality thoroughly.
+We made sure to document all functionality thoroughly to facilitate the usage and extension of ZeroSDN.
 
-### Avoids unecessary event-delivery
+### Flexible Event Filtering
 
-ZeroSDN filters events at sending modules using hierarchical topic-based publish/subscribe. 
-If, for example, no module is subscribed to UDP packets from the network, the switches will not even attempt to deliver them.
+ZeroSDN uses the publish/subscribe paradigm to filter events. We designed a hierarchical pub/sub schema making it easy for modules to receive just the events that are relevant for the module. Thanks to ZeroMQ, events can be filtered at high speed. Here is a simplified example for Packet-In messages from switches:
 
-### Performs very well
+_A module subscribed to IPv4 packets will not receive ARP packets, but will receive both UDP and TCP packets._
 
-While ZeroSDN can be run locally on one machine without a problem, it really plays to its advantage once distributed:
+### High performance
+
+The distributed design of ZeroSDN based on the high-performance messaging library ZeroMQ helps it to scale well with the number of hosts:
 
 ![ZeroSDN StartUpSelector initial screen](http://alki.square7.de/zsdn/throughput_4_node.png)
 _Tested using Cbench. 16 Switches, throughput mode_
