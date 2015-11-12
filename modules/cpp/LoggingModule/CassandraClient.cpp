@@ -39,7 +39,7 @@ inline CassError CassandraClient::executeStatement(std::string cqlStatement) {
     CassError rc = CASS_OK;
     CassFuture* result_future = NULL;
 
-    logger.information("Executing CQL Command");
+    logger.trace("Executing CQL Command");
 
     CassStatement* statement = cass_statement_new(cqlStatement.c_str(), 0);
     result_future = cass_session_execute(session, statement);
@@ -47,7 +47,7 @@ inline CassError CassandraClient::executeStatement(std::string cqlStatement) {
 
     rc = cass_future_error_code(result_future);
     if (rc == CASS_OK) {
-        logger.information("Executing CQL Command: Success");
+        logger.trace("Executing CQL Command: Success");
     } else {
         return printError(rc);
     }
@@ -85,7 +85,7 @@ CassError CassandraClient::insertLogMsg(const zmf::data::ZmfMessage& message, co
     }
     std::string asString = stream.str();
 
-    logger.information("New Log Message");
+    logger.trace("New Log Message");
     std::string statement = std::string(
             "INSERT INTO logging.messages (id, messageType, senderType, senderId, timestamp) VALUES (uuid(), 0x") +
                             asString + ", " + std::to_string(sender.TypeId) + ", " +
