@@ -56,8 +56,12 @@ int main(int argc, char* argv[]) {
         SwitchAdapterRunner switchAdapterServer(version, ofPort, argv[1]);
         bool started = switchAdapterServer.start();
         if (started) {
-            std::cout << "Press enter to stop the SwitchAdapterRunner.";
-            std::cin.ignore();
+            std::string line;
+            do {
+                std::cout << "Enter \"stop\" to stop the SwitchAdapterRunner.";
+                std::getline(std::cin, line);
+            } while(line.compare("stop") != 0);
+
             switchAdapterServer.stop();
             google::protobuf::ShutdownProtobufLibrary();
             return 0;
