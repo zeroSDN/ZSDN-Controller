@@ -564,8 +564,8 @@ void ForwardingModule::applyTopology(const common::topology::Topology& newTopo) 
     currentGraph = std::shared_ptr<zsdn::NetworkGraph>(new zsdn::NetworkGraph(newTopo));
     w.stop();
     getLogger().information("Applied new topology in " + std::to_string(w.elapsed()) + "µs.");
-    if (getLogger().information()) {
-        getLogger().information("Graph reachability: \n" + printReachabilityCheck(newTopo));
+    if (getLogger().trace()) {
+        getLogger().trace("Graph reachability: \n" + printReachabilityCheck(newTopo));
     }
 }
 
