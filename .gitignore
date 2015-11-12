@@ -44,4 +44,4 @@ util/startup-selector/target
 export
 .extract
 util/module-starter/target/
-
+common/java/zsdn-proto/src/
